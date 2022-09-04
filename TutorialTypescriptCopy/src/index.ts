@@ -5,7 +5,7 @@ const ajv = new Ajv()
 
 interface MyData {
     age: number
-    name: string
+    name: string 
 }
 
 //define a schema
