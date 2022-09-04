@@ -1,6 +1,6 @@
 //ajv is for validating your data by comparing to 
 //JSON schema object you made with typescript-json-schema
-import Ajv from 'ajv'
+import Ajv, {JSONSchemaType} from 'ajv'
 const ajv = new Ajv()
 
 interface MyData {
