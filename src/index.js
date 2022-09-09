@@ -4,20 +4,40 @@ import Ajv from "ajv";
 const ajv = new Ajv();
 
 const schema = {
+    title: "Example Schema",
     type: "object",
     properties: {
-        age: { type: "integer" },
-        name: { type: "string", nullable: true },
+        firstName: {
+            type: "string",
+        },
+        lastName: {
+            type: "string",
+        },
+        age: {
+            description: "age in years",
+            type: "integer",
+            minimum: 5,
+            maximum: 100,
+        },
+        hairColor: {
+            enum: ["black", "red", "brown"],
+            type: "string",
+        },
     },
-    required: ["age"],
+    if: { properties: { age: { maximum: 60 } } },
+    then: { required: ["Salary"] },
+    else: { required: ["pension"] },
+
+    required: ["age"], //requirements on what must be filled in.
     additionalProperties: false,
 };
 
 const validate = ajv.compile(schema);
 
 const data = {
-    age: 1,
-    name: "abc",
+    firstName: "Gabbi",
+    lastName: "Mukanga",
+    age: 35,
 };
 
 if (validate(data)) {
