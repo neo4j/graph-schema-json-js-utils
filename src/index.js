@@ -3,6 +3,7 @@
 import Ajv from "ajv";
 const ajv = new Ajv();
 
+/*
 const schema = {
     title: "Example Schema",
     type: "object",
@@ -25,14 +26,15 @@ const schema = {
         },
     },
     if: { properties: { age: { maximum: 60 } } },
+
     then: { required: ["Salary"] },
     else: { required: ["pension"] },
 
     required: ["age"], //requirements on what must be filled in.
     additionalProperties: false,
 };
-
-const validate = ajv.compile(schema);
+*/
+const validate = ajv.compile(GraphSchema.json); //JSONschemat från fil.
 
 const data = {
     firstName: "Gabbi",

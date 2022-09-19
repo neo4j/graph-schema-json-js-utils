@@ -1,0 +1,47 @@
+{
+    "graphDescription": {
+        "version": "1.0.0",
+        "name": "MovieDB",
+        "nodeSpecs": [
+            {
+                "ref": "nr1",
+                "lables": ["Person"],
+                "properties": {
+                    "name":{
+                        "type": "string"
+                    }
+                }
+            },
+            {
+                "ref": "nr2",
+                "lables": ["Movie"],
+                "propersies": {
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            {
+        
+                "ref": "nr3",
+                "lables": ["Genre"],
+                "properties": {
+                    "type": "string"
+                }
+            }
+        ],
+        "relationshipSpecs": [
+           { "ref": "r1", "type": "DIRECTED", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "DIRECTOR", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "ACTOR", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "WROTE", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "PRODUCED", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "REVIEWED", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "ACTED_IN", "fromNodeRef": "n1", "toNodeRef": "n2" },
+           { "ref": "r1", "type": "GENRE", "fromNodeRef": "n2", "toNodeRef": "n3" },
+           { "ref": "r1", "type": "FOLLOWS", "fromNodeRef": "n1", "toNodeRef": "n1" }
+
+        ]
+        
+    }
+}
