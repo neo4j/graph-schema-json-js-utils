@@ -2,9 +2,8 @@
 //JSON schema object you made with typescript-json-schema
 import Ajv from "ajv";
 const ajv = new Ajv();
-import "./GraphSchema.json" assert { type: "json" };
+//import "./GraphSchema.json" assert { type: "json" };
 
-/*
 const schema = {
     title: "Example Schema",
     type: "object",
@@ -34,22 +33,21 @@ const schema = {
     required: ["age"], //requirements on what must be filled in.
     additionalProperties: false,
 };
-*/
 
-const validate = ajv.compile(GraphSchema.json); //JSONschemat från fil. Oklart om detta ska vara med...
+//const validate = ajv.compile(GraphSchema.json); //JSONschemat från fil. Oklart om detta ska vara med...
 
+/*
 const data = {
     name: "Keanu Reeves",
     born: "1964",
 };
+*/
 
-/*
 const data = {
     firstName: "Gabbi",
     lastName: "Mukanga",
     age: 35,
 };
-*/
 
 if (validate(data)) {
     //data is MyData here
