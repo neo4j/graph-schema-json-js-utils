@@ -6,8 +6,6 @@ import Ajv from "ajv";
 
 const ajv = new Ajv();
 
-import "./GraphSchema.json" assert { type: "json" };
-
 const schema = {
     title: "Example Schema",
     type: "object",
@@ -53,8 +51,6 @@ const valid = validate(data);
 if (!valid) console.log(validate.errors);
 else console.log(data + "data-test");
 
-
-console.log(myJson.)
 /*
 function validate() {
     if (data) {
