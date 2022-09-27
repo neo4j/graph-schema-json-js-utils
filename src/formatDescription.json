@@ -10,12 +10,18 @@
                 "relationshipSpecs" : { "type" : "array", "items" : { "$ref" : "#/$defs/Relationship"} }
 
             },
-            "extensions" : {
-                "type" : "object",
-                "properties" : 
+            "additionalProperties" : "falce",
+            "required" : ["nodeSpecs"]
+        },
+        "extensions" : {
+            "type" : "object",
+            "properties" : {
+                "indexes" : { "type" : "array", "items" : { "$ref" : "#/$defs/Index"} },
+                "constraints" : { "type" : "array", "items" : { "$ref" : "#/$defs/Constraint"} }
             }
         }
     },
+    "additionalProperties" : false,
 
     "$defs" : {
         "Node" : {
