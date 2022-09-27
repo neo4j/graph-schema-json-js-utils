@@ -1,0 +1,32 @@
+{
+    "type" : "object",
+    "properties" : {
+        "graphDescription" : {
+            "type" : "object",
+            "properties" : {
+                "version" : { "type" : "string"},
+                "name" : { "type" : "string"},
+                "nodeSpaces" : { "type" : "array", "item" : {"$ref" : "#/$defs/Node"} },
+                "relationshipSpecs" : { "type" : "array", "items" : { "$ref" : "#/$defs/Relationship"} }
+
+            },
+            "extensions" : {
+                "type" : "object",
+                "properties" : 
+            }
+        }
+    },
+
+    "$defs" : {
+        "Node" : {
+            "type" : "object",
+            "properties" : {
+                "ref" : {"type" : "string"},
+                "lableRefs" : { "type" : "array", "items" : { "type" : "string"} },
+                "properties" : { "$ref" : "#/defs/properties" }
+            },
+            "additionalProperties" : false, 
+            "required" : ["ref", "lableRefs"]
+        }
+    }
+}
