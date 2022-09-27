@@ -11,7 +11,7 @@
                         "type": "string"
                     },
                     "born": {
-                        "type": "integer(alltid 4 siffror)" 
+                        "type": "integer" 
                     }
                 }
             },
@@ -46,7 +46,18 @@
         ]
         
     },
-    "extensions" : {}
+    "extensions" : {
+        "indexes" : [
+            {
+                "ref" : "i1",
+                "name" : "index1",
+                "type" : "TEXT", 
+                "entityType" : "LABEL",
+                "entity" : "Person",
+                "properties" : ["name"]
+            }
+        ]
+    }
     
 }
 
