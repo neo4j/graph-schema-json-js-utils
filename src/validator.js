@@ -55,7 +55,7 @@ else console.log(data + "data-test");
 function validate() {
     if (data) {
         //data is MyData here
-        console.log(data.name);^^
+        console.log(data.name);
     } else {
         console.log(validate.errors);
     }
