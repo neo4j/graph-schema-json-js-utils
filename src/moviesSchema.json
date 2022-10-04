@@ -54,10 +54,37 @@
                 "type" : "TEXT", 
                 "entityType" : "LABEL",
                 "entity" : "Person",
-                "properties" : ["name"]
+                "properties" : ["name"],
+                "uniqueness" : false
+            },
+            {
+                "ref" : "i2",
+                "name" : "index2",
+                "type" : "TEXT",
+                "entityType" : "LABEL",
+                "entity" : "Movie",
+                "properties" : ["title"],
+                "uniqueness" : false
+
+            },
+            {
+                "ref" : "i3",
+                "name" : "index3",
+                "type" : "TEXT", 
+                "entityType" : "LABEL",
+                "entity" : "Gender",
+                "uniqueness" : false
+            }
+        ],
+        "constraints" : [
+            {
+                "name" : "c1",
+                "type" : "UNIQUENESS",
+                "entityType" : "LABEL",
+                "entity" : " ",
+                "propersties" : ["name"]
             }
         ]
     }
-    
 }
 
