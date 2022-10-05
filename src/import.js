@@ -1,9 +1,11 @@
 import fs from "fs";
 function main() {
-    const content = fs.readFileSync("./schema.json", { encoding: "utf-8" });
-    console.log(content);
+    //som en sträng
+    const content = fs.readFileSync("./moviesSchema.json", { encoding: "utf-8" });
+    console.log("ettan" + content);
 
+    //som ett objekt
     const obj = JSON.parse(content);
-    console.log(obj.graphDescription.nodeSpecs[0]);
+    console.log("pars" + obj.graphDescription.nodeSpecs[0]);
 }
 main();

@@ -10,7 +10,7 @@
                 "relationshipSpecs" : { "type" : "array", "items" : { "$ref" : "#/$defs/Relationship"} }
 
             },
-            "additionalProperties" : "falce",
+            "additionalProperties" : "false",
             "required" : ["nodeSpecs"]
         },
         "extensions" : {
