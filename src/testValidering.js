@@ -20,7 +20,7 @@ const schema = {
 
 const data = {
     name: "Keanu Reeves",
-    born: "1964",
+    born: 1964,
 };
 
 

@@ -7,5 +7,6 @@ function main() {
     //som ett objekt
     const obj = JSON.parse(content);
     console.log("pars" + obj.graphDescription.nodeSpecs[0]);
+    console.log(obj.graphDescription.nodeSpecs[1]);
 }
 main();
