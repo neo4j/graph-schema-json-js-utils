@@ -1,5 +1,4 @@
 {
-    
      "graphDescription": {
         "version": "1.0.0",
         "name": "MovieDB",
@@ -7,30 +6,17 @@
             {
                 "ref": "nr1",
                 "lables": ["Person"],
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "born": {
-                        "type": "integer" 
-                    }
-                }
+                "properties": { "name": { "type": "string" }}
             },
             {
                 "ref": "nr2",
                 "lables": ["Movie"],
-                "propersies": {
-                    "title": {
-                        "type": "string"
-                    }
-                }
+                "propersies": { "title": {  "type": "string" }}
             },
             {
                 "ref": "nr3",
                 "lables": ["Genre"],
-                "properties": {
-                    "type": "string"
-                }
+                "properties": { "type": "string" }
             }
         ],
         "relationshipSpecs": [
@@ -76,16 +62,7 @@
                 "entity" : "Gender",
                 "uniqueness" : false
             }
-        ],
-        "constraints" : [
-            {
-                "name" : "c1",
-                "type" : "UNIQUENESS",
-                "entityType" : "LABEL",
-                "entity" : " ",
-                "propersties" : ["name"]
-            }
-        ]
+        ]    
     }
 }
 

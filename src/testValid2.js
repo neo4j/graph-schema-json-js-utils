@@ -15,9 +15,9 @@ function main2() {
     const descriptionString = fs.readFileSync("./formatDescription.json", { encoding: "utf-8" });
     console.log("SCHEMA-STRING " + descriptionString)
 
-    //let obj = JSON.parse(descriptionString);
-    //console.log("SCHEMA " + obj)
-    return descriptionString;
+    let obj = JSON.parse(descriptionString);
+    console.log("SCHEMA " + obj)
+    return obj;
     
 }
 
@@ -26,19 +26,13 @@ function main() {
     const contentMoviesSchema = fs.readFileSync("./moviesSchema.json", { encoding: "utf-8" });
     console.log("MOVIE-STRING " + contentMoviesSchema);
 
-    //const obj = JSON.parse(contentMoviesSchema);
-    //console.log("DATA " + obj);
-    return contentMoviesSchema;
+    const obj2 = JSON.parse(contentMoviesSchema);
+    console.log("DATA " + obj2);
+    return obj2;
 
 }
 
-//const validate = ajv.compile(GraphSchema.json); //JSONschemat från fil. Oklart om detta ska vara med...
-/*
-const data = {
-    name: "Keanu Reeves",
-    born: "1964",
-};
-*/
+
 //const obj = JSON.parse(objSchema);
 //const obj2 = JSON.parse(objData);
 const validate = ajv.compile(objSchema);
