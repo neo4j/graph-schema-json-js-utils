@@ -1,4 +1,8 @@
 {
+
+"$title": "Test schema Movies",
+"type": "object",
+"Properties": {
      "graphDescription": {
         "version": "1.0.0",
         "name": "MovieDB",
@@ -43,6 +47,7 @@
                 "entity" : "Person",
                 "properties" : ["name"],
                 "uniqueness" : false
+
             },
             {
                 "ref" : "i2",
@@ -61,8 +66,10 @@
                 "entityType" : "LABEL",
                 "entity" : "Gender",
                 "uniqueness" : false
+
             }
         ]    
     }
+}
 }
 

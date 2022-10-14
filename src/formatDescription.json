@@ -1,92 +1,69 @@
 {
-    "type" : "object",
-    "properties" : {
-        "graphDescription" : {
-            "type" : "object",
-            "properties" : {
-                "version" : { "type" : "string"},
-                "name" : { "type" : "string"},
-                "nodeSpaces" : { "type" : "array", "item" : {"$ref" : "#/$defs/Node"} },
-                "relationshipSpecs" : { "type" : "array", "items" : { "$ref" : "#/$defs/Relationship"} }
 
-            },
-            "additionalProperties" : false,
-            "required" : ["nodeSpecs"]
-        },
-        "extensions" : {
-            "type" : "object",
-            "properties" : {
-                "indexes" : { "type" : "array", "items" : { "$ref" : "#/$defs/Index"} },
-                "constraints" : { "type" : "array", "items" : { "$ref" : "#/$defs/Constraint"} }
+    "$title": "Description schema",
+    "type": "object",
+    "Properties": {
+      "graphDescription ": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nodeSpaces": {
+            "type": "array",
+            "item": {
+              "$ref": "#/$defs//Node"
             }
+          }
+        },
+        "additional": false,
+        "required": [
+          "nodeSpecs"
+        ]
+      },
+      "extensions": {
+        "type": "object",
+        "properties": {
+          "indexes": {
+            "type": "array",
+            "items": {
+              "$ref": {
+                "$ref": "#/$defs/Index"
+              }
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Constraint"
+              }
+            }
+          }
         }
+      }
     },
-    "additionalProperties" : false,
-
-    "$defs" : {
-        "Node" : {
-            "type" : "object",
-            "properties" : {
-                "ref" : { "type" : "string"},
-                "lableRefs" : { "type" : "array", "items" : { "type" : "string"} },
-                "properties" : { "$ref" : "#/defs/properties" }
-            },
-            "additionalProperties" : false, 
-            "required" : ["ref", "lableRefs"]
-        },
-        "Relationship" : {
-            "type" : "object",
-            "properties" : { 
-                "ref" : {"type" : "string"},
-                "typeRef" : { "type" : "string" },
-                "properties" : { "$ref" : "#/$defs/Properties" },
-                "fromNodeRef" : { "type" : "string" },
-                "toNodeRef" : { "type" : "string" }
-            },
-            "additionalProperties" : false,
-            "required" : ["ref", "typeRef", "fromNodeRef", "toNodeRef"]
-        },
-        "Index" : {
-            "type" : "object",
-            "propersies" : {
-                "ref" : { "type" : "string" },
-                "name" : { "type" : "string" },
-                "type" : { "enum" : ["BTREE", "FULLTEXT", "TEXT", "LOOKUP", "RANGE", "POINT"] },
-                "options" : {"type" : "object" },
-                "entityType" : { "enum" : ["LABEL"] },
-                "entityRef" : { "type" : "string"},
-                "propersties" : { "type" : "array", "items" : { "type" : "string"} },
-                "uniqueness" : { "type" : "boolean"}
-
-            },
-            "additionalProperties" : false,
-            "required" : ["ref", "name", "type", "entityType", "entityRef", "propersies"]
-        }, 
-        "Properties" : {
-            "type" : "object",
-            "properties" : {
-                "type" : "object",
-                "properties" : {
-                    "type" : {
-                        "enum": [
-                            "integer",
-                            "string",
-                            "float",
-                            "boolean",
-                            "point",
-                            "date",
-                            "datetime",
-                            "time",
-                            "localtime",
-                            "localdatetime",
-                            "duration"
-                        ]
-                    },
-                    "optional" : "boolean"
-                },
-                "additionalProperties" : false,
-                "required" : ["type"]
+    "additional": false,
+    "$defs": {
+      "Node": {
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "lable": {
+            "type": "array",
+            "items": {
+              "type": "string"
             }
-        }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "lable"
+        ]
+      }
     }
-}
+  }
