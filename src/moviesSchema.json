@@ -64,7 +64,7 @@
                 "name" : "index3",
                 "type" : "TEXT", 
                 "entityType" : "LABEL",
-                "entity" : "Gender",
+                "entity" : "Genre",
                 "uniqueness" : false
 
             }
