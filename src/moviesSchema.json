@@ -1,7 +1,7 @@
 {
     "graphDescription": {
       "version": "1.0.0",
-      "name": 123,
+      "name": "MovieDB",
       "nodeSpecs": [
         {
           "ref": "nr1",
