@@ -1,69 +1,60 @@
 {
-
-    "$title": "Description schema",
-    "type": "object",
-    "Properties": {
-      "graphDescription ": {
-        "type": "object",
-        "properties": {
-          "version": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "nodeSpaces": {
-            "type": "array",
-            "item": {
-              "$ref": "#/$defs//Node"
-            }
-          }
+  "$title": "Description schema",
+  "type": "object",
+  "properties": {
+    "graphDescription ": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
         },
-        "additional": false,
-        "required": [
-          "nodeSpecs"
-        ]
+        "name": {
+          "type": "string"
+        },
+        "nodeSpaces": {
+          "type": "array",
+          "item": {
+            "$ref": "#/$defs//Node"
+          }
+        }
       },
-      "extensions": {
-        "type": "object",
-        "properties": {
-          "indexes": {
-            "type": "array",
-            "items": {
-              "$ref": {
-                "$ref": "#/$defs/Index"
-              }
-            },
-            "constraints": {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/Constraint"
-              }
-            }
+      "additional": false,
+      "required": [
+        "nodeSpecs"
+      ]
+    },
+    "extensions": {
+      "type": "object",
+      "properties": {
+        "indexes": {
+          "type": "array",
+          "constraints": {
+            "type": "array"
           }
         }
       }
-    },
-    "additional": false,
-    "$defs": {
-      "Node": {
-        "type": "object",
-        "properties": {
-          "ref": {
-            "type": "string"
-          },
-          "lable": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
+    }
+  },
+  "additional": false,
+  "$defs": {
+    "Node": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
         },
-        "additionalProperties": false,
-        "required": [
-          "ref",
-          "lable"
-        ]
-      }
+        "lable": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "lable"
+      ]
     }
   }
+}
