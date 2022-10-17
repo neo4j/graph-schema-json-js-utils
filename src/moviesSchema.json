@@ -1,129 +1,33 @@
 {
     "graphDescription": {
-      "version": "1.0.0",
-      "name": 123,
-      "nodeSpecs": [
-        {
-          "ref": "nr1",
-          "lables": [
-            "Person"
-          ],
-          "properties": {
-            "name": {
-              "type": "string"
+        "version": "1.0.0",
+        "name": "Hej",
+        "nodeSpecs": [
+            {
+                "ref": "nr1",
+                "labels": ["Person"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            {
+                "ref": "nr2",
+                "labels": ["Movie"],
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            {
+                "ref": "nr3",
+                "labels": ["Genre"],
+                "properties": {
+                    "type": "string"
+                }
             }
-          }
-        },
-        {
-          "ref": "nr2",
-          "lables": [
-            "Movie"
-          ],
-          "propersies": {
-            "title": {
-              "type": "string"
-            }
-          }
-        },
-        {
-          "ref": "nr3",
-          "lables": [
-            "Genre"
-          ],
-          "properties": {
-            "type": "string"
-          }
-        }
-      ],
-      "relationshipSpecs": [
-        {
-          "ref": "r1",
-          "type": "DIRECTED",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "DIRECTOR",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "ACTOR",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "WROTE",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "PRODUCED",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "REVIEWED",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "ACTED_IN",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n2"
-        },
-        {
-          "ref": "r1",
-          "type": "GENRE",
-          "fromNodeRef": "n2",
-          "toNodeRef": "n3"
-        },
-        {
-          "ref": "r1",
-          "type": "FOLLOWS",
-          "fromNodeRef": "n1",
-          "toNodeRef": "n1"
-        }
-      ]
-    },
-    "extensions": {
-      "indexes": [
-        {
-          "ref": "i1",
-          "name": "index1",
-          "type": "TEXT",
-          "entityType": "LABEL",
-          "entity": "Person",
-          "properties": [
-            "name"
-          ],
-          "uniqueness": false
-        },
-        {
-          "ref": "i2",
-          "name": "index2",
-          "type": "TEXT",
-          "entityType": "LABEL",
-          "entity": "Movie",
-          "properties": [
-            "title"
-          ],
-          "uniqueness": false
-        },
-        {
-          "ref": "i3",
-          "name": "index3",
-          "type": "TEXT",
-          "entityType": "LABEL",
-          "entity": "Gender",
-          "uniqueness": false
-        }
-      ]
+        ]
     }
-  }
+}
