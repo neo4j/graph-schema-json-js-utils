@@ -17,7 +17,13 @@
                         "$ref": "#/$defs/Node"
                     }
                 },
-                "testtest" : { "type" : "number"}
+                "relationshipSpecs": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Relationship"
+                  }
+                }
+                
             },
             "additionalProperties": false,
             "required": ["nodeSpecs"]
@@ -42,7 +48,25 @@
                 }
             },
             "additionalProperties": false,
-            "required": ["ref", "labels"]
+            "required": ["ref", "labels", "properties"]
+        },
+        "Relationship": {
+            "type": "object",
+            "properties": {
+              "ref": {
+                "type": "string"
+              },
+              "refType": {
+                "type": "string"
+              },
+              "fromNodeRef": {
+                "type": "string"
+              },
+                "toNodeRef" : {
+                "type" : "string"}
+            },
+            "additionalProperties": false,
+            "required": ["ref", "refType", "fromNodeRef", "toNodeRef"]
         }
     }
 }

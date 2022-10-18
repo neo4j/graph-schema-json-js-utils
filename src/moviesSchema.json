@@ -5,7 +5,7 @@
         "nodeSpecs": [
             {
                 "ref": "nr1",
-                "labels": ["Person"],
+                "labels": ["Marianne"],
                 "properties": {
                     "name": {
                         "type": "string"
@@ -28,6 +28,31 @@
                     "type": "string"
                 }
             }
-        ]
+        ],
+    "relationshipSpecs": [
+      {
+        "ref": "r1",
+        "refType": "DIRECTED",
+        "fromNodeRef": "n1",
+        "toNodeRef": "n2"
+      },
+      {
+        "ref": "r1",
+        "refType": "DIRECTOR",
+        "fromNodeRef": "n1",
+        "toNodeRef": "n2"
+      },
+      {
+        "ref": "r1",
+        "refType": "ACTOR",
+        "fromNodeRef": "n1",
+        "toNodeRef": "n2"
+      },
+      { "ref": "r1", 
+      "refType": "WROTE", 
+      "fromNodeRef": "n1", 
+      "toNodeRef": "n2" 
+      }
+    ]
     }
 }

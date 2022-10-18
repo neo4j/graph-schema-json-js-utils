@@ -1,13 +1,13 @@
 //ajv is for validating your data by comparing to
 //JSON schema object you made with typescript-json-schema
-import Ajv from "ajv";
+import Ajv2019 from "ajv/dist/2019.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
-const ajv = new Ajv({ strict: false });
+const ajv = new Ajv2019({ strict: false });
 
 const JSON_SCHEMA_FILE = path.resolve(__dirname, "formatDescription.json");
 const DB_SCHEMA_FILE = path.resolve(__dirname, "moviesSchema.json");
@@ -29,6 +29,8 @@ function main() {
         console.log(validate.errors);
     } else {
         console.log(dbSchema);
+        console.log("SCHEMA IN STRING " + JSON.stringify(dbSchema, null, 2));
+        
     }
 }
 
