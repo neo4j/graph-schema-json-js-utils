@@ -11,8 +11,12 @@
            {
                "ref": "nr2",
                "lables": ["Movie"],
-               "propersies": { "title": {  "type": "string" }}
-           }
+               "propersies": { 
+                    "title": {  
+                        "type": "string" 
+                    }
+                }
+            }
        ],
        "relationshipSpecs": [
           { "ref": "r1", "type": "DIRECTED", "fromNodeRef": "n1", "toNodeRef": "n2" },

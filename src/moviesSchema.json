@@ -1,18 +1,5 @@
 {
     "graphDescription": {
-<<<<<<< HEAD
-      "version": "1.0.0",
-      "name": "MovieDB",
-      "nodeSpecs": [
-        {
-          "ref": "nr1",
-          "lables": [
-            "Person"
-          ],
-          "properties": {
-            "name": {
-              "type": "string"
-=======
         "version": "1.0.0",
         "name": "Hej",
         "nodeSpecs": [
@@ -40,7 +27,6 @@
                 "properties": {
                     "type": "string"
                 }
->>>>>>> 4a8d13be0a2e10f9edf675ac8d9d696eb978f3ca
             }
         ]
     }

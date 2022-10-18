@@ -16,9 +16,11 @@
                     "items": {
                         "$ref": "#/$defs/Node"
                     }
-                }
+                },
+                "testtest" : { "type" : "number"}
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "required": ["nodeSpecs"]
         }
     },
     "additionalProperties": false,
