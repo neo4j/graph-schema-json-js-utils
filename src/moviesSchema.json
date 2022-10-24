@@ -5,7 +5,7 @@
         "nodeSpecs": [
             {
                 "ref": "nr1",
-                "labels": ["Marianne"],
+                "labels": ["Person"],
                 "properties": {
                     "name": {
                         "type": "string"

@@ -59,11 +59,15 @@
               "refType": {
                 "type": "string"
               },
+              "properties": {
+                "$ref": "#/$defs/Properties"
+              },
               "fromNodeRef": {
                 "type": "string"
               },
                 "toNodeRef" : {
-                "type" : "string"}
+                "type" : "string"
+              }
             },
             "additionalProperties": false,
             "required": ["ref", "refType", "fromNodeRef", "toNodeRef"]
