@@ -31,25 +31,49 @@
     },
     "additionalProperties": false,
     "$defs": {
-        "Node": {
+      "Node": {
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "properties": {
             "type": "object",
             "properties": {
-                "ref": {
-                    "type": "string"
-                },
-                "labels": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "properties": {
-                    "type": "object"
+              "properties": {
+                "type": "object",
+                "patternProperties": {
+                  "^.+$": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "string",
+                          "boolean",
+                          "array"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  }
                 }
-            },
-            "additionalProperties": false,
-            "required": ["ref", "labels", "properties"]
+              }
+            }
+          }
         },
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "labels",
+          "properties"
+        ]
+      },
         "Relationship": {
             "type": "object",
             "properties": {
@@ -59,9 +83,6 @@
               "refType": {
                 "type": "string"
               },
-              "properties": {
-                "$ref": "#/$defs/Properties"
-              },
               "fromNodeRef": {
                 "type": "string"
               },
@@ -70,7 +91,7 @@
               }
             },
             "additionalProperties": false,
-            "required": ["ref", "refType", "fromNodeRef", "toNodeRef"]
+            "required": ["ref", "refType", "fromNodeRef", "toNodeRef", "properties"]
         }
     }
 }

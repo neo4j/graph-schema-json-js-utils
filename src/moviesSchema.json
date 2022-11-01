@@ -34,24 +34,28 @@
         "ref": "r1",
         "refType": "DIRECTED",
         "fromNodeRef": "n1",
-        "toNodeRef": "n2"
+        "toNodeRef": "n2",
+        "properties" : {"roles" : {"type" : "string"}}
       },
       {
         "ref": "r1",
         "refType": "DIRECTOR",
         "fromNodeRef": "n1",
-        "toNodeRef": "n2"
+        "toNodeRef": "n2",
+        "properties" : {"roles" : {"type" : "string"}}
       },
       {
         "ref": "r1",
         "refType": "ACTOR",
         "fromNodeRef": "n1",
-        "toNodeRef": "n2"
+        "toNodeRef": "n2",
+        "properties" : {"roles" : {"type" : "string"}}
       },
       { "ref": "r1", 
       "refType": "WROTE", 
       "fromNodeRef": "n1", 
-      "toNodeRef": "n2" 
+      "toNodeRef": "n2",
+      "properties" : {"roles" : {"type" : "string"}}
       }
     ]
     }
