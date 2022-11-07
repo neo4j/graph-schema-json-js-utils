@@ -9,8 +9,8 @@ const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 const ajv = new Ajv2019({ strict: false });
 
-const JSON_SCHEMA_FILE = path.resolve(__dirname, "formatDescription.json");
-const DB_SCHEMA_FILE = path.resolve(__dirname, "moviesSchema.json");
+const JSON_SCHEMA_FILE = path.resolve(__dirname, "graphDescriptionNew.json");
+const DB_SCHEMA_FILE = path.resolve(__dirname, "graphSchemaRepresentation.json");
 
 function readFile(filename) {
     const contents = fs.readFileSync(filename, { encoding: "utf-8" });
