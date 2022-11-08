@@ -141,10 +141,10 @@
             "integer"
           ]
         }
-      }, "additionalProperties": false
-    },"additionalProperties": false,
-    "required": [
-      "type"
-    ]
+      },"additionalProperties": false,
+      "required": [
+        "type"
+      ]
+    }
   }
 }
