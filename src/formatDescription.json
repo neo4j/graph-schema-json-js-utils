@@ -140,9 +140,7 @@
               "array"
             ]
           }
-        },
-        "additionalProperties" : false,
-          "required":["type"]
+        }
       }
     }
   }

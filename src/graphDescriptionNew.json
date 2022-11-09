@@ -63,15 +63,48 @@
                   "properties": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "token": {
-                          "type": "string"
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "token",
+                            "type",
+                            "items"
+                          ],
+                          "properties": {
+                            "token": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string",
+                              "pattern": "^array$"
+                            },
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "$ref": "#/$defs/PropertyTypes"
+                                }
+                              }
+                            }
+                          }
                         },
-                        "type": {
-                          "$ref": "#/$defs/PropertyTypes"
+                        {
+                          "type": "object",
+                          "required": [
+                            "token",
+                            "type"
+                          ],
+                          "properties": {
+                            "token": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "$ref": "#/$defs/PropertyTypes"
+                            }
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 }
@@ -115,7 +148,11 @@
                       "oneOf":[
                         {
                         "type": "object",
-                        "required":["token", "type", "items"],
+                        "required":[
+                          "token", 
+                          "type", 
+                          "items"
+                        ],
                         "properties": {
                           "token": {
                             "type": "string"
@@ -136,20 +173,23 @@
                       },
                       {
                         "type": "object",
-                         "required":["token", "type"],
+                         "required":[
+                          "token", 
+                          "type"
+                        ],
                         "properties": {
                           "token": {
                             "type": "string"
-                          },
-                          "type": {
-                            "$ref": "#/$defs/PropertyTypes"
+                            },
+                            "type": {
+                              "$ref": "#/$defs/PropertyTypes"
+                            }
                           }
                         }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 }
-              }
               }
             }
           }
@@ -158,18 +198,12 @@
     }
   },
   "$defs": {
-    "Properties": {
-      "properties": {
-        "type": {
-          "enum": [
-            "string",
-            "boolean",
-            "integer"
-          ]
-        }
-      },"additionalProperties": false,
-      "required": [
-        "type"
+    "PropertyTypes": {
+      "type": "string",
+      "enum": [
+        "string",
+        "boolean",
+        "integer"
       ]
     }
   }

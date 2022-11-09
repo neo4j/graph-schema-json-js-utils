@@ -107,8 +107,12 @@
             },
             "properties": [
               {
-                "token": "role",
-                "type": "string"
+                "token":"role",
+                "type":"array",
+                "items": {
+                  "type": "string" 
+                }
+                
               }
             ]
           },
