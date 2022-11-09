@@ -47,7 +47,7 @@
                 "type": "object",
                 "properties": {
                   "$id": {
-                    "$ref": "#/$defs/Properties"
+                    "type":"string"
                   },
                   "labels": {
                     "type": "array",
@@ -55,7 +55,7 @@
                       "type": "object",
                       "properties": {
                         "$ref": {
-                          "$ref": "#/$defs/Properties"
+                          "type":"string"
                         }
                       }
                     }
@@ -69,7 +69,7 @@
                           "type": "string"
                         },
                         "type": {
-                          "$ref": "#/$defs/Properties"
+                          "$ref": "#/$defs/PropertyTypes"
                         }
                       }
                     }
@@ -112,18 +112,44 @@
                   "properties": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "token": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "$ref": "#/$defs/Properties"
+                      "oneOf":[
+                        {
+                        "type": "object",
+                        "required":["token", "type", "items"],
+                        "properties": {
+                          "token": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "pattern": "^array$"
+                          },
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "$ref": "#/$defs/PropertyTypes"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                         "required":["token", "type"],
+                        "properties": {
+                          "token": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "$ref": "#/$defs/PropertyTypes"
+                          }
                         }
                       }
-                    }
+                    ]
                   }
                 }
+              }
               }
             }
           }
