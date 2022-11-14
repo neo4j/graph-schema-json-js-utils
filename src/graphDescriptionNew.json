@@ -202,9 +202,17 @@
     "PropertyTypes": {
       "type": "string",
       "enum": [
-        "string",
-        "boolean",
-        "integer"
+        "integer",
+                            "string",
+                            "float",
+                            "boolean",
+                            "point",
+                            "date",
+                            "datetime",
+                            "time",
+                            "localtime",
+                            "localdatetime",
+                            "duration"
       ]
     }
   }
