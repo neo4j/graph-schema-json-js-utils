@@ -4,5 +4,18 @@ const ajv = new Ajv({ strict: false });
 
 export function validateSchema(jsonSchema, graphSchema) {
     const validate = ajv.compile(jsonSchema);
-    return validate(graphSchema);
+    const result = validate(graphSchema);
+    if (result !== true) {
+        throw new SchemaValidationError(validate.errors);
+    }
+    return true;
+}
+
+export class SchemaValidationError extends Error {
+    messages = [];
+    constructor(messages) {
+        super(messages);
+        this.messages = messages;
+        this.name = "SchemaValidationError";
+    }
 }

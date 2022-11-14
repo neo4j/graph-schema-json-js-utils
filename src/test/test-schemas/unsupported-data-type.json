@@ -1,0 +1,32 @@
+{
+    "graphSchemaRepresentation": {
+        "version": "1.0.1",
+        "graphSchema": {
+            "version": "1.0.0",
+            "nodeLabels": [
+                {
+                    "$id": "l1",
+                    "token": "Person"
+                }
+            ],
+            "relationshipTypes": [],
+            "nodeSpecs": [
+                {
+                    "$id": "n1",
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
+                    "properties": [
+                        {
+                            "token": "prop1",
+                            "type": "unsupported-type"
+                        }
+                    ]
+                }
+            ],
+            "relationshipSpecs": []
+        }
+    }
+}
