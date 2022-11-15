@@ -1,0 +1,43 @@
+{
+    "graphSchemaRepresentation": {
+        "version": "1.0.1",
+        "graphSchema": {
+            "version": "1.0.0",
+            "nodeLabels": [
+                {
+                    "$id": "l1",
+                    "token": "Person"
+                }
+                
+            ],
+            "relationshipTypes": [
+                {
+                    "$id": "rt1",
+                    "token": "ACTED_IN"
+                },
+                {
+                    "$id": "rt2",
+                    "token": "DIRECTED"
+                }
+            ],
+            "nodeSpecs": [
+                {
+                    "$id": "n1",
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
+                    "properties": [
+                        {
+                            "token": "born",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ],
+            "relationshipSpecs": [],
+            "too-many-properties-array-test":[]
+        }
+    }
+}

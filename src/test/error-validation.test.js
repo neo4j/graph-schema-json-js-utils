@@ -15,7 +15,7 @@ describe("Validate type errors", () => {
 
     test("Identifies unsupported types", () => {
         const unsupportedDataTypeSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/unsupported-data-type.json")
+            path.resolve(__dirname, "./test-schemas/unsupported-label-no-id.json")
         );
 
         assert.throws(

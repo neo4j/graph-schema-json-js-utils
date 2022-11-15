@@ -49,7 +49,7 @@
                         },
                         {
                             "token": "born",
-                            "type": "sdfdsf"
+                            "type": "string"
                         }
                     ]
                 },
