@@ -24,7 +24,12 @@
                   "token": {
                     "type": "string"
                   }
-                }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "$id",
+                  "token"
+                ]
               }
             },
             "relationshipTypes": {
@@ -38,7 +43,12 @@
                   "token": {
                     "type": "string"
                   }
-                }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "$id",
+                  "token"
+                ]
               }
             },
             "nodeSpecs": {
@@ -47,7 +57,7 @@
                 "type": "object",
                 "properties": {
                   "$id": {
-                    "type":"string"
+                    "type": "string"
                   },
                   "labels": {
                     "type": "array",
@@ -55,8 +65,99 @@
                       "type": "object",
                       "properties": {
                         "$ref": {
-                          "type":"string"
+                          "type": "string"
                         }
+                      },
+                      "required": [
+                        "$ref"
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "token",
+                            "type",
+                            "items"
+                          ],
+                          "properties": {
+                            "token": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string",
+                              "pattern": "^array$"
+                            },
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "$ref": "#/$defs/PropertyTypes"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "token",
+                            "type"
+                          ],
+                          "properties": {
+                            "token": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "$ref": "#/$defs/PropertyTypes"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "$id",
+                  "labels",
+                  "properties"
+                ]
+              }
+            },
+            "relationshipSpecs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "$id": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "object",
+                    "properties": {
+                      "$ref": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "from": {
+                    "type": "object",
+                    "properties": {
+                      "$ref": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "to": {
+                    "type": "object",
+                    "properties": {
+                      "$ref": {
+                        "type": "string"
                       }
                     }
                   },
@@ -106,113 +207,49 @@
                         }
                       ]
                     }
-                  },"additionalProperties": false
-                }
-              }
-            },
-            "relationshipSpecs": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "$id": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "object",
-                    "properties": {
-                      "$ref": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "from": {
-                    "type": "object",
-                    "properties": {
-                      "$ref": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "to": {
-                    "type": "object",
-                    "properties": {
-                      "$ref": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "properties": {
-                    "type": "array",
-                    "items": {
-                      "oneOf":[
-                        {
-                        "type": "object",
-                        "required":[
-                          "token", 
-                          "type", 
-                          "items"
-                        ],
-                        "properties": {
-                          "token": {
-                            "type": "string"
-                          },
-                          "type": {
-                            "type": "string",
-                            "pattern": "^array$"
-                          },
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "$ref": "#/$defs/PropertyTypes"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      {
-                        "type": "object",
-                         "required":[
-                          "token", 
-                          "type"
-                        ],
-                        "properties": {
-                          "token": {
-                            "type": "string"
-                            },
-                            "type": {
-                              "$ref": "#/$defs/PropertyTypes"
-                            }
-                          }
-                        }
-                      ]
-                    }
                   }
-                },"additionalProperties": false
+                },
+                "additionalProperties": false,
+                "required": [
+                  "$id",
+                  "type",
+                  "from",
+                  "to",
+                  "properties"
+                ]
               }
             }
-          },"additionalProperties": false
+          },
+          "additionalProperties": false,
+          "required": [
+            "nodeLabels",
+            "relationshipTypes",
+            "nodeSpecs",
+            "relationshipSpecs"
+          ]
         }
       }
     }
   },
   "additionalProperties": false,
+  "required": [
+    "graphSchemaRepresentation"
+  ],
   "$defs": {
     "PropertyTypes": {
       "type": "string",
       "enum": [
         "integer",
-                            "string",
-                            "float",
-                            "boolean",
-                            "point",
-                            "date",
-                            "datetime",
-                            "time",
-                            "localtime",
-                            "localdatetime",
-                            "duration"
+        "string",
+        "float",
+        "boolean",
+        "point",
+        "date",
+        "datetime",
+        "time",
+        "localtime",
+        "localdatetime",
+        "duration"
       ]
     }
   }

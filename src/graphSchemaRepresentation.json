@@ -1,133 +1,142 @@
 {
     "graphSchemaRepresentation": {
-        "version": "1.0.1",
-        "graphSchema": {
-            "version": "1.0.0",
-            "nodeLabels": [
-                {
-                    "$id": "l1",
-                    "token": "Person"
-                },
-                {
-                    "$id": "l2",
-                    "token": "Actor"
-                },
-                {
-                    "$id": "l3",
-                    "token": "Director"
-                },
-                {
-                    "$id": "l4",
-                    "token": "Movie"
-                }
+      "version": "1.0.1",
+      "graphSchema": {
+        "version": "1.0.0",
+        "nodeLabels": [
+          {
+            "$id": "l1",
+            "token": "Person"
+          },
+          {
+            "$id": "l2",
+            "token": "Actor"
+          },
+          {
+            "$id": "l3",
+            "token": "Director"
+          },
+          {
+            "$id": "l4",
+            "token": "Movie"
+          }
+        ],
+        "relationshipTypes": [
+          {
+            "$id": "rt1",
+            "token": "ACTED_IN"
+          },
+          {
+            "$id": "rt2",
+            "token": "DIRECTED"
+          }
+        ],
+        "nodeSpecs": [
+          {
+            "$id": "n1",
+            "labels": [
+              {
+                "$ref": "#l1"
+              },
+              {
+                "$ref": "#l2"
+              }
             ],
-            "relationshipTypes": [
-                {
-                    "$id": "rt1",
-                    "token": "ACTED_IN"
-                },
-                {
-                    "$id": "rt2",
-                    "token": "DIRECTED"
-                }
-            ],
-            "nodeSpecs": [
-                {
-                    "$id": "n1",
-                    "labels": [
-                        {
-                            "$ref": "#l1"
-                        },
-                        {
-                            "$ref": "#l2"
-                        }
-                    ],
-                    "properties": [
-                        {
-                            "token": "name",
-                            "type": "string"
-                        },
-                        {
-                            "token": "born",
-                            "type": "string"
-                        }
-                    ]
-                },
-                {
-                    "$id": "n2",
-                    "labels": [
-                        {
-                            "$ref": "#l1"
-                        },
-                        {
-                            "$ref": "#l3"
-                        }
-                    ],
-                    "properties": [
-                        {
-                            "token": "name",
-                            "type": "string"
-                        },
-                        {
-                            "token": "born",
-                            "type": "integer"
-                        }
-                    ]
-                },
-                {
-                    "$id": "n3",
-                    "labels": [
-                        {
-                            "$ref": "#l4"
-                        }
-                    ],
-                    "properties": [
-                        {
-                            "token": "title",
-                            "type": "string"
-                        },
-                        {
-                            "token": "release",
-                            "type": "date"
-                        }
-                    ]
-                }
-            ],
-            "relationshipSpecs": [
-                {
-                    "$id": "r1",
-                    "type": {
-                        "$ref": "#rt1"
-                    },
-                    "from": {
-                        "$ref": "#n1"
-                    },
-                    "to": {
-                        "$ref": "#n3"
-                    },
-                    "properties": [
-                        {
-                            "token": "role",
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "$id": "r2",
-                    "type": {
-                        "$ref": "#rt2"
-                    },
-                    "from": {
-                        "$ref": "#n2"
-                    },
-                    "to": {
-                        "$ref": "#n3"
-                    }
-                }
+            "properties": [
+              {
+                "token": "name",
+                "type": "string"
+              },
+              {
+                "token": "born",
+                "type": "integer"
+              }
             ]
-        }
+          },
+          {
+            "$id": "n2",
+            "labels": [
+              {
+                "$ref": "#l1"
+              },
+              {
+                "$ref": "#l3"
+              }
+            ],
+            "properties": [
+              {
+                "token": "name",
+                "type": "string"
+              },
+              {
+                "token": "born",
+                "type": "integer"
+              }
+            ]
+          },
+          {
+            "$id": "n3",
+            "labels": [
+              {
+                "$ref": "#l4"
+              }
+            ],
+            "properties": [
+              {
+                "token": "title",
+                "type": "string"
+              },
+              {
+                "token": "release",
+                "type": "date"
+              }
+            ]
+          }
+        ],
+        "relationshipSpecs": [
+          {
+            "$id": "r1",
+            "type": {
+              "$ref": "#rt1"
+            },
+            "from": {
+              "$ref": "#n1"
+            },
+            "to": {
+              "$ref": "#n3"
+            },
+            "properties": [
+              {
+                "token": "role",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          {
+            "$id": "r2",
+            "type": {
+              "$ref": "#rt2"
+            },
+            "from": {
+              "$ref": "#n2"
+            },
+            "to": {
+              "$ref": "#n3"
+            },
+            "properties": [
+              {
+                "token": "role",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        ]
+      }
     }
-}
+  }

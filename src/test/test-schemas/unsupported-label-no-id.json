@@ -5,7 +5,7 @@
             "version": "1.0.0",
             "nodeLabels": [
                 {
-                    "": "l1",
+                    "$id": "l1",
                     "token": "Person"
                 }
             ],
