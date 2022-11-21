@@ -37,6 +37,17 @@ describe("Validate type errors", () => {
     });
 
 
+    test("Identifies additional properties", () => {
+        const testSchema = readFile(
+            path.resolve(__dirname, "./test-schemas/additional-properties.json")
+        );
+
+        assert.throws(
+            () => validateSchema(JSON_SCHEMA, testSchema),
+            SchemaValidationError
+        );
+    });
+    
     test("Identifies additional fields nodeSpecs", () => {
         const testSchema = readFile(
             path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs.json")
@@ -48,16 +59,7 @@ describe("Validate type errors", () => {
         );
     });
 
-    test("Identifies additional properties", () => {
-        const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/additional-properties.json")
-        );
-
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
+    
 
     test("Identifies missing required fields nodeSpecs", () => {
         const testSchema = readFile(
