@@ -68,7 +68,8 @@
                           "type": "string"
                         }
                       },
-                      "required": [
+                        "additionalProperties": false,
+                        "required": [
                         "$ref"
                       ]
                     }
@@ -79,6 +80,7 @@
                       "oneOf": [
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "required": [
                             "token",
                             "type",
@@ -104,6 +106,7 @@
                         },
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "required": [
                             "token",
                             "type"
@@ -133,12 +136,18 @@
               "type": "array",
               "items": {
                 "type": "object",
+                  
+                          
                 "properties": {
                   "$id": {
                     "type": "string"
                   },
                   "type": {
                     "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                            "$ref"
+                          ],
                     "properties": {
                       "$ref": {
                         "type": "string"
@@ -147,6 +156,10 @@
                   },
                   "from": {
                     "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                            "$ref"
+                          ],
                     "properties": {
                       "$ref": {
                         "type": "string"
@@ -155,6 +168,10 @@
                   },
                   "to": {
                     "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                            "$ref"
+                          ],
                     "properties": {
                       "$ref": {
                         "type": "string"
@@ -167,6 +184,7 @@
                       "oneOf": [
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "required": [
                             "token",
                             "type",
@@ -192,6 +210,7 @@
                         },
                         {
                           "type": "object",
+                          "additionalProperties": false,
                           "required": [
                             "token",
                             "type"
