@@ -21,7 +21,8 @@
                     "properties": [
                         {
                             "token": "name",
-                            "unsupported-label": "string"
+                            "type": "string",
+                            "additional-fields-nodeSpecs": "string"
                         }
                     ]
                 }

@@ -9,28 +9,24 @@
                     "token": "Person"
                 }
             ],
-            "relationshipTypes": [
-                {
-                    "$id": "rt1",
-                    "token": "ACTED_IN"
-                }
-            ],
+            "relationshipTypes": [],
             "nodeSpecs": [
                 {
-                    "$id": "n3",
+                    "$id": "n1",
                     "labels": [
                         {
-                            "$ref": "#l4"
+                            "$ref": "#l1"
                         }
                     ],
                     "properties": [
                         {
-                            "token": "title",
-                            "type": "string"
+                            "token": "name",
+                            "type": "unsupported-type-nodeSpecs"
                         }
                     ]
                 }
-            ]
+            ],
+            "relationshipSpecs": []
         }
     }
 }

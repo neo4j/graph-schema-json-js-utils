@@ -8,8 +8,18 @@
                     "$id": "l1",
                     "token": "Person"
                 }
+                
             ],
-            "relationshipTypes": [],
+            "relationshipTypes": [
+                {
+                    "$id": "rt1",
+                    "token": "ACTED_IN"
+                },
+                {
+                    "$id": "rt2",
+                    "token": "DIRECTED"
+                }
+            ],
             "nodeSpecs": [
                 {
                     "$id": "n1",
@@ -20,13 +30,12 @@
                     ],
                     "properties": [
                         {
-                            "token": "prop1",
-                            "type": "unsupported-type"
+                            "token": "born",
+                            "type": "string"
                         }
                     ]
                 }
-            ],
-            "relationshipSpecs": []
+            ]
         }
     }
 }

@@ -11,6 +11,7 @@ const JSON_SCHEMA = readFile(JSON_SCHEMA_FILE);
 
 // Happy path == schemas we expect to pass
 describe("Simple happy path tests", () => {
+
     test("Single node test", () => {
         const minimalGraphSchema = readFile(
             path.resolve(__dirname, "./test-schemas/single-node.json")
@@ -18,4 +19,5 @@ describe("Simple happy path tests", () => {
         const valid = validateSchema(JSON_SCHEMA, minimalGraphSchema);
         assert.strictEqual(valid, true);
     });
+    
 });
