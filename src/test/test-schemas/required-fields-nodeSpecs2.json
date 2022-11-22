@@ -9,21 +9,19 @@
                     "token": "Person"
                 }
             ],
-            "relationshipTypes": [
-                {
-                    "$id": "rt1",
-                    "token": "ACTED_IN"
-                }
-            ],
+            "relationshipTypes": [],
             "nodeSpecs": [
                 {
                     "$id": "n1",
-                    
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
                     "properties": [
                         {
-                            "token": "name",
-                            "type": "integer"
-                           
+                            "token": "name"
+                 
                         }
                     ]
                 }

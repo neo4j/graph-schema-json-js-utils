@@ -51,7 +51,7 @@ describe("Validate type errors", () => {
             path.resolve(__dirname, "./test-schemas/additional-properties.json")
         );
 
-        
+
         assert.throws(
             () => validateSchema(JSON_SCHEMA, additionalFieldsNodeSpecs, AdditionalFieldsNodeSpecs2, additionalFieldsNodeSpecsArray, AdditionalProperties),
             SchemaValidationError
@@ -61,7 +61,7 @@ describe("Validate type errors", () => {
     
     test("TEST", () => {
         const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs-Array.json")
+            path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs-Array.json")
         );
         
         assert.throws(
@@ -76,12 +76,20 @@ describe("Validate type errors", () => {
             path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs.json")
         );
 
+        const MissingRequiredFieldsNodeSpecs2 = readFile(
+            path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs2.json")
+        );
+
+        const requiredFieldsNodeSpecsArray = readFile(
+            path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs-Array.json")
+        );
+
         const MissingRequiredPropertiesNodeSpecs = readFile(
             path.resolve(__dirname, "./test-schemas/required-properties-nodeSpecs.json")
         );
 
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, MissingRequiredFieldsNodeSpecs, MissingRequiredPropertiesNodeSpecs),
+            () => validateSchema(JSON_SCHEMA, MissingRequiredFieldsNodeSpecs, MissingRequiredFieldsNodeSpecs2,requiredFieldsNodeSpecsArray, MissingRequiredPropertiesNodeSpecs),
             SchemaValidationError
         );
     });
