@@ -53,7 +53,11 @@ describe("Validate type errors", () => {
 
 
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalFieldsNodeSpecs, AdditionalFieldsNodeSpecs2, additionalFieldsNodeSpecsArray, AdditionalProperties),
+            () => validateSchema(JSON_SCHEMA, 
+                additionalFieldsNodeSpecs, 
+                AdditionalFieldsNodeSpecs2, 
+                additionalFieldsNodeSpecsArray, 
+                AdditionalProperties),
             SchemaValidationError
         );
         
