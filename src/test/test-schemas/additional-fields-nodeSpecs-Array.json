@@ -18,7 +18,6 @@
         "nodeSpecs": [
           {
             "$id": "n1",
-            "additional-fields-nodeSpecs": "additional-fields-nodeSpecs",
             "labels": [
               {
                 "$ref": "#l1"
@@ -32,6 +31,21 @@
               {
                 "token": "born",
                 "type": "integer"
+              }
+            ],
+            "additional-fields-nodeSpecs-Array":[]
+          },
+          {
+            "$id": "n3",
+            "labels": [
+              {
+                "$ref": "#l4"
+              }
+            ],
+            "properties": [
+              {
+                "token": "title",
+                "type": "string"
               }
             ]
           }

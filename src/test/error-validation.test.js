@@ -13,97 +13,79 @@ const JSON_SCHEMA = readFile(JSON_SCHEMA_FILE);
 // Validate type errors == schemas we expect NOT to pass
 describe("Validate type errors", () => {
 
-    test("Identifies unsupported types nodeSpecs", () => {
-        const unsupportedDataTypeSchema = readFile(
+    test("Identifies unsupported types", () => {
+        const unsupportedDataTypeSchemaNodeSpecs = readFile(
             path.resolve(__dirname, "./test-schemas/unsupported-data-type-nodeSpecs.json")
         );
 
+        const unsupportedDataTypeSchemaRelationshipSpecs = readFile(
+            path.resolve(__dirname, "./test-schemas/unsupported-data-type-relationshipSpecs.json")
+        );
+
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, unsupportedDataTypeSchema),
+            () => validateSchema(JSON_SCHEMA, unsupportedDataTypeSchemaNodeSpecs, unsupportedDataTypeSchemaRelationshipSpecs),
             SchemaValidationError
         );
     });
 
 
-    test("Identifies unsupported types rel.specs", () => {
-        const unsupportedDataTypeSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/unsupporter-data-type-rel.specs.json")
+    //Dessa två kan slås ihop och göras ännu bredare, 
+    //så att det testas om extra fields överallt och inte bara på ett ställe i json-filen.
+    test("Identifies additional fields/properties", () => {
+        const additionalFieldsNodeSpecs = readFile(
+            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs.json")
+        );
+    
+
+        const AdditionalFieldsNodeSpecs2 = readFile(
+            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs2.json")
         );
 
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, unsupportedDataTypeSchema),
-            SchemaValidationError
+
+        const additionalFieldsNodeSpecsArray = readFile(
+            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs-Array.json")
         );
-    });
 
 
-    test("Identifies additional properties", () => {
-        const testSchema = readFile(
+        const AdditionalProperties = readFile(
             path.resolve(__dirname, "./test-schemas/additional-properties.json")
         );
 
+        
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
+            () => validateSchema(JSON_SCHEMA, additionalFieldsNodeSpecs, AdditionalFieldsNodeSpecs2, additionalFieldsNodeSpecsArray, AdditionalProperties),
+            SchemaValidationError
+        );
+        
+    });
+    
+    test("TEST", () => {
+        const testSchema = readFile(
+            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs-Array.json")
+        );
+        
+        assert.throws(
+            () => validateSchema(JSON_SCHEMA, testSchema ),
             SchemaValidationError
         );
     });
-    
-    test("Identifies additional fields nodeSpecs", () => {
-        const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/additional-fields-nodeSpecs.json")
-        );
 
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
-
-    
-
-    test("Identifies missing required fields nodeSpecs", () => {
-        const testSchema = readFile(
+   //inkludera fler borttagna fält
+    test("Identifies missing required fields/properties nodeSpecs", () => {
+        const MissingRequiredFieldsNodeSpecs = readFile(
             path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs.json")
         );
 
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
-
-    test("Identifies missing required properties nodeSpecs", () => {
-        const testSchema = readFile(
+        const MissingRequiredPropertiesNodeSpecs = readFile(
             path.resolve(__dirname, "./test-schemas/required-properties-nodeSpecs.json")
         );
 
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
+            () => validateSchema(JSON_SCHEMA, MissingRequiredFieldsNodeSpecs, MissingRequiredPropertiesNodeSpecs),
             SchemaValidationError
         );
     });
 
-    test("Identifies missing required label id nodeSpecs", () => {
-        const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/unsupported-label-id-nodeSpecs.json")
-        );
-
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
-
-    test("Identifies missing required label id rel.specs", () => {
-        const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/unsupported-label-id-rel.specs.json")
-        );
-
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
 
    
     
