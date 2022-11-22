@@ -5,27 +5,23 @@
             "version": "1.0.0",
             "nodeLabels": [
                 {
-                    "$id": "l1",
-                    "token": "Person"
+                    "$id": "l1"
+                 
                 }
             ],
-            "relationshipTypes": [
-                {
-                    "$id": "rt1",
-                    "token": "ACTED_IN"
-                }
-            ],
+            "relationshipTypes": [],
             "nodeSpecs": [
                 {
                     "$id": "n1",
-                    
-
-                    
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
                     "properties": [
                         {
                             "token": "name",
-                            "type": "integer"
-                           
+                            "type": "string"
                         }
                     ]
                 }

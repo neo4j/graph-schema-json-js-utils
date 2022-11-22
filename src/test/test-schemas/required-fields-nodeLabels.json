@@ -1,0 +1,54 @@
+{
+    "graphSchemaRepresentation": {
+        "version": "1.0.1",
+        "graphSchema": {
+            "version": "1.0.0",
+            "nodeLabels": [
+                {
+                 
+                    "token": "Person"
+                }
+            ],
+            "relationshipTypes": [],
+            "nodeSpecs": [
+                {
+                    "$id": "n1",
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
+                    "properties": [
+                        {
+                            "token": "name",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ],
+            "relationshipSpecs": [
+                {
+                    "$id": "r1",
+                    "type": {
+                      "$ref": "#rt1"
+                    },
+                    "from": {
+                      "$ref": "#n1"
+                    },
+                    "to": {
+                      "$ref": "#n3"
+                    },
+                    "properties": [
+                      {
+                        "token": "role",
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  }
+            ]
+        }
+    }
+}

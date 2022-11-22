@@ -61,7 +61,7 @@ describe("Validate type errors", () => {
     
     test("TEST", () => {
         const testSchema = readFile(
-            path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs-Array.json")
+            path.resolve(__dirname, "./test-schemas/required-fields-relationshipType2.json")
         );
         
         assert.throws(
@@ -72,6 +72,27 @@ describe("Validate type errors", () => {
 
    //inkludera fler borttagna fält
     test("Identifies missing required fields/properties nodeSpecs", () => {
+       
+        //nodeLabels
+        const MissingRequiredFieldsNodeLabels = readFile(
+        path.resolve(__dirname, "./test-schemas/required-fields-nodeLabels.json")
+        );
+
+        const MissingRequiredFieldsNodeLabels2 = readFile(
+            path.resolve(__dirname, "./test-schemas/required-fields-nodeLabels2.json")
+        );
+
+        //nodeLabels
+        const MissingRequiredFieldsRelationshipType = readFile(
+            path.resolve(__dirname, "./test-schemas/required-fields-relationshipType.json")
+        );
+
+        const MissingRequiredFieldsRelationshipType2 = readFile(
+            path.resolve(__dirname, "./test-schemas/required-fields-relationshipType2.json")
+        );
+       
+       
+        //nodeSpecs
         const MissingRequiredFieldsNodeSpecs = readFile(
             path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs.json")
         );
@@ -80,7 +101,7 @@ describe("Validate type errors", () => {
             path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs2.json")
         );
 
-        const requiredFieldsNodeSpecsArray = readFile(
+        const MissingRequiredFieldsNodeSpecsArray = readFile(
             path.resolve(__dirname, "./test-schemas/required-fields-nodeSpecs-Array.json")
         );
 
@@ -89,7 +110,17 @@ describe("Validate type errors", () => {
         );
 
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, MissingRequiredFieldsNodeSpecs, MissingRequiredFieldsNodeSpecs2,requiredFieldsNodeSpecsArray, MissingRequiredPropertiesNodeSpecs),
+            () => validateSchema(JSON_SCHEMA,
+                 MissingRequiredFieldsNodeLabels,
+                 MissingRequiredFieldsNodeLabels2,
+
+                 MissingRequiredFieldsRelationshipType,
+                 MissingRequiredFieldsRelationshipType2,
+
+                 MissingRequiredFieldsNodeSpecs, 
+                 MissingRequiredFieldsNodeSpecs2,
+                 MissingRequiredFieldsNodeSpecsArray, 
+                 MissingRequiredPropertiesNodeSpecs),
             SchemaValidationError
         );
     });
