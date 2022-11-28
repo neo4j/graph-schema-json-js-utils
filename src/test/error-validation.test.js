@@ -35,8 +35,6 @@ describe("Validate type errors", () => {
         );
     });
 
-    //Dessa två kan slås ihop och göras ännu bredare,
-    //så att det testas om extra fields överallt och inte bara på ett ställe i json-filen.
     test("Identifies additional fields/properties", () => {
         const additionalNodeSpecs = readFile(
             path.resolve(
@@ -81,21 +79,7 @@ describe("Validate type errors", () => {
         );
     });
 
-    test("TEST", () => {
-        const testSchema = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/required-fields-relationshipType2.json"
-            )
-        );
 
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, testSchema),
-            SchemaValidationError
-        );
-    });
-
-    //inkludera fler borttagna fält
     test("Identifies missing required fields/properties nodeSpecs", () => {
         //nodeLabels
         const missingRequiredNodeLabels = readFile(
@@ -128,11 +112,7 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () =>
-                validateSchema(
-                    JSON_SCHEMA,
-                    missingRequiredRelationshipType
-                ),
+            () => validateSchema(JSON_SCHEMA, missingRequiredRelationshipType),
             SchemaValidationError
         );
 
@@ -143,11 +123,7 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () =>
-                validateSchema(
-                    JSON_SCHEMA,
-                    missingRequiredRelationshipType2
-                ),
+            () => validateSchema(JSON_SCHEMA, missingRequiredRelationshipType2),
             SchemaValidationError
         );
 
@@ -181,11 +157,7 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () =>
-                validateSchema(
-                    JSON_SCHEMA,
-                    missingRequiredNodeSpecs3
-                ),
+            () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecs3),
             SchemaValidationError
         );
 
