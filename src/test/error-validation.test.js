@@ -46,6 +46,41 @@ describe("Validate type errors", () => {
             SchemaValidationError
         );
 
+        //NodeLabel
+        const additionalNodeLabelRoot = readFile(
+            path.resolve(
+                __dirname,
+                "./test-schemas/additional-fields-nodeLabel-root.json"
+            )
+        );
+        assert.throws(
+            () => validateSchema(JSON_SCHEMA, additionalNodeLabelRoot),
+            SchemaValidationError
+        );
+
+        const additionalNodeLabelLabel = readFile(
+            path.resolve(
+                __dirname,
+                "./test-schemas/additional-fields-nodeLabel-label.json"
+            )
+        );
+        assert.throws(
+            () => validateSchema(JSON_SCHEMA, additionalNodeLabelLabel),
+            SchemaValidationError
+        );
+
+        //RelationshipType
+        const additionalRelationshipTypesRoot = readFile(
+            path.resolve(
+                __dirname,
+                "./test-schemas/additional-fields-relationshipType-root.json"
+            )
+        );
+        assert.throws(
+            () => validateSchema(JSON_SCHEMA, additionalRelationshipTypesRoot),
+            SchemaValidationError
+        );
+       
         //NodeSpecs
         const additionalNodeSpecsRoot = readFile(
             path.resolve(
@@ -126,41 +161,7 @@ describe("Validate type errors", () => {
             SchemaValidationError
         );
 
-        //NodeLabel
-        const additionalNodeLabelRoot = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/additional-fields-nodeLabel-root.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalNodeLabelRoot),
-            SchemaValidationError
-        );
-
-        const additionalNodeLabelLabel = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/additional-fields-nodeLabel-label.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalNodeLabelLabel),
-            SchemaValidationError
-        );
-
-        //RelationshipType
-        const additionalRelationshipTypesRoot = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/additional-fields-relationshipType-root.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalRelationshipTypesRoot),
-            SchemaValidationError
-        );
-       
+        
 
         
     });
