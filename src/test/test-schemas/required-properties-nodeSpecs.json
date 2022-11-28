@@ -19,23 +19,9 @@
                     "$id": "rt2",
                     "token": "DIRECTED"
                 }
-            ],
-            "nodeSpecs": [
-                {
-                    "$id": "n1",
-                    "labels": [
-                        {
-                            "$ref": "#l1"
-                        }
-                    ],
-                    "properties": [
-                        {
-                            "token": "born",
-                            "type": "string"
-                        }
-                    ]
-                }
             ]
+
+            
         }
     }
 }

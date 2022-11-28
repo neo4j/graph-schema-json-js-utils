@@ -12,14 +12,15 @@
             "relationshipTypes": [
                 {
                     "$id": "rt1",
-                    "token": "ACTED_IN"
+                    "token": "ACTED_IN",
+                    "illegal-field": "illegal-field"
                 }
             ],
             "nodeSpecs": [],
             "relationshipSpecs": [
                 {
                     "$id": "r1",
-                    "Illegal": {
+                    "type": {
                         "$ref": "#rt1"
                     },
                     "from": {
