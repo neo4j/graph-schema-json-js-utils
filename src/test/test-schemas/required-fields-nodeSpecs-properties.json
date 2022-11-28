@@ -5,8 +5,8 @@
             "version": "1.0.0",
             "nodeLabels": [
                 {
-                    "$id": "l1"
-                 
+                    "$id": "l1",
+                    "token": "Person"
                 }
             ],
             "relationshipTypes": [],
@@ -20,8 +20,10 @@
                     ],
                     "properties": [
                         {
-                            "token": "name",
-                            "type": "string"
+                            
+
+                            
+                 
                         }
                     ]
                 }

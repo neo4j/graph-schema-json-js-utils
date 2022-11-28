@@ -6,10 +6,16 @@
             "nodeLabels": [
                 {
                     "$id": "l1",
-                    "token": "Person"
+                    "token": "Person" 
                 }
             ],
-            "relationshipTypes": [],
+            "relationshipTypes": [
+                {
+                   
+                    
+                   
+                }
+            ],
             "nodeSpecs": [
                 {
                     "$id": "n1",
@@ -21,8 +27,7 @@
                     "properties": [
                         {
                             "token": "name",
-                            "type": "string",
-                            "additional-fields-nodeSpecs2": "string"
+                            "type": "string"
                         }
                     ]
                 }

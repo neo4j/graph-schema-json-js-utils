@@ -21,7 +21,7 @@
                     "properties": [
                         {
                             "token": "name",
-                            "type": "unsupported-type-nodeSpecs"
+                            "type": "unsupported-type"
                         }
                     ]
                 }

@@ -129,10 +129,7 @@
             "properties": [
               {
                 "token": "role",
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
+                "type": "string"
               }
             ]
           }

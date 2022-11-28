@@ -18,7 +18,7 @@
         "nodeSpecs": [
           {
             "$id": "n1",
-            "additional-fields-nodeSpecs": "additional-fields-nodeSpecs",
+            "illegal-field": "illegal-field",
             "labels": [
               {
                 "$ref": "#l1"
