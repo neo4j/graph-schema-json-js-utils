@@ -6,7 +6,7 @@ import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-const JSON_SCHEMA_FILE = path.resolve(__dirname, "../graphDescriptionNew.json");
+const JSON_SCHEMA_FILE = path.resolve(__dirname, "../json-schema.json");
 const JSON_SCHEMA = readFile(JSON_SCHEMA_FILE);
 
 // Validate type errors == schemas we expect NOT to pass
@@ -18,6 +18,7 @@ describe("Validate type errors", () => {
                 "./test-schemas/unsupported-data-type-nodeSpecs.json"
             )
         );
+
         assert.throws(
             () => validateSchema(JSON_SCHEMA, unsupportedNodeSpecs),
             SchemaValidationError
@@ -158,7 +159,7 @@ describe("Validate type errors", () => {
         );
     });
 
-    //check number of errors (2 errors expected)
+    //check number of errors
     test("Identifies missing required fields/properties nodeSpecs", () => {
         //GraphSchema
 
@@ -168,10 +169,20 @@ describe("Validate type errors", () => {
                 "./test-schemas/required-fields-graphSchema.json"
             )
         );
+
         assert.throws(
             () => validateSchema(JSON_SCHEMA, missingRequireGraphSchema),
             SchemaValidationError
         );
+
+        const NUM_MISSING_GRAPH_SCHEMA_ITEMS = 4;
+        let allErrors = [];
+        try {
+            validateSchema(JSON_SCHEMA, missingRequireGraphSchema);
+        } catch (e) {
+            allErrors = e.messages;
+        }
+        assert.equal(allErrors.length, NUM_MISSING_GRAPH_SCHEMA_ITEMS);
 
         //NodeLabels
         const missingRequiredNodeLabels = readFile(

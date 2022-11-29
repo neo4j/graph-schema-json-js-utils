@@ -5,10 +5,10 @@ import { validateSchema } from "./index.js";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
-const JSON_SCHEMA_FILE = path.resolve(__dirname, "graphDescriptionNew.json");
+const JSON_SCHEMA_FILE = path.resolve(__dirname, "json-schema.json");
 const DB_SCHEMA_FILE = path.resolve(
     __dirname,
-    "graphSchemaRepresentation.json"
+    "./test/test-schemas/example-graph-schema.json"
 );
 
 function main() {

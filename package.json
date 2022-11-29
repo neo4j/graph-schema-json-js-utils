@@ -6,7 +6,8 @@
     "type": "module",
     "scripts": {
         "start": "node ./src",
-        "test": "vitest"
+        "test": "vitest",
+        "coverage": "vitest run --coverage"
     },
     "repository": {
         "type": "git",
@@ -23,6 +24,7 @@
     },
     "keywords": [],
     "devDependencies": {
+        "@vitest/coverage-c8": "^0.25.3",
         "vitest": "^0.25.3"
     }
 }
