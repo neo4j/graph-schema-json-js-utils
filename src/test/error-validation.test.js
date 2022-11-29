@@ -3,7 +3,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { SchemaValidationError, validateSchema } from "../index.js";
 import { readFile } from "../fs.utils.js";
-import { describe, test } from "./utils/helpers.utils.js";
+import { describe, test } from "vitest";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 const JSON_SCHEMA_FILE = path.resolve(__dirname, "../graphDescriptionNew.json");

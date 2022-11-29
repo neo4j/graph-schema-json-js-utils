@@ -1,24 +1,28 @@
 {
-  "name": "jsonschema-validation",
-  "version": "0.0.1",
-  "description": "``` npm install ```",
-  "main": "src/index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node ./src"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mewken/JSONSchema-Validation.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Mewken/JSONSchema-Validation/issues"
-  },
-  "homepage": "https://github.com/Mewken/JSONSchema-Validation#readme",
-  "dependencies": {
-    "ajv": "^8.11.0"
-  },
-  "keywords": []
+    "name": "jsonschema-validation",
+    "version": "0.0.1",
+    "description": "``` npm install ```",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node ./src",
+        "test": "vitest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Mewken/JSONSchema-Validation.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Mewken/JSONSchema-Validation/issues"
+    },
+    "homepage": "https://github.com/Mewken/JSONSchema-Validation#readme",
+    "dependencies": {
+        "ajv": "^8.11.0"
+    },
+    "keywords": [],
+    "devDependencies": {
+        "vitest": "^0.25.3"
+    }
 }
