@@ -3,11 +3,11 @@
       "version": "1.0.1",
       "graphSchema": {
         "version": "1.0.0",
-        "nodeLabels": [ //finns nodeLabels? - K
+        "nodeLabels": [ 
           {
-            "$id": "l1", //finns id - K 
-            "token": "Person"//finns token - K
-            //tillåt inga extra fält? - K
+            "$id": "l1", 
+            "token": "Person"
+            
           },
           {
             "$id": "l2",
@@ -22,25 +22,25 @@
             "token": "Movie"
           }
         ],
-        "relationshipTypes": [ //finns rel.type? - K
+        "relationshipTypes": [ 
           {
-            "$id": "rt1", //Finns id - K
-            "token": "ACTED_IN"//finns token - K
-            //tillåts inga extra fält? - K
+            "$id": "rt1", 
+            "token": "ACTED_IN"
+            
           },
           {
             "$id": "rt2",
             "token": "DIRECTED"
           }
         ],
-        "nodeSpecs": [//Finns Nodespecs? - K
+        "nodeSpecs": [
           {
-            "$id": "n1",//Finns id? - K
-            "labels": [//finns label - K
-            //Tillåts inga extra fält? - K
+            "$id": "n1",
+            "labels": [
+            
               {
-                "$ref": "#l1"//Finns ref.
-                //Tillåts inga extra fält? - K
+                "$ref": "#l1"
+                
               },
               {
                 "$ref": "#l2"
@@ -48,9 +48,9 @@
             ],
             "properties": [
               {
-                "token": "name",//Finns token? - K
-                "type": "string"//Finns type? - K
-                //Tillåts inga extra fält - K
+                "token": "name",
+                "type": "string"
+                
               },
               {
                 "token": "born",
@@ -98,26 +98,26 @@
             ]
           }
         ],
-        "relationshipSpecs": [//Finns rel.specs - K
+        "relationshipSpecs": [
           {
-            "$id": "r1",//Finns id? - K
-            "type": {//finns type
+            "$id": "r1",
+            "type": {
               "$ref": "#rt1"
-              //Tillåts inga extra fält? -K
+              
             },
-            //Tillåts inga extra fält? -K
+            
             "from": {
               "$ref": "#n1"
             },
             "to": {
               "$ref": "#n3"
             },
-            "properties": [//finns properties-K
+            "properties": [
               {
                 "token": "role",
                 "type": "array",
-                //Tillåts inga extra fält? - K
-                "items": { //finns item om typ är array
+                
+                "items": { 
                   "type": "string"
                 }
               }
@@ -136,9 +136,9 @@
             },
             "properties": [
               {
-                "token": "role",//finns token-K
-                "type": "string" //finns type-K
-                //Tillåts inga extra fält?-K
+                "token": "role",
+                "type": "string" 
+                
               }
             ]
           }
