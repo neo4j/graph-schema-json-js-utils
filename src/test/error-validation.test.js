@@ -162,14 +162,12 @@ describe("Validate type errors", () => {
     //check number of errors
     test("Identifies missing required fields/properties nodeSpecs", () => {
         //GraphSchema
-
         const missingRequireGraphSchema = readFile(
             path.resolve(
                 __dirname,
                 "./test-schemas/required-fields-graphSchema.json"
             )
         );
-
         assert.throws(
             () => validateSchema(JSON_SCHEMA, missingRequireGraphSchema),
             SchemaValidationError
@@ -195,6 +193,15 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, missingRequiredNodeLabels),
             SchemaValidationError
         );
+
+        const NUM_MISSING_NODELABELS = 2;
+        let allErrorsNodeLabels = [];
+        try {
+            validateSchema(JSON_SCHEMA, missingRequiredNodeLabels);
+        } catch (e) {
+            allErrorsNodeLabels = e.messages;
+        }
+        assert.equal(allErrorsNodeLabels.length, NUM_MISSING_NODELABELS);
 
         //RelationshipType
         const missingRequiredRelationshipTypeRoot = readFile(
