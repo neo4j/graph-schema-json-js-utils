@@ -5,8 +5,8 @@
             "version": "1.0.0",
             "nodeLabels": [],
             "relationshipTypes": [],
-            "nodeSpecs": [],
-            "relationshipSpecs": [{}]
+            "nodeSpecs": [{}],
+            "relationshipSpecs": []
         }
     }
 }

@@ -37,12 +37,15 @@ describe("Validate type errors", () => {
 
     test("Identifies additional fields/properties", () => {
         //schema properties
-        const additionalProperties = readFile(
-            path.resolve(__dirname, "./test-schemas/additional-properties.json")
+        const additionalFieldsGraphSchema = readFile(
+            path.resolve(
+                __dirname,
+                "./test-schemas/additional-fields-graphSchema.json"
+            )
         );
 
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalProperties),
+            () => validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema),
             SchemaValidationError
         );
 
@@ -58,29 +61,18 @@ describe("Validate type errors", () => {
             SchemaValidationError
         );
 
-        const additionalNodeLabelLabel = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/additional-fields-nodeLabel-label.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalNodeLabelLabel),
-            SchemaValidationError
-        );
-
         //RelationshipType
         const additionalRelationshipTypesRoot = readFile(
             path.resolve(
                 __dirname,
-                "./test-schemas/additional-fields-relationshipType-root.json"
+                "./test-schemas/additional-fields-relationshipTypes-root.json"
             )
         );
         assert.throws(
             () => validateSchema(JSON_SCHEMA, additionalRelationshipTypesRoot),
             SchemaValidationError
         );
-       
+
         //NodeSpecs
         const additionalNodeSpecsRoot = readFile(
             path.resolve(
@@ -107,7 +99,7 @@ describe("Validate type errors", () => {
         const additionalNodeSpecs3 = readFile(
             path.resolve(
                 __dirname,
-                "./test-schemas/additional-fields-nodeSpecs-type.json"
+                "./test-schemas/additional-fields-nodeSpecs-labels.json"
             )
         );
         assert.throws(
@@ -119,14 +111,14 @@ describe("Validate type errors", () => {
         const additionalRelationshipSpecsLabels = readFile(
             path.resolve(
                 __dirname,
-                "./test-schemas/additional-fields-relationshipSpecs-labels.json"
+                "./test-schemas/additional-fields-relationshipSpecs-type.json"
             )
         );
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsLabels),
+            () =>
+                validateSchema(JSON_SCHEMA, additionalRelationshipSpecsLabels),
             SchemaValidationError
         );
-
 
         const additionalRelationshipSpecsProperties = readFile(
             path.resolve(
@@ -135,7 +127,11 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsProperties),
+            () =>
+                validateSchema(
+                    JSON_SCHEMA,
+                    additionalRelationshipSpecsProperties
+                ),
             SchemaValidationError
         );
 
@@ -160,13 +156,9 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType),
             SchemaValidationError
         );
-
-        
-
-        
     });
 
-   //check number of errors (2 errors expected)
+    //check number of errors (2 errors expected)
     test("Identifies missing required fields/properties nodeSpecs", () => {
         //GraphSchema
 
@@ -180,8 +172,7 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, missingRequireGraphSchema),
             SchemaValidationError
         );
-        
-        
+
         //NodeLabels
         const missingRequiredNodeLabels = readFile(
             path.resolve(
@@ -202,25 +193,14 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, missingRequiredRelationshipTypeRoot),
+            () =>
+                validateSchema(
+                    JSON_SCHEMA,
+                    missingRequiredRelationshipTypeRoot
+                ),
             SchemaValidationError
         );
 
-
-        //nodeSpecs
-        // (1 error expected)
-        const missingRequiredNodeSpecs = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/required-fields-nodeSpecs-labels.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecs),
-            SchemaValidationError
-        );
-
-       
         const missingRequiredNodeSpecsProperties = readFile(
             path.resolve(
                 __dirname,
@@ -228,57 +208,24 @@ describe("Validate type errors", () => {
             )
         );
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties),
-            SchemaValidationError
-        );
-
-        const missingRequiredNodeSpecs3 = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/required-fields-nodeSpecs3.json"
-            )
-        );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecs3),
-            SchemaValidationError
-        );
-
-        const missingRequiredPropertiesNodeSpecs = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/required-properties-nodeSpecs.json"
-            )
-        );
-        assert.throws(
             () =>
-                validateSchema(JSON_SCHEMA, missingRequiredPropertiesNodeSpecs),
-            SchemaValidationError
-        );
-
-        //RelationshipSpecs
-        const missingRequiredPropertiesNodeSpecsProperties = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/required-properties-nodeSpecs-properties.json"
-            )
-        );
-        assert.throws(
-            () =>
-                validateSchema(JSON_SCHEMA, missingRequiredPropertiesNodeSpecsProperties),
+                validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties),
             SchemaValidationError
         );
 
         const missingRequiredPropertiesNodeSpecsRoot = readFile(
             path.resolve(
                 __dirname,
-                "./test-schemas/required-properties-nodeSpecs-root.json"
+                "./test-schemas/required-fields-nodeSpecs-root.json"
             )
         );
         assert.throws(
             () =>
-                validateSchema(JSON_SCHEMA, missingRequiredPropertiesNodeSpecsRoot),
+                validateSchema(
+                    JSON_SCHEMA,
+                    missingRequiredPropertiesNodeSpecsRoot
+                ),
             SchemaValidationError
         );
-        
     });
 });
