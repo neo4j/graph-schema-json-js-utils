@@ -3,13 +3,7 @@
         "version": "1.0.1",
         "graphSchema": {
             "version": "1.0.0",
-            "nodeLabels": [
-                {
-                 
-
-                  
-                }
-            ],
+            "nodeLabels": [{}],
             "relationshipTypes": [],
             "nodeSpecs": [
                 {
@@ -31,24 +25,24 @@
                 {
                     "$id": "r1",
                     "type": {
-                      "$ref": "#rt1"
+                        "$ref": "#rt1"
                     },
                     "from": {
-                      "$ref": "#n1"
+                        "$ref": "#n1"
                     },
                     "to": {
-                      "$ref": "#n3"
+                        "$ref": "#n3"
                     },
                     "properties": [
-                      {
-                        "token": "role",
-                        "type": "array",
-                        "items": {
-                          "type": "string"
+                        {
+                            "token": "role",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
-                      }
                     ]
-                  }
+                }
             ]
         }
     }

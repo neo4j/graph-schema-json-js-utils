@@ -157,6 +157,14 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType),
             SchemaValidationError
         );
+        const NUM_TOO_many_RELTYPE = 1;
+        let allErrorNodespecsRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType);
+        } catch (e) {
+            allErrorNodespecsRoot = e.messages;
+        }
+        assert.equal(allErrorNodespecsRoot.length, NUM_TOO_many_RELTYPE)
     });
 
     //check number of errors
@@ -202,7 +210,7 @@ describe("Validate type errors", () => {
             allErrorsNodeLabels = e.messages;
         }
         assert.equal(allErrorsNodeLabels.length, NUM_MISSING_NODELABELS);
-
+        //--------------------------------------------------
         //RelationshipType
         const missingRequiredRelationshipTypeRoot = readFile(
             path.resolve(
@@ -219,6 +227,18 @@ describe("Validate type errors", () => {
             SchemaValidationError
         );
 
+        const NUM_MISSING_RELATIONSHIPTYPE_ROOT = 2;
+        let allErrorsRelationshipTypeRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, missingRequiredRelationshipTypeRoot);
+        } catch (e) {
+            allErrorsRelationshipTypeRoot = e.messages;
+        }
+        assert.equal(
+            allErrorsRelationshipTypeRoot.length,
+            NUM_MISSING_RELATIONSHIPTYPE_ROOT
+        );
+
         const missingRequiredNodeSpecsProperties = readFile(
             path.resolve(
                 __dirname,
@@ -230,6 +250,16 @@ describe("Validate type errors", () => {
                 validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties),
             SchemaValidationError
         );
+        const NUM_MISSING_NODESPECS_PROPERTIES = 6;
+        let allErrorNodespecsProperties = [];
+        try {
+            validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties);
+        } catch (e) {
+            allErrorNodespecsProperties = e.messages;
+        }
+        assert.equal(
+            allErrorNodespecsProperties.length, NUM_MISSING_NODESPECS_PROPERTIES
+        );
 
         const missingRequiredPropertiesNodeSpecsRoot = readFile(
             path.resolve(
@@ -239,11 +269,17 @@ describe("Validate type errors", () => {
         );
         assert.throws(
             () =>
-                validateSchema(
-                    JSON_SCHEMA,
-                    missingRequiredPropertiesNodeSpecsRoot
-                ),
+                validateSchema( JSON_SCHEMA, missingRequiredPropertiesNodeSpecsRoot),
             SchemaValidationError
         );
+
+        const NUM_MISSING_NODESPECS_ROOT = 3;
+        let allErrorNodespecsRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA,missingRequiredPropertiesNodeSpecsRoot);
+        } catch (e) {
+            allErrorNodespecsRoot = e.messages;
+        }
+        assert.equal(allErrorNodespecsRoot.length, NUM_MISSING_NODESPECS_ROOT)
     });
 });

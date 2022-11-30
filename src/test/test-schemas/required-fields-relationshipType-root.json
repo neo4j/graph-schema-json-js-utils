@@ -6,14 +6,14 @@
             "nodeLabels": [
                 {
                     "$id": "l1",
-                    "token": "Person" 
+                    "token": "Person"
                 }
             ],
             "relationshipTypes": [
                 {
-                   
+
+
                     
-                   
                 }
             ],
             "nodeSpecs": [
