@@ -157,14 +157,7 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType),
             SchemaValidationError
         );
-        const NUM_TOO_many_RELTYPE = 1;
-        let allErrorNodespecsRoot = [];
-        try {
-            validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType);
-        } catch (e) {
-            allErrorNodespecsRoot = e.messages;
-        }
-        assert.equal(allErrorNodespecsRoot.length, NUM_TOO_many_RELTYPE)
+        
     });
 
     //check number of errors

@@ -1,0 +1,73 @@
+{
+    "graphSchemaRepresentation": {
+        "version": "1.0.1",
+        "graphSchema": {
+            "nodeLabels": [
+                { "$id": "nl:Person", "token": "Person" },
+                { "$id": "nl:Actor", "token": "Actor" },
+                { "$id": "nl:Director", "token": "Director" },
+                { "$id": "nl:Movie", "token": "Movie" }
+            ],
+            "relationshipTypes": [
+                { "$id": "rt:ACTED_IN", "token": "ACTED_IN" },
+                { "$id": "rt:DIRECTED", "token": "DIRECTED" }
+            ],
+            "nodeObjectTypes": [
+                {
+                    "$id": "n:Actor:Person",
+                    "labels": [
+                        { "$ref": "#nl:Person" },
+                        { "$ref": "#nl:Actor" }
+                    ],
+                    "properties": [
+                        { "token": "id", "type": "string" },
+                        { "token": "name", "type": "string" },
+                        { "token": "born", "type": "integer" }
+                    ]
+                },
+                {
+                    "$id": "n:Director:Person",
+                    "labels": [
+                        { "$ref": "#nl:Person" },
+                        { "$ref": "#nl:Director" }
+                    ],
+                    "properties": [
+                        { "token": "id", "type": "string" },
+                        { "token": "name", "type": "string" },
+                        { "token": "born", "type": "integer" }
+                    ]
+                },
+                {
+                    "$id": "n:Movie",
+                    "labels": [{ "$ref": "#nl:Movie" }],
+                    "properties": [
+                        { "token": "title", "type": "string" },
+                        { "token": "release", "type": "date" }
+                    ]
+                }
+            ],
+            "relationshipObjectTypes": [
+                {
+                    "$id": "r:ACTED_IN",
+                    "type": { "$ref": "#rt:ACTED_IN" },
+                    "from": { "$ref": "#n:Actor:Person" },
+                    "to": { "$ref": "#n:Movie" },
+                    "properties": [
+                        {
+                            "token": "roles",
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    ]
+                },
+                {
+                    "$id": "r:DIRECTED",
+                    "type": { "$ref": "#rt:DIRECTED" },
+                    "from": { "$ref": "#n:Actor:Director" },
+                    "to": { "$ref": "#n:Movie" },
+                    "properties": []
+                }
+            ]
+        }
+    }
+}
