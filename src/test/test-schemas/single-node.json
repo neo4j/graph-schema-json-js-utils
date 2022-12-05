@@ -10,7 +10,7 @@
                 }
             ],
             "relationshipTypes": [],
-            "nodeSpecs": [
+            "nodeObjectTypes": [
                 {
                     "$id": "n1",
                     "labels": [
@@ -21,7 +21,7 @@
                     "properties": []
                 }
             ],
-            "relationshipSpecs": []
+            "relationshipObjectTypes": []
         }
     }
 }

@@ -10,7 +10,7 @@
                 }
             ],
             "relationshipTypes": [],
-            "nodeSpecs": [
+            "nodeObjectTypes": [
                 {
                     "$id": "n1",
                     "labels": [
@@ -26,28 +26,28 @@
                     ]
                 }
             ],
-            "relationshipSpecs": [
+            "relationshipObjectTypes": [
                 {
                     "$id": "r1",
                     "type": {
-                      "$ref": "#rt1"
+                        "$ref": "#rt1"
                     },
                     "from": {
-                      "$ref": "#n1"
+                        "$ref": "#n1"
                     },
                     "to": {
-                      "$ref": "#n3"
+                        "$ref": "#n3"
                     },
                     "properties": [
-                      {
-                        "token": "role",
-                        "type": "array",
-                        "items": {
-                          "type": "unsupporter-data-type-rel.specs"
+                        {
+                            "token": "role",
+                            "type": "array",
+                            "items": {
+                                "type": "unsupporter-data-type-rel.specs"
+                            }
                         }
-                      }
                     ]
-                  }
+                }
             ]
         }
     }

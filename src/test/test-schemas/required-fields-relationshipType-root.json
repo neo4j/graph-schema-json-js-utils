@@ -9,14 +9,8 @@
                     "token": "Person"
                 }
             ],
-            "relationshipTypes": [
-                {
-
-
-                    
-                }
-            ],
-            "nodeSpecs": [
+            "relationshipTypes": [{}],
+            "nodeObjectTypes": [
                 {
                     "$id": "n1",
                     "labels": [
@@ -32,7 +26,7 @@
                     ]
                 }
             ],
-            "relationshipSpecs": []
+            "relationshipObjectTypes": []
         }
     }
 }

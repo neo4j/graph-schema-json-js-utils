@@ -15,8 +15,8 @@
                     "token": "ACTED_IN"
                 }
             ],
-            "nodeSpecs": [],
-            "relationshipSpecs": [
+            "nodeObjectTypes": [],
+            "relationshipObjectTypes": [
                 {
                     "$id": "r1",
                     "type": {
@@ -32,9 +32,6 @@
                         {
                             "token": "role",
                             "type": "array"
-
-
-                            
                         }
                     ]
                 },
@@ -49,15 +46,7 @@
                     "to": {
                         "$ref": "#n3"
                     },
-                    "properties": [
-                        {
-                            
-                            
-
-
-                            
-                        }
-                    ]
+                    "properties": [{}]
                 }
             ]
         }

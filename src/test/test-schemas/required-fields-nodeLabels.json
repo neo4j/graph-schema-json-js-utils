@@ -5,7 +5,7 @@
             "version": "1.0.0",
             "nodeLabels": [{}],
             "relationshipTypes": [],
-            "nodeSpecs": [
+            "nodeObjectTypes": [
                 {
                     "$id": "n1",
                     "labels": [
@@ -21,7 +21,7 @@
                     ]
                 }
             ],
-            "relationshipSpecs": [
+            "relationshipObjectTypes": [
                 {
                     "$id": "r1",
                     "type": {
