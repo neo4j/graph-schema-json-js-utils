@@ -15,7 +15,7 @@
                     "token": "ACTED_IN"
                 }
             ],
-            "nodeSpecs": [
+            "nodeObjectTypes": [
                 {
                     "$id": "n1",
                     "labels": [
@@ -46,7 +46,7 @@
                     ]
                 }
             ],
-            "relationshipSpecs": []
+            "relationshipObjectTypes": []
         }
     }
 }

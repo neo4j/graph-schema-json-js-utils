@@ -49,7 +49,17 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema),
             SchemaValidationError
         );
-
+        //--------
+        const NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA = 1;
+        let allErrors = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema);
+        } catch (e) {
+            allErrors = e.messages;
+        }
+        assert.equal(allErrors.length, NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA);
+        assert.equal(allErrors[0].keyword, "additionalProperties");
+        //------------
         //NodeLabel
         const additionalNodeLabelRoot = readFile(
             path.resolve(
@@ -60,6 +70,21 @@ describe("Validate type errors", () => {
         assert.throws(
             () => validateSchema(JSON_SCHEMA, additionalNodeLabelRoot),
             SchemaValidationError
+        );
+        const NUM_ADDITIONAL_NODELABEL_ROOT = 1;
+        let allErrorsAddittionalNodeLabelsRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
+        } catch (e) {
+            allErrorsAddittionalNodeLabelsRoot = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalNodeLabelsRoot.length,
+            NUM_ADDITIONAL_NODELABEL_ROOT
+        );
+        assert.equal(
+            allErrorsAddittionalNodeLabelsRoot[0].keyword,
+            "additionalProperties"
         );
 
         //RelationshipType
@@ -73,6 +98,21 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalRelationshipTypesRoot),
             SchemaValidationError
         );
+        const NUM_ADDITIONAL_RELATIONSHIP_TYPES_ROOT = 1;
+        let allErrorsAddittionalRelationshipTypeRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
+        } catch (e) {
+            allErrorsAddittionalRelationshipTypeRoot = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalRelationshipTypeRoot.length,
+            NUM_ADDITIONAL_RELATIONSHIP_TYPES_ROOT
+        );
+        assert.equal(
+            allErrorsAddittionalRelationshipTypeRoot[0].keyword,
+            "additionalProperties"
+        );
 
         //NodeSpecs
         const additionalNodeSpecsRoot = readFile(
@@ -85,6 +125,21 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalNodeSpecsRoot),
             SchemaValidationError
         );
+        const NUM_ADDITIONAL_NODESPEC_ROOT = 1;
+        let allErrorsAddittionalNodeSpecsRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
+        } catch (e) {
+            allErrorsAddittionalNodeSpecsRoot = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalNodeSpecsRoot.length,
+            NUM_ADDITIONAL_NODESPEC_ROOT
+        );
+        assert.equal(
+            allErrorsAddittionalNodeSpecsRoot[0].keyword,
+            "additionalProperties"
+        );
 
         const additionalNodeSpecsProperties = readFile(
             path.resolve(
@@ -96,16 +151,46 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalNodeSpecsProperties),
             SchemaValidationError
         );
+        const NUM_ADDITIONAL_NODESPECS_PROPERTIRES = 1;
+        let allErrorsAddittionalNodeSpecsProperties = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
+        } catch (e) {
+            allErrorsAddittionalNodeSpecsProperties = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalNodeSpecsProperties.length,
+            NUM_ADDITIONAL_NODESPECS_PROPERTIRES
+        );
+        assert.equal(
+            allErrorsAddittionalNodeSpecsProperties[0].keyword,
+            "additionalProperties"
+        );
 
-        const additionalNodeSpecs3 = readFile(
+        const additionalNodeSpecsLabels = readFile(
             path.resolve(
                 __dirname,
                 "./test-schemas/additional-fields-nodeSpecs-labels.json"
             )
         );
         assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalNodeSpecs3),
+            () => validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels),
             SchemaValidationError
+        );
+        const NUM_ADDITIONAL_NODESPEC_LABELS = 1;
+        let allErrorsAddittionalNodeSpecsLabels = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
+        } catch (e) {
+            allErrorsAddittionalNodeSpecsLabels = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalNodeSpecsLabels.length,
+            NUM_ADDITIONAL_NODESPEC_LABELS
+        );
+        assert.equal(
+            allErrorsAddittionalNodeSpecsLabels[0].keyword,
+            "additionalProperties"
         );
 
         //RelationshipSpecs
@@ -119,6 +204,21 @@ describe("Validate type errors", () => {
             () =>
                 validateSchema(JSON_SCHEMA, additionalRelationshipSpecsLabels),
             SchemaValidationError
+        );
+        const NUM_ADDITIONAL_RELATIONSHIP_SPECS_TYPE = 1;
+        let allErrorsAddittionalRelationshipSpecsType = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
+        } catch (e) {
+            allErrorsAddittionalRelationshipSpecsType = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsType.length,
+            NUM_ADDITIONAL_RELATIONSHIP_SPECS_TYPE
+        );
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsType[0].keyword,
+            "additionalProperties"
         );
 
         const additionalRelationshipSpecsProperties = readFile(
@@ -135,6 +235,21 @@ describe("Validate type errors", () => {
                 ),
             SchemaValidationError
         );
+        const NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES = 1;
+        let allErrorsAddittionalRelationshipSpecsProperties = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
+        } catch (e) {
+            allErrorsAddittionalRelationshipSpecsProperties = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsProperties.length,
+            NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES
+        );
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsProperties[0].keyword,
+            "additionalProperties"
+        );
 
         const additionalRelationshipSpecsRoot = readFile(
             path.resolve(
@@ -146,16 +261,20 @@ describe("Validate type errors", () => {
             () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsRoot),
             SchemaValidationError
         );
-
-        const additionalRelationshipSpecsType = readFile(
-            path.resolve(
-                __dirname,
-                "./test-schemas/additional-fields-relationshipSpecs-type.json"
-            )
+        const NUM_ADDITIONAL_RELATIONSHIP_SPECS_ROOT = 1;
+        let allErrorsAddittionalRelationshipSpecsRoot = [];
+        try {
+            validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
+        } catch (e) {
+            allErrorsAddittionalRelationshipSpecsRoot = e.messages;
+        }
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsRoot.length,
+            NUM_ADDITIONAL_RELATIONSHIP_SPECS_ROOT
         );
-        assert.throws(
-            () => validateSchema(JSON_SCHEMA, additionalRelationshipSpecsType),
-            SchemaValidationError
+        assert.equal(
+            allErrorsAddittionalRelationshipSpecsRoot[0].keyword,
+            "additionalProperties"
         );
     });
 

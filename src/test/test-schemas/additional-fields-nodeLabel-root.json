@@ -1,54 +1,76 @@
 {
     "graphSchemaRepresentation": {
-      "version": "1.0.1",
-      "graphSchema": {
-        "version": "1.0.0",
-        "nodeLabels": [
-          {
-            "$id": "l1",
-            "token": "Person",
-            "illegal-field": "illegal-field"
-          }
-        ],
-        "relationshipTypes": [
-          {
-            "$id": "rt1",
-            "token": "ACTED_IN"
-          }
-        ],
-        "nodeSpecs": [
-          {
-            "$id": "n1",
-            "labels": [
-              {
-                "$ref": "#l1"
-              }
-            ]
-          }
-        ],
-        "relationshipSpecs": [
-          {
-            "$id": "r1",
-            "type": {
-              "$ref": "#rt1"
-            },
-            "from": {
-              "$ref": "#n1"
-            },
-            "to": {
-              "$ref": "#n3"
-            },
-            "properties": [
-              {
-                "token": "role",
-                "type": "array",
-                "items": {
-                  "type": "string"
+        "version": "1.0.1",
+        "graphSchema": {
+            "version": "1.0.0",
+            "nodeLabels": [
+                {
+                    "$id": "l1",
+                    "token": "Person",
+                    "illegal-field": "illegal-field"
                 }
-              }
+            ],
+            "relationshipTypes": [
+                {
+                    "$id": "rt1",
+                    "token": "ACTED_IN"
+                }
+            ],
+            "nodeObjectTypes": [
+                {
+                    "$id": "n1",
+                    "labels": [
+                        {
+                            "$ref": "#l1"
+                        }
+                    ],
+                    "properties": [{ "token": "id", "type": "string" }]
+                }
+            ],
+            "relationshipObjectTypes": [
+                {
+                    "$id": "r1",
+                    "type": {
+                        "$ref": "#rt1"
+                    },
+                    "from": {
+                        "$ref": "#n1"
+                    },
+                    "to": {
+                        "$ref": "#n3"
+                    },
+                    "properties": [
+                        {
+                            "token": "role",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "$id": "r1",
+                    "type": {
+                        "$ref": "#rt1"
+                    },
+                    "from": {
+                        "$ref": "#n1"
+                    },
+                    "to": {
+                        "$ref": "#n3"
+                    },
+                    "properties": [
+                        {
+                            "token": "role",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]
+                }
             ]
-          }
-        ]
-      }
+        }
     }
-  }
+}

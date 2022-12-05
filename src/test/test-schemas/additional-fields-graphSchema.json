@@ -30,8 +30,9 @@
                         }
                     ]
                 }
-            ],"relationshipObjectTypes": [],
-            "illegal-field":[]
+            ],
+            "relationshipObjectTypes": [],
+            "illegal-field": []
         }
     }
 }
