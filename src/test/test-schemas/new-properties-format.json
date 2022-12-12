@@ -18,6 +18,13 @@
                                 { "type": "string" },
                                 { "type": "integer" }
                             ]
+                        },
+                        {
+                            "token": "all",
+                            "type": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
                         }
                     ]
                 }

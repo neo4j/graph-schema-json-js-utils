@@ -75,21 +75,24 @@
                                                     "additionalProperties": false,
                                                     "required": [
                                                         "token",
-                                                        "type",
-                                                        "items"
+                                                        "type"
                                                     ],
                                                     "properties": {
                                                         "token": {
                                                             "type": "string"
                                                         },
                                                         "type": {
-                                                            "type": "string",
-                                                            "pattern": "^array$"
-                                                        },
-                                                        "items": {
                                                             "type": "object",
+                                                            "required": [
+                                                                "items",
+                                                                "type"
+                                                            ],
                                                             "properties": {
                                                                 "type": {
+                                                                    "type": "string",
+                                                                    "pattern": "^array$"
+                                                                },
+                                                                "items": {
                                                                     "$ref": "#/$defs/PropertyTypes"
                                                                 }
                                                             }
