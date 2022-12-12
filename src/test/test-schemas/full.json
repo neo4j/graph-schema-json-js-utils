@@ -20,9 +20,25 @@
                         { "$ref": "#nl:Actor" }
                     ],
                     "properties": [
-                        { "token": "id", "type": "string" },
-                        { "token": "name", "type": "string" },
-                        { "token": "born", "type": "integer" }
+                        {
+                            "token": "id",
+                            "type": [
+                                { "type": "string" },
+                                { "type": "integer" },
+                                {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                }
+                            ]
+                        },
+                        { "token": "name", "type": { "type": "string" } },
+                        {
+                            "token": "born",
+                            "type": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        }
                     ]
                 },
                 {
