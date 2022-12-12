@@ -1,0 +1,29 @@
+{
+    "graphSchemaRepresentation": {
+        "version": "1.0.1",
+        "graphSchema": {
+            "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
+            "nodeObjectTypes": [
+                {
+                    "$id": "xxxxx",
+                    "labels": [{ "$ref": "#nl:Person" }],
+                    "properties": [
+                        {
+                            "token": "primitive",
+                            "type": { "type": "string" }
+                        },
+                        {
+                            "token": "many-primitive",
+                            "type": [
+                                { "type": "string" },
+                                { "type": "integer" }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "relationshipTypes": [],
+            "relationshipObjectTypes": []
+        }
+    }
+}

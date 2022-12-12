@@ -108,7 +108,17 @@
                                                             "type": "string"
                                                         },
                                                         "type": {
-                                                            "$ref": "#/$defs/PropertyTypes"
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "#/$defs/PropertyTypes"
+                                                                },
+                                                                {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "$ref": "#/$defs/PropertyTypes"
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 }
@@ -235,6 +245,14 @@
     "required": ["graphSchemaRepresentation"],
     "$defs": {
         "PropertyTypes": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "#/$defs/PropertyTypesEnum"
+                }
+            }
+        },
+        "PropertyTypesEnum": {
             "type": "string",
             "enum": [
                 "integer",
