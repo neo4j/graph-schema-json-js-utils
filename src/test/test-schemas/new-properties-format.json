@@ -1,36 +1,43 @@
 {
-    "graphSchemaRepresentation": {
-        "version": "1.0.1",
-        "graphSchema": {
-            "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
-            "nodeObjectTypes": [
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
+      "nodeObjectTypes": [
+        {
+          "$id": "xxxxx",
+          "labels": [{ "$ref": "#nl:Person" }],
+          "properties": [
+            {
+              "token": "primitive",
+              "type": { "type": "string" }
+            },
+            {
+              "token": "many-primitive",
+              "type": [{ "type": "string" }, { "type": "integer" }]
+            },
+            {
+              "token": "primitive array",
+              "type": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            {
+              "token": "primitive array + primitive",
+              "type": [
+                { "type": "string" },
                 {
-                    "$id": "xxxxx",
-                    "labels": [{ "$ref": "#nl:Person" }],
-                    "properties": [
-                        {
-                            "token": "primitive",
-                            "type": { "type": "string" }
-                        },
-                        {
-                            "token": "many-primitive",
-                            "type": [
-                                { "type": "string" },
-                                { "type": "integer" }
-                            ]
-                        },
-                        {
-                            "token": "all",
-                            "type": {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            }
-                        }
-                    ]
+                  "type": "array",
+                  "items": { "type": "string" }
                 }
-            ],
-            "relationshipTypes": [],
-            "relationshipObjectTypes": []
+              ]
+            }
+          ]
         }
+      ],
+      "relationshipTypes": [],
+      "relationshipObjectTypes": []
     }
+  }
 }
