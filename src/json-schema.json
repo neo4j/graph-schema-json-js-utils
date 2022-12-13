@@ -151,14 +151,19 @@
                         {
                           "type": "object",
                           "additionalProperties": false,
-                          "required": ["token", "type", "items"],
+                          "required": ["token", "type"],
                           "properties": {
                             "token": {
                               "type": "string"
                             },
                             "type": {
-                              "type": "string",
-                              "pattern": "^array$"
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "pattern": "^array$"
+                                }
+                              }
                             },
                             "items": {
                               "type": "object",

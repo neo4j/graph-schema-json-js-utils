@@ -24,10 +24,10 @@
       "relationshipObjectTypes": [
         {
           "$id": "r1",
-          "type": {
+       
             "type": {
               "$ref": "#rt1"
-            }
+            
           },
           "from": {
             "$ref": "#n1"

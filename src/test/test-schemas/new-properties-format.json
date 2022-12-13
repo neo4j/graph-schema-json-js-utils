@@ -3,6 +3,7 @@
     "version": "1.0.1",
     "graphSchema": {
       "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
+      "relationshipTypes": [],
       "nodeObjectTypes": [
         {
           "$id": "xxxxx",
@@ -36,7 +37,6 @@
           ]
         }
       ],
-      "relationshipTypes": [],
       "relationshipObjectTypes": []
     }
   }

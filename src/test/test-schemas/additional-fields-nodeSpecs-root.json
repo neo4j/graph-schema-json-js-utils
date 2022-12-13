@@ -15,7 +15,7 @@
           "token": "ACTED_IN"
         }
       ],
-      "nodeSpecs": [
+      "nodeObjectTypes": [
         {
           "$id": "n1",
           "illegal-field": "illegal-field",
@@ -32,7 +32,7 @@
           ]
         }
       ],
-      "relationshipSpecs": []
+      "relationshipObjectTypes": []
     }
   }
 }

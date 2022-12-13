@@ -24,17 +24,18 @@
               "$ref": "#l1"
             }
           ],
-          "properties": [{ "token": "id", "type": { "type": "string" } }]
+          "properties": [
+            {
+              "token": "id",
+              "type": { "type": "string" }
+            }
+          ]
         }
       ],
       "relationshipObjectTypes": [
         {
           "$id": "r1",
-          "type": {
-            "type": {
-              "$ref": "#rt1"
-            }
-          },
+          "type": { "$ref": "#rt1" },
           "from": {
             "$ref": "#n1"
           },
@@ -44,21 +45,16 @@
           "properties": [
             {
               "token": "role",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
+              "type": { "type": "array", "items": { "type": "string" } }
             }
           ]
         },
         {
           "$id": "r1",
-          "type": {
+          
             "type": {
               "$ref": "#rt1"
-            }
+            
           },
           "from": {
             "$ref": "#n1"
@@ -69,9 +65,7 @@
           "properties": [
             {
               "token": "role",
-              "type": { "type": "array", "items": {"type": "string"
-                }
-              }
+              "type": { "type": "array", "items": { "type": "string" } }
             }
           ]
         }
