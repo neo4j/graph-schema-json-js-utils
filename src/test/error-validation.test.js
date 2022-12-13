@@ -345,7 +345,7 @@ describe("Validate type errors", () => {
       () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties),
       SchemaValidationError
     );
-    const NUM_MISSING_NODESPECS_PROPERTIES = 6;
+    const NUM_MISSING_NODESPECS_PROPERTIES = 5;
     let allErrorNodespecsProperties = [];
     try {
       validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties);
