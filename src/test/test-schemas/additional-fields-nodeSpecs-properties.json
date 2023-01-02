@@ -1,33 +1,33 @@
 {
-    "graphSchemaRepresentation": {
-        "version": "1.0.1",
-        "graphSchema": {
-            "version": "1.0.0",
-            "nodeLabels": [
-                {
-                    "$id": "l1",
-                    "token": "Person"
-                }
-            ],
-            "relationshipTypes": [],
-            "nodeSpecs": [
-                {
-                    "$id": "n1",
-                    "labels": [
-                        {
-                            "$ref": "#l1"
-                        }
-                    ],
-                    "properties": [
-                        {
-                            "token": "name",
-                            "type": "string",
-                            "illegal-field": "illegal-field"
-                        }
-                    ]
-                }
-            ],
-            "relationshipSpecs": []
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "version": "1.0.0",
+      "nodeLabels": [
+        {
+          "$id": "l1",
+          "token": "Person"
         }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n1",
+          "labels": [
+            {
+              "$ref": "#l1"
+            }
+          ],
+          "properties": [
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "illegal-field": "illegal-field"
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": []
     }
+  }
 }

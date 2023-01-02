@@ -1,63 +1,69 @@
 {
-    "graphSchemaRepresentation": {
-        "version": "1.0.1",
-        "graphSchema": {
-            "version": "1.0.0",
-            "nodeLabels": [
-                {
-                    "$id": "l1",
-                    "token": "Person"
-                }
-            ],
-            "relationshipTypes": [
-                {
-                    "$id": "rt1",
-                    "token": "ACTED_IN"
-                }
-            ],
-            "nodeSpecs": [],
-            "relationshipSpecs": [
-                {
-                    "$id": "r1",
-                    "type": {
-                        "$ref": "#rt1"
-                    },
-                    "from": {
-                        "$ref": "#n1"
-                    },
-                    "to": {
-                        "$ref": "#n3"
-                    },
-                    "properties": [
-                        {
-                            "token": "role",
-                            "illegal-field": "illegal-field",
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "$id": "r2",
-                    "type": {
-                        "$ref": "#rt2"
-                    },
-                    "from": {
-                        "$ref": "#n2"
-                    },
-                    "to": {
-                        "$ref": "#n3"
-                    },
-                    "properties": [
-                        {
-                            "token": "role",
-                            "type": "string"
-                        }
-                    ]
-                }
-            ]
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "version": "1.0.0",
+      "nodeLabels": [
+        {
+          "$id": "l1",
+          "token": "Person"
         }
+      ],
+      "relationshipTypes": [
+        {
+          "$id": "rt1",
+          "token": "ACTED_IN"
+        }
+      ],
+      "nodeSpecs": [],
+      "relationshipSpecs": [
+        {
+          "$id": "r1",
+          "type": {
+            "type": {
+              "$ref": "#rt1"
+            }
+          },
+          "from": {
+            "$ref": "#n1"
+          },
+          "to": {
+            "$ref": "#n3"
+          },
+          "properties": [
+            {
+              "token": "role",
+              "illegal-field": "illegal-field",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "$id": "r2",
+          "type": {
+            "type": {
+              "$ref": "#rt2"
+            }
+          },
+          "from": {
+            "$ref": "#n2"
+          },
+          "to": {
+            "$ref": "#n3"
+          },
+          "properties": [
+            {
+              "token": "role",
+              "type": { "type": "string" }
+            }
+          ]
+        }
+      ]
     }
+  }
 }
