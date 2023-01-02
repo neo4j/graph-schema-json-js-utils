@@ -14,7 +14,7 @@
         "url": "git+https://github.com/Mewken/JSONSchema-Validation.git"
     },
     "author": "",
-    "license": "ISC",
+    "license": "Apache-2.0",
     "bugs": {
         "url": "https://github.com/Mewken/JSONSchema-Validation/issues"
     },
