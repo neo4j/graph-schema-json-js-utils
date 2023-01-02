@@ -8,6 +8,10 @@
     "test:watch": "vitest",
     "test": "vitest run --coverage"
   },
+  "files": [
+    "src",
+    "json-schema.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neo4j/graph-schema-json-js-utils.git"
