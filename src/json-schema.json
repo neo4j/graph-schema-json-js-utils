@@ -66,40 +66,7 @@
                       "required": ["$ref"]
                     }
                   },
-                  "properties": {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        { "$ref": "#/$defs/PropertyTypesArrayObject" },
-                        {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": ["token", "type"],
-                          "properties": {
-                            "token": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "oneOf": [
-                                {
-                                  "$ref": "#/$defs/PropertyTypes"
-                                },
-                                {
-                                  "type": "array",
-                                  "items": {
-                                    "oneOf": [
-                                      { "$ref": "#/$defs/PropertyTypes" },
-                                      { "$ref": "#/$defs/PropertyTypesArray" }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
+                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
                 },
                 "additionalProperties": false,
                 "required": ["$id", "labels", "properties"]
@@ -144,40 +111,7 @@
                       }
                     }
                   },
-                  "properties": {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        { "$ref": "#/$defs/PropertyTypesArrayObject" },
-                        {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": ["token", "type"],
-                          "properties": {
-                            "token": {
-                              "type": "string"
-                            },
-                            "type": {
-                              "oneOf": [
-                                {
-                                  "$ref": "#/$defs/PropertyTypes"
-                                },
-                                {
-                                  "type": "array",
-                                  "items": {
-                                    "oneOf": [
-                                      { "$ref": "#/$defs/PropertyTypes" },
-                                      { "$ref": "#/$defs/PropertyTypesArray" }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      ]
-                    }
-                  }
+                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
                 },
                 "additionalProperties": false,
                 "required": ["$id", "type", "from", "to", "properties"]
@@ -198,6 +132,43 @@
   "additionalProperties": false,
   "required": ["graphSchemaRepresentation"],
   "$defs": {
+    "PropertyTypesOneOf": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/PropertyTypesArrayObject"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["token", "type"],
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "mandatory": { "type": "boolean" },
+              "type": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/PropertyTypes"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        { "$ref": "#/$defs/PropertyTypes" },
+                        { "$ref": "#/$defs/PropertyTypesArray" }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
     "PropertyTypesArray": {
       "type": "object",
       "required": ["items", "type"],
@@ -221,7 +192,8 @@
         },
         "type": {
           "$ref": "#/$defs/PropertyTypesArray"
-        }
+        },
+        "mandatory": { "type": "boolean" }
       }
     },
     "PropertyTypes": {
