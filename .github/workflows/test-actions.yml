@@ -9,13 +9,13 @@ on:
 jobs:
   test:
   
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
   
-  strategy:
-    matrix:
-      node-version: [18.x, 19.x]
+    strategy:
+      matrix:
+        node-version: [18.x, 19.x]
       
-  steps:
+    steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
