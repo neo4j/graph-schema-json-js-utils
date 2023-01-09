@@ -2,6 +2,11 @@ import Ajv from "ajv";
 
 const ajv = new Ajv({ strict: false, allErrors: true });
 
+/**
+ *
+ * @type {import ("./types").ValidateSchemaFunction}
+ *
+ */
 export function validateSchema(jsonSchema, graphSchema) {
   const validate = ajv.compile(jsonSchema);
   const result = validate(graphSchema);
@@ -12,10 +17,17 @@ export function validateSchema(jsonSchema, graphSchema) {
 }
 
 export class SchemaValidationError extends Error {
+  /**
+   * @type {string[]}
+   */
   messages = [];
-  constructor(messages) {
-    super(messages);
-    this.messages = messages;
+
+  /**
+   * @param {string[]} inputMessages
+   */
+  constructor(inputMessages) {
+    super(inputMessages);
+    this.messages = inputMessages;
     this.name = "SchemaValidationError";
   }
 }
