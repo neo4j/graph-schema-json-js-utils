@@ -11,9 +11,6 @@
         "graphSchema": {
           "type": "object",
           "properties": {
-            "version": {
-              "type": "string"
-            },
             "nodeLabels": {
               "type": "array",
               "items": {

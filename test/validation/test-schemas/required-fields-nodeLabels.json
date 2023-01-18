@@ -2,7 +2,6 @@
   "graphSchemaRepresentation": {
     "version": "1.0.1",
     "graphSchema": {
-      "version": "1.0.0",
       "nodeLabels": [{}],
       "relationshipTypes": [],
       "nodeObjectTypes": [
@@ -24,10 +23,9 @@
       "relationshipObjectTypes": [
         {
           "$id": "r1",
-       
-            "type": {
-              "$ref": "#rt1"
-            
+
+          "type": {
+            "$ref": "#rt1"
           },
           "from": {
             "$ref": "#n1"

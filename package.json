@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test:watch": "vitest",
-    "test": "vitest run --coverage"
+    "test": "vitest run"
   },
   "files": [
     "src",

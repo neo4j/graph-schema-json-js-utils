@@ -1,12 +1,11 @@
 {
-    "graphSchemaRepresentation": {
-        "version": "1.0.1",
-        "graphSchema": {
-            "version": "1.0.0",
-            "nodeLabels": [],
-            "relationshipTypes": [],
-            "nodeObjectTypes": [{}],
-            "relationshipObjectTypes": []
-        }
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [{}],
+      "relationshipObjectTypes": []
     }
+  }
 }
