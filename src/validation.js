@@ -18,7 +18,16 @@ export function validateSchema(jsonSchema, graphSchema) {
     throw new InputTypeError("Cannot JSON.parse JSON schema input");
   }
 
-  const graphSchemaObj = JSON.parse(graphSchema);
+  if (typeof graphSchema !== "string") {
+    throw new InputTypeError("Graph schema should be a string");
+  }
+
+  let graphSchemaObj;
+  try {
+    graphSchemaObj = JSON.parse(graphSchema);
+  } catch (_) {
+    throw new InputTypeError("Cannot JSON.parse graph schema input");
+  }
 
   const validate = ajv.compile(jsonSchemaObj);
   const result = validate(graphSchemaObj);
