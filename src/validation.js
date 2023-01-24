@@ -15,9 +15,7 @@ export function validateSchema(jsonSchema, graphSchema) {
   try {
     jsonSchemaObj = JSON.parse(jsonSchema);
   } catch (_) {
-
     throw new InputTypeError("Cannot JSON.parse JSON schema input");
-
   }
 
   const graphSchemaObj = JSON.parse(graphSchema);
@@ -48,6 +46,9 @@ export class SchemaValidationError extends Error {
 }
 
 export class InputTypeError extends Error {
+  /**
+   * @param {string} message
+   */
   constructor(message) {
     super(message);
     this.name = "InputTypeError";
