@@ -6,7 +6,10 @@ import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-const JSON_SCHEMA_FILE = path.resolve(__dirname, "../../json-schema.json");
+const JSON_SCHEMA_FILE = path.resolve(
+  __dirname,
+  "../../../json-schema/json-schema.json"
+);
 const JSON_SCHEMA = readFile(JSON_SCHEMA_FILE);
 
 // Happy path == schemas we expect to pass
