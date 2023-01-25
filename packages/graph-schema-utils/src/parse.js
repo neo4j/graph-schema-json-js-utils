@@ -1,4 +1,26 @@
 /**
+ * @typedef {Object} PropertyBaseType
+ * @property {string} type
+ */
+
+/**
+ * @typedef {Object} PropertyArrayType
+ * @property {"array"} type
+ * @property {PropertyBaseType} items
+ */
+
+/**
+ * @typedef {PropertyBaseType | PropertyArrayType} PropertyType
+ */
+
+/**
+ * @typedef {Object} Property
+ * @property {string} token
+ * @property {PropertyType} type
+ * @property {boolean} [mandatory]
+ */
+
+/**
  * @typedef {Object} NodeLabel
  * @property {string} id
  * @property {string} token
@@ -14,16 +36,16 @@
  * @typedef {Object} NodeObjectType
  * @property {string} id
  * @property {NodeLabel[]} labels
- * @property {*} properties
+ * @property {Property[]} properties
  */
 
 /**
  * @typedef {Object} RelationshipObjectType
  * @property {string} id
  * @property {RelationshipType} type
- * @property {NodeLabel} from
- * @property {NodeLabel} to
- * @property {*} properties
+ * @property {NodeObjectType} from
+ * @property {NodeObjectType} to
+ * @property {Property[]} properties
  */
 
 /**
@@ -64,21 +86,21 @@ export function parseJson(jsonString) {
     const graphSchema = graphSchemaRepresentation.graphSchema;
     if (graphSchema) {
       result.graphSchema.nodeLabels = graphSchema.nodeLabels.map((nl) => ({
-        id: nl.$id,
+        $id: nl.$id,
         token: nl.token,
       }));
       result.graphSchema.relationshipTypes = graphSchema.relationshipTypes.map(
         (rt) => ({
-          id: rt.$id,
+          $id: rt.$id,
           token: rt.token,
         })
       );
       result.graphSchema.nodeObjectTypes = graphSchema.nodeObjectTypes.map(
         (not) => ({
-          id: not.$id,
+          $id: not.$id,
           labels: not.labels.map((l) =>
             result.graphSchema.nodeLabels.find(
-              (nl) => nl.id === l.$ref.substring(1)
+              (nl) => nl.$id === l.$ref.substring(1)
             )
           ),
           properties: not.properties,
@@ -86,14 +108,16 @@ export function parseJson(jsonString) {
       );
       result.graphSchema.relationshipObjectTypes =
         graphSchema.relationshipObjectTypes.map((rot) => ({
-          id: rot.$id,
+          $id: rot.$id,
           type: result.graphSchema.relationshipTypes.find(
-            (rt) => rt.id === rot.type.$ref
+            (rt) => rt.$id === rot.type.$ref.substring(1)
           ),
-          from: result.graphSchema.nodeLabels.find(
-            (nl) => nl.id === rot.from.$ref
+          from: result.graphSchema.nodeObjectTypes.find(
+            (nl) => nl.$id === rot.from.$ref.substring(1)
           ),
-          to: result.graphSchema.nodeLabels.find((nl) => nl.id === rot.to.$ref),
+          to: result.graphSchema.nodeObjectTypes.find(
+            (nl) => nl.$id === rot.to.$ref.substring(1)
+          ),
           properties: rot.properties,
         }));
     }
