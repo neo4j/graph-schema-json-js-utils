@@ -9,8 +9,7 @@
     "test": "vitest run"
   },
   "files": [
-    "src",
-    "json-schema.json"
+    "src"
   ],
   "repository": {
     "type": "git",
