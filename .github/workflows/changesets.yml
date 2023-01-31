@@ -31,7 +31,6 @@ jobs:
       - run: changeset version
       - run: changeset release
       
-    steps:
       - name: Git push changes back to origin
         run: git push && git push --tags
       
