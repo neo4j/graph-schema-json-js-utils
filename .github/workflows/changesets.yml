@@ -27,6 +27,12 @@ jobs:
         uses: changesets/action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - run: changeset version
       - run: changeset release
+      
+    steps:
+      - git push: 
+      - git push: --tags
+      
       
