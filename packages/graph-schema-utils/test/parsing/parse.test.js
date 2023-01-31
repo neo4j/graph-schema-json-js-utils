@@ -3,7 +3,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
-import { parseJson } from "../../src/parse.js";
+import { model } from "../../src";
 
 const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
@@ -12,7 +12,7 @@ describe("Parser tests", () => {
     path.resolve(__dirname, "./test-schemas/full.json")
   );
   test("Can parse a graph schema and bind references", () => {
-    const parsed = parseJson(fullSchema);
+    const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
 
     // root fields
     assert.strictEqual(parsed.version, "1.0.1");
