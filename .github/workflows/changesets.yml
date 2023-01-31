@@ -32,7 +32,7 @@ jobs:
       - run: changeset release
       
     steps:
-      - git push: 
-      - git push: --tags
+      - name: Git push changes back to origin
+        run: git push && git push --tags
       
       
