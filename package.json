@@ -18,5 +18,8 @@
   "homepage": "https://github.com/neo4j/graph-schema-json-js-utils#readme",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0"
+  }
 }
