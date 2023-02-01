@@ -1,4 +1,4 @@
-name: Changesets
+name: Release
 
 on: workflow_dispatch
 
@@ -6,7 +6,7 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
-    name: Changesets
+    name: Release
     runs-on: ubuntu-latest
     
     steps:
