@@ -1,0 +1,25 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:1",
+          "labels": [],
+          "properties": []
+        }
+      ],
+      "relationshipObjectTypes": [
+        {
+          "$id": "r:1",
+          "type": { "$ref": "#NOT_EXISTENT" },
+          "from": { "$ref": "#n:1" },
+          "to": { "$ref": "#n:1" },
+          "properties": []
+        }
+      ]
+    }
+  }
+}

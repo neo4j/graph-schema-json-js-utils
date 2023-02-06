@@ -178,6 +178,10 @@ export class NodeObjectType {
     this.properties = properties;
   }
   toJsonStruct() {
+    const brokenLabels = this.labels.filter((label) => !label);
+    if (brokenLabels.length > 0) {
+      throw new Error("Not all labels are defined");
+    }
     return {
       $id: this.$id,
       labels: this.labels.map((label) => label.toRef()),
@@ -207,6 +211,15 @@ export class RelationshipObjectType {
     this.properties = properties;
   }
   toJsonStruct() {
+    if (!this.type) {
+      throw new Error("RelationshipObjectType.type is not defined");
+    }
+    if (!this.from) {
+      throw new Error("RelationshipObjectType.from is not defined");
+    }
+    if (!this.to) {
+      throw new Error("RelationshipObjectType.to is not defined");
+    }
     return {
       $id: this.$id,
       type: this.type.toRef(),
