@@ -12,6 +12,7 @@ describe("Parser tests", () => {
     path.resolve(__dirname, "./test-schemas/full.json")
   );
   test("Can parse a graph schema and bind references", () => {
+    const rawParsed = JSON.parse(fullSchema);
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
 
     // root fields
@@ -37,6 +38,15 @@ describe("Parser tests", () => {
     assert.strictEqual(
       parsed.graphSchema.nodeObjectTypes[0].labels[0].token,
       "Person"
+    );
+    // handles array of types
+    assert.deepEqual(
+      // the map here is just to make it a plain object to pass the comparison
+      parsed.graphSchema.nodeObjectTypes[0].properties[0].type.map((pbt) => ({
+        ...pbt,
+      })),
+      rawParsed.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0]
+        .properties[0].type
     );
 
     // relationship object types, connected to relationship types and from/to nodes -> label
@@ -72,5 +82,37 @@ describe("Parser tests", () => {
       parsed.graphSchema.relationshipObjectTypes[0].to.labels[0],
       parsed.graphSchema.nodeLabels[3]
     );
+  });
+  test("throws if label referece is not found", () => {
+    const schema = JSON.parse(fullSchema);
+    schema.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0].labels[0].$ref =
+      "NON_EXISTING_LABEL";
+    assert.throws(() => {
+      model.GraphSchemaRepresentation.parseJson(JSON.stringify(schema));
+    }, new Error("Not all label references are defined"));
+  });
+  test("throws if type referece is not found", () => {
+    const schema = JSON.parse(fullSchema);
+    schema.graphSchemaRepresentation.graphSchema.relationshipObjectTypes[0].type.$ref =
+      "NON_EXISTING_TYPE";
+    assert.throws(() => {
+      model.GraphSchemaRepresentation.parseJson(JSON.stringify(schema));
+    }, new Error("Not all relationship type references are defined"));
+  });
+  test("throws if from referece is not found", () => {
+    const schema = JSON.parse(fullSchema);
+    schema.graphSchemaRepresentation.graphSchema.relationshipObjectTypes[0].from.$ref =
+      "NON_EXISTING_NODE";
+    assert.throws(() => {
+      model.GraphSchemaRepresentation.parseJson(JSON.stringify(schema));
+    }, new Error("Not all node object type references in from are defined"));
+  });
+  test("throws if to referece is not found", () => {
+    const schema = JSON.parse(fullSchema);
+    schema.graphSchemaRepresentation.graphSchema.relationshipObjectTypes[0].to.$ref =
+      "NON_EXISTING_NODE";
+    assert.throws(() => {
+      model.GraphSchemaRepresentation.parseJson(JSON.stringify(schema));
+    }, new Error("Not all node object type references in to are defined"));
   });
 });
