@@ -55,41 +55,55 @@ describe("Programatic model tests", () => {
       relationshipObjectTypes
     );
 
-    assert.strictEqual(graphSchema.nodeLabels.length, 3);
-    assert.strictEqual(graphSchema.relationshipTypes.length, 3);
-    assert.strictEqual(graphSchema.nodeObjectTypes.length, 3);
-    assert.strictEqual(graphSchema.relationshipObjectTypes.length, 3);
-    assert.strictEqual(graphSchema.nodeObjectTypes[0].labels[0].$id, "l1");
+    const gRep = new model.GraphSchemaRepresentation("1.0.1", graphSchema);
+
+    assert.strictEqual(gRep.graphSchema.nodeLabels.length, 3);
+    assert.strictEqual(gRep.graphSchema.relationshipTypes.length, 3);
+    assert.strictEqual(gRep.graphSchema.nodeObjectTypes.length, 3);
+    assert.strictEqual(gRep.graphSchema.relationshipObjectTypes.length, 3);
+    assert.strictEqual(gRep.graphSchema.nodeObjectTypes[0].labels[0].$id, "l1");
     assert.strictEqual(
-      graphSchema.nodeObjectTypes[0].labels[0],
-      graphSchema.nodeLabels[0]
-    );
-    assert.strictEqual(graphSchema.nodeObjectTypes[0].properties.length, 1);
-    assert.strictEqual(
-      graphSchema.nodeObjectTypes[0].properties[0].token,
-      "name"
-    );
-    assert.strictEqual(graphSchema.relationshipObjectTypes[0].type.$id, "rt1");
-    assert.strictEqual(graphSchema.relationshipObjectTypes[0].from.$id, "n1");
-    assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].from,
-      nodeObjectTypes[0]
-    );
-    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.$id, "n2");
-    assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].to,
-      nodeObjectTypes[1]
+      gRep.graphSchema.nodeObjectTypes[0].labels[0],
+      gRep.graphSchema.nodeLabels[0]
     );
     assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].properties.length,
+      gRep.graphSchema.nodeObjectTypes[0].properties.length,
       1
     );
     assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].properties[0].token,
+      gRep.graphSchema.nodeObjectTypes[0].properties[0].token,
+      "name"
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].type.$id,
+      "rt1"
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].from.$id,
+      "n1"
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].from,
+      nodeObjectTypes[0]
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].to.$id,
+      "n2"
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].to,
+      nodeObjectTypes[1]
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].properties.length,
+      1
+    );
+    assert.strictEqual(
+      gRep.graphSchema.relationshipObjectTypes[0].properties[0].token,
       "roles"
     );
     assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].properties[0].type.type,
+      gRep.graphSchema.relationshipObjectTypes[0].properties[0].type.type,
       "array"
     );
   });
