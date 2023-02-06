@@ -73,7 +73,7 @@
         {
           "$id": "r:DIRECTED",
           "type": { "$ref": "#rt:DIRECTED" },
-          "from": { "$ref": "#n:Actor:Director" },
+          "from": { "$ref": "#n:Director:Person" },
           "to": { "$ref": "#n:Movie" },
           "properties": []
         }

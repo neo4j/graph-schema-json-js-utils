@@ -7,6 +7,16 @@ export class GraphSchemaRepresentation {
     this.version = version;
     this.graphSchema = graphSchema;
   }
+
+  toJson() {
+    return JSON.stringify({
+      graphSchemaRepresentation: {
+        version: this.version,
+        graphSchema: this.graphSchema.toJsonStruct(),
+      },
+    });
+  }
+
   static parseJson(jsonString) {
     const json = JSON.parse(jsonString);
     const version = json.graphSchemaRepresentation.version;
@@ -35,6 +45,21 @@ export class GraphSchema {
     this.nodeObjectTypes = nodeObjectTypes;
     this.relationshipObjectTypes = relationshipObjectTypes;
   }
+  toJsonStruct() {
+    return {
+      nodeLabels: this.nodeLabels.map((nodeLabel) => nodeLabel.toJsonStruct()),
+      relationshipTypes: this.relationshipTypes.map((relationshipType) =>
+        relationshipType.toJsonStruct()
+      ),
+      nodeObjectTypes: this.nodeObjectTypes.map((nodeObjectType) =>
+        nodeObjectType.toJsonStruct()
+      ),
+      relationshipObjectTypes: this.relationshipObjectTypes.map(
+        (relationshipObjectType) => relationshipObjectType.toJsonStruct()
+      ),
+    };
+  }
+
   static fromJsonStruct(json) {
     const nodeLabels = json.nodeLabels.map(
       (nodeLabel) => new NodeLabel(nodeLabel.$id, nodeLabel.token)
@@ -106,6 +131,17 @@ export class NodeLabel {
     this.$id = id;
     this.token = token;
   }
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      token: this.token,
+    };
+  }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
+  }
 }
 
 export class RelationshipType {
@@ -116,6 +152,17 @@ export class RelationshipType {
   constructor(id, token) {
     this.$id = id;
     this.token = token;
+  }
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      token: this.token,
+    };
+  }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
   }
 }
 
@@ -129,6 +176,18 @@ export class NodeObjectType {
     this.$id = id;
     this.labels = labels;
     this.properties = properties;
+  }
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      labels: this.labels.map((label) => label.toRef()),
+      properties: this.properties.map((property) => property.toJsonStruct()),
+    };
+  }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
   }
 }
 
@@ -146,6 +205,15 @@ export class RelationshipObjectType {
     this.from = from;
     this.to = to;
     this.properties = properties;
+  }
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      type: this.type.toRef(),
+      from: this.from.toRef(),
+      to: this.to.toRef(),
+      properties: this.properties.map((property) => property.toJsonStruct()),
+    };
   }
 }
 
@@ -167,6 +235,16 @@ export class Property {
     this.type = type;
     this.mandatory = mandatory;
   }
+  toJsonStruct() {
+    const typeVal = Array.isArray(this.type)
+      ? this.type.map((t) => t.toJsonStruct())
+      : this.type.toJsonStruct();
+    return {
+      type: typeVal,
+      token: this.token,
+      mandatory: this.mandatory,
+    };
+  }
 }
 
 export class PropertyBaseType {
@@ -178,6 +256,11 @@ export class PropertyBaseType {
    */
   constructor(type) {
     this.type = type;
+  }
+  toJsonStruct() {
+    return {
+      type: this.type,
+    };
   }
 }
 
@@ -191,10 +274,19 @@ export class PropertyArrayType {
     this.type = "array";
     this.items = items;
   }
+  toJsonStruct() {
+    return {
+      type: this.type,
+      items: this.items,
+    };
+  }
 }
 
 export class PropertyType {
   static fromJsonStruct(json) {
+    if (Array.isArray(json)) {
+      return json.map((item) => PropertyType.fromJsonStruct(item));
+    }
     if (json.type === "array") {
       return new PropertyArrayType(json.items);
     }
