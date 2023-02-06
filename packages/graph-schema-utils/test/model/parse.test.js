@@ -12,6 +12,7 @@ describe("Parser tests", () => {
     path.resolve(__dirname, "./test-schemas/full.json")
   );
   test("Can parse a graph schema and bind references", () => {
+    const rawParsed = JSON.parse(fullSchema);
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
 
     // root fields
@@ -37,6 +38,15 @@ describe("Parser tests", () => {
     assert.strictEqual(
       parsed.graphSchema.nodeObjectTypes[0].labels[0].token,
       "Person"
+    );
+    // handles array of types
+    assert.deepEqual(
+      // the map here is just to make it a plain object to pass the comparison
+      parsed.graphSchema.nodeObjectTypes[0].properties[0].type.map((pbt) => ({
+        ...pbt,
+      })),
+      rawParsed.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0]
+        .properties[0].type
     );
 
     // relationship object types, connected to relationship types and from/to nodes -> label
