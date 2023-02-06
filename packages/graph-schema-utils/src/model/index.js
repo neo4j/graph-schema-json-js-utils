@@ -68,41 +68,60 @@ export class GraphSchema {
       (relationshipType) =>
         new RelationshipType(relationshipType.$id, relationshipType.token)
     );
-    const nodeObjectTypes = json.nodeObjectTypes.map(
-      (nodeObjectType) =>
-        new NodeObjectType(
-          nodeObjectType.$id,
-          nodeObjectType.labels.map((label) =>
-            nodeLabels.find(
-              (nodeLabel) => nodeLabel.$id === label.$ref.slice(1)
-            )
-          ),
-          nodeObjectType.properties.map(
-            (property) =>
-              new Property(
-                property.token,
-                PropertyType.fromJsonStruct(property.type),
-                property.mandatory
-              )
-          )
+    const nodeObjectTypes = json.nodeObjectTypes.map((nodeObjectType) => {
+      const labels = nodeObjectType.labels
+        .map((label) =>
+          nodeLabels.find((nodeLabel) => nodeLabel.$id === label.$ref.slice(1))
         )
-    );
+        .filter((label) => label);
+      if (labels.length !== nodeObjectType.labels.length) {
+        throw new Error("Not all label references are defined");
+      }
+      return new NodeObjectType(
+        nodeObjectType.$id,
+        labels,
+        nodeObjectType.properties.map(
+          (property) =>
+            new Property(
+              property.token,
+              PropertyType.fromJsonStruct(property.type),
+              property.mandatory
+            )
+        )
+      );
+    });
     const relationshipObjectTypes = json.relationshipObjectTypes.map(
-      (relationshipObjectType) =>
-        new RelationshipObjectType(
+      (relationshipObjectType) => {
+        const type = relationshipTypes.find(
+          (relationshipType) =>
+            relationshipType.$id === relationshipObjectType.type.$ref.slice(1)
+        );
+        if (!type) {
+          throw new Error("Not all relationship type references are defined");
+        }
+        const from = nodeObjectTypes.find(
+          (nodeObjectType) =>
+            nodeObjectType.$id === relationshipObjectType.from.$ref.slice(1)
+        );
+        if (!from) {
+          throw new Error(
+            "Not all node object type references in from are defined"
+          );
+        }
+        const to = nodeObjectTypes.find(
+          (nodeObjectType) =>
+            nodeObjectType.$id === relationshipObjectType.to.$ref.slice(1)
+        );
+        if (!to) {
+          throw new Error(
+            "Not all node object type references in to are defined"
+          );
+        }
+        return new RelationshipObjectType(
           relationshipObjectType.$id,
-          relationshipTypes.find(
-            (relationshipType) =>
-              relationshipType.$id === relationshipObjectType.type.$ref.slice(1)
-          ),
-          nodeObjectTypes.find(
-            (nodeObjectType) =>
-              nodeObjectType.$id === relationshipObjectType.from.$ref.slice(1)
-          ),
-          nodeObjectTypes.find(
-            (nodeObjectType) =>
-              nodeObjectType.$id === relationshipObjectType.to.$ref.slice(1)
-          ),
+          type,
+          from,
+          to,
           relationshipObjectType.properties.map(
             (property) =>
               new Property(
@@ -111,7 +130,8 @@ export class GraphSchema {
                 property.mandatory
               )
           )
-        )
+        );
+      }
     );
     return new GraphSchema(
       nodeLabels,
