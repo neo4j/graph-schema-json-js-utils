@@ -4,7 +4,8 @@
   "private": "true",
   "description": "Monorepo for Graph Schema JSON Utils",
   "scripts": {
-    "test": "npm run test --workspaces"
+    "test": "npm run test --workspaces",
+    "changeset": "changeset"
   },
   "repository": {
     "type": "git",
