@@ -21,10 +21,15 @@ jobs:
       - name: Install Dependencies
         run: npm ci
           
-      - run: changeset version
-      - run: changeset release
+      - name: Bump version
+        run: |
+          npm run changeset version
+          git add . && git commit -am "Version bump"
+
+      - name: Publish to npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm run changeset publish
       
       - name: Git push changes back to origin
         run: git push && git push --tags
-      
-      
