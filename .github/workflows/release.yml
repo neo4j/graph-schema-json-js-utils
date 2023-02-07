@@ -20,6 +20,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Configure git
+        run: |
+          git config --global user.email "team-nx@neo4j.com"
+          git config --global user.name "GitHub Action Automation"
           
       - name: Bump version
         run: |
