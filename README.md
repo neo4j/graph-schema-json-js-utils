@@ -20,7 +20,7 @@ The file contains of the description against which the graph schema will be vali
 ## The validation 
 This function is needed to perform a validation on a graph schema. The validateSchema function compares the output against the JSON schema. 
 ```js
-import { SchemaValidationError, validateSchema } from "../../src/index.js";
+import { validateSchema } from "@neo4j/graph-schema-utils";
 ```
 
 The SchemaValidationError class captures the error message that occurs if an error is detected during validation.
@@ -31,9 +31,9 @@ export function validateSchema(jsonSchema, graphSchema)
 ## Parser
 Since the references in the JSON document are references by id:s, there's a parser utility that hydrates the references and makes it easy to work with the schema.
 ```js
-import { model } from "../../src";
+import { model } from "@neo4j/graph-schema-utils";
 
-const parsed = model.GraphSchemaRepresentation.parseJson(myModel);
+const parsed = model.GraphSchemaRepresentation.parseJson(graphSchemaJsonString);
 ```
 
 ## Serializer
@@ -43,7 +43,9 @@ const serialized = myModel.toJson();
 ```
 
 ## Run test
-```npm run test ``` 
-Run ```npm run test:watch``` to let the test watch the users file changes live.
+```
+npm run test 
+``` 
+Run `npm run test:watch` to let the test watch the users file changes live.
 
  
