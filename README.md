@@ -12,12 +12,13 @@ There are two parts to this repo:
 2. Utility functions that help the consumers to validate and work with a graph schema. 
 
 ### JSON-schema
-The JSON that describes the shape of a graph schema is available in the source code (`packages/json-schema/json-schema.js`) and published on: https://dist.neo4j.org/json-graph-schema/
+The JSON that describes the shape of a graph schema is available in the source code (`packages/json-schema/json-schema.json`) and published on: https://dist.neo4j.org/json-graph-schema/
 
 ### Validate 
 This function is needed to perform a validation on a graph schema. The validateSchema function compares the output against the JSON schema. 
 ```js
 import { validateSchema } from "@neo4j/graph-schema-utils";
+
 validateSchema(jsonSchema, graphSchema) 
 ```
 
