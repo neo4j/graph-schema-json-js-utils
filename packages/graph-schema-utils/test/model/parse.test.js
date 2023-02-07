@@ -1,11 +1,8 @@
 import { strict as assert } from "node:assert";
-import { fileURLToPath } from "url";
 import path from "path";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 import { model } from "../../src";
-
-const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
 
 describe("Parser tests", () => {
   const fullSchema = readFile(

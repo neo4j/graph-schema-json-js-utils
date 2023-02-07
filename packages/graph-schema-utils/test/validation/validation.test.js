@@ -5,13 +5,12 @@ import { validateSchema } from "../../src/index.js";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 import { InputTypeError } from "../../src/validation.js";
+import { createRequire } from "module";
 
-const __dirname = path.dirname(fileURLToPath(new URL(import.meta.url)));
-const JSON_SCHEMA_FILE = path.resolve(
-  __dirname,
-  "../../../json-schema/json-schema.json"
+const require = createRequire(import.meta.url);
+const JSON_SCHEMA = JSON.stringify(
+  require("@neo4j/graph-json-schema/json-schema.json")
 );
-const JSON_SCHEMA = readFile(JSON_SCHEMA_FILE);
 
 describe("Validate if JSON-documen is a string", () => {
   const NON_STRING = 11;
