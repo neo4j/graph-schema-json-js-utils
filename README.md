@@ -11,8 +11,6 @@ There are two parts to this repo:
 1. A JSON schema that describes how a graph schema should be expressed in JSON.
 2. Utility functions that help the consumers to validate and work with a graph schema. 
 
-This allows the user to validate a graph schema to see if it follows the correct graph specification. The result is displayed in the form of a JSON schema, which should also be able to be translated into a .js object and into a JSON string.
-
 ## Use
 json-schema.json
 The file contains of the description against which the graph schema will be validated. The JSON schema serves as a template or as the structure that the graph schema is expected to have.
@@ -47,5 +45,3 @@ const serialized = myModel.toJson();
 npm run test 
 ``` 
 Run `npm run test:watch` to let the test watch the users file changes live.
-
- 
