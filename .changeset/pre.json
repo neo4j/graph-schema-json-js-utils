@@ -5,5 +5,8 @@
     "@neo4j/graph-schema-utils": "0.0.1",
     "@neo4j/graph-json-schema": "1.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "friendly-masks-punch",
+    "rude-camels-speak"
+  ]
 }
