@@ -21,14 +21,14 @@
   },
   "homepage": "https://github.com/neo4j/graph-schema-json-js-utils#readme",
   "dependencies": {
-    "ajv": "^8.11.0",
-    "@neo4j/graph-json-schema": "*"
+    "ajv": "^8.11.0"
   },
   "keywords": [
     "graph schema"
   ],
   "devDependencies": {
     "@vitest/coverage-c8": "^0.25.3",
-    "vitest": "^0.25.3"
+    "vitest": "^0.25.3",
+    "@neo4j/graph-json-schema": "*"
   }
 }
