@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.1
+
+### Patch Changes
+
+- 62f0601: Move JSON-schema to devDep.
+
 ## 1.0.0-next.0
 
 ### Major Changes

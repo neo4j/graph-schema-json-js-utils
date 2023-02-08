@@ -6,6 +6,7 @@
     "@neo4j/graph-json-schema": "1.0.0"
   },
   "changesets": [
+    "bright-eels-sniff",
     "friendly-masks-punch",
     "rude-camels-speak"
   ]
