@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- 5eb1d0c: Convert to typescript
+
 ## 1.0.0-next.1
 
 ### Patch Changes
