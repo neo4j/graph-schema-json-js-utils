@@ -109,3 +109,11 @@ To watch for changes and run tests on change:
 ```bash
 npm run test:watch
 ```
+
+### Build
+
+To build the TypeScript:
+
+```bash
+npm run build
+```
