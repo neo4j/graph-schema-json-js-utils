@@ -1,9 +1,8 @@
 export class GraphSchemaRepresentation {
-  /**
-   * @param {string} version
-   * @param {GraphSchema} graphSchema
-   */
-  constructor(version, graphSchema) {
+  version: string;
+  graphSchema: GraphSchema;
+
+  constructor(version: string, graphSchema: GraphSchema) {
     this.version = version;
     this.graphSchema = graphSchema;
   }
@@ -28,17 +27,16 @@ export class GraphSchemaRepresentation {
 }
 
 export class GraphSchema {
-  /**
-   * @param {NodeLabel[]} nodeLabels
-   * @param {RelationshipType[]} relationshipTypes
-   * @param {NodeObjectType[]} nodeObjectTypes
-   * @param {RelationshipObjectType[]} relationshipObjectTypes
-   */
+  nodeLabels: NodeLabel[];
+  relationshipTypes: RelationshipType[];
+  nodeObjectTypes: NodeObjectType[];
+  relationshipObjectTypes: RelationshipObjectType[];
+
   constructor(
-    nodeLabels,
-    relationshipTypes,
-    nodeObjectTypes,
-    relationshipObjectTypes
+    nodeLabels: NodeLabel[],
+    relationshipTypes: RelationshipType[],
+    nodeObjectTypes: NodeObjectType[],
+    relationshipObjectTypes: RelationshipObjectType[]
   ) {
     this.nodeLabels = nodeLabels;
     this.relationshipTypes = relationshipTypes;
@@ -143,11 +141,10 @@ export class GraphSchema {
 }
 
 export class NodeLabel {
-  /**
-   * @param {string} id
-   * @param {string} token
-   */
-  constructor(id, token) {
+  $id: string;
+  token: string;
+
+  constructor(id: string, token: string) {
     this.$id = id;
     this.token = token;
   }
@@ -165,11 +162,10 @@ export class NodeLabel {
 }
 
 export class RelationshipType {
-  /**
-   * @param {string} id
-   * @param {string} token
-   */
-  constructor(id, token) {
+  $id: string;
+  token: string;
+
+  constructor(id: string, token: string) {
     this.$id = id;
     this.token = token;
   }
@@ -187,12 +183,11 @@ export class RelationshipType {
 }
 
 export class NodeObjectType {
-  /**
-   * @param {string} id
-   * @param {NodeLabel[]} labels
-   * @param {Property[]} properties
-   */
-  constructor(id, labels, properties) {
+  $id: string;
+  labels: NodeLabel[];
+  properties: Property[];
+
+  constructor(id: string, labels: NodeLabel[], properties: Property[]) {
     this.$id = id;
     this.labels = labels;
     this.properties = properties;
@@ -216,14 +211,19 @@ export class NodeObjectType {
 }
 
 export class RelationshipObjectType {
-  /**
-   * @param {string} id
-   * @param {RelationshipType} type
-   * @param {NodeObjectType} from
-   * @param {NodeObjectType} to
-   * @param {Property[]} properties
-   */
-  constructor(id, type, from, to, properties) {
+  $id: string;
+  type: RelationshipType;
+  from: NodeObjectType;
+  to: NodeObjectType;
+  properties: Property[];
+
+  constructor(
+    id: string,
+    type: RelationshipType,
+    from: NodeObjectType,
+    to: NodeObjectType,
+    properties: Property[]
+  ) {
     this.$id = id;
     this.type = type;
     this.from = from;
@@ -251,19 +251,15 @@ export class RelationshipObjectType {
 }
 
 export class Property {
-  /** @type {string} */
-  token;
-  /** @type {PropertyBaseType | PropertyArrayType} */
-  type;
-  /** @type {boolean} */
-  mandatory;
+  token: string;
+  type: PropertyBaseType | PropertyArrayType;
+  mandatory: boolean;
 
-  /**
-   * @param {string} token
-   * @param {PropertyBaseType | PropertyArrayType} type
-   * @param {boolean} [mandatory]
-   */
-  constructor(token, type, mandatory) {
+  constructor(
+    token: string,
+    type: PropertyBaseType | PropertyArrayType,
+    mandatory: boolean
+  ) {
     this.token = token;
     this.type = type;
     this.mandatory = mandatory;
@@ -281,13 +277,8 @@ export class Property {
 }
 
 export class PropertyBaseType {
-  /** @type {PropertyTypes} */
-  type;
-
-  /**
-   * @param {PropertyTypes} type
-   */
-  constructor(type) {
+  type: PropertyTypes;
+  constructor(type: PropertyTypes) {
     this.type = type;
   }
   toJsonStruct() {
@@ -298,12 +289,10 @@ export class PropertyBaseType {
 }
 
 export class PropertyArrayType {
-  /** @type {PropertyBaseType} */
-  items;
-  /**
-   * @param {PropertyBaseType} items
-   */
-  constructor(items) {
+  items: PropertyBaseType;
+  type: "array";
+
+  constructor(items: PropertyBaseType) {
     this.type = "array";
     this.items = items;
   }
@@ -327,4 +316,15 @@ export class PropertyType {
   }
 }
 
-/** @typedef {"integer" | "string" | "float" | "boolean" | "point" | "date" | "datetime" | "time" | "localtime" | "localdatetime" | "duration"} PropertyTypes */
+type PropertyTypes =
+  | "integer"
+  | "string"
+  | "float"
+  | "boolean"
+  | "point"
+  | "date"
+  | "datetime"
+  | "time"
+  | "localtime"
+  | "localdatetime"
+  | "duration";

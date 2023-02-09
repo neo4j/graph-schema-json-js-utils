@@ -6,10 +6,11 @@
   "type": "module",
   "scripts": {
     "test:watch": "vitest",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build": "tsc"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",

@@ -1,13 +1,14 @@
-import Ajv from "ajv";
+import AjvModule from "ajv";
+
+// FIXME: https://github.com/ajv-validator/ajv/issues/2047
+const Ajv = AjvModule.default;
 
 const ajv = new Ajv({ strict: false, allErrors: true });
 
-/**
- *
- * @type {import ("./types").ValidateSchemaFunction}
- *
- */
-export function validateSchema(jsonSchema, graphSchema) {
+export function validateSchema(
+  jsonSchema: string,
+  graphSchema: string
+): boolean {
   if (typeof jsonSchema !== "string") {
     throw new InputTypeError("JSON schema should be a string");
   }
@@ -31,7 +32,6 @@ export function validateSchema(jsonSchema, graphSchema) {
 
   const validate = ajv.compile(jsonSchemaObj);
   const result = validate(graphSchemaObj);
-
   if (result !== true) {
     throw new SchemaValidationError(validate.errors);
   }
@@ -39,26 +39,19 @@ export function validateSchema(jsonSchema, graphSchema) {
 }
 
 export class SchemaValidationError extends Error {
-  /**
-   * @type {string[]}
-   */
-  messages = [];
+  messages: AjvModule.ErrorObject<string, Record<string, any>, unknown>[] = [];
 
-  /**
-   * @param {string[]} inputMessages
-   */
-  constructor(inputMessages) {
-    super(inputMessages);
+  constructor(
+    inputMessages: AjvModule.ErrorObject<string, Record<string, any>, unknown>[]
+  ) {
+    super(`See error.messages for details`);
     this.messages = inputMessages;
     this.name = "SchemaValidationError";
   }
 }
 
 export class InputTypeError extends Error {
-  /**
-   * @param {string} message
-   */
-  constructor(message) {
+  constructor(message: string) {
     super(message);
     this.name = "InputTypeError";
   }

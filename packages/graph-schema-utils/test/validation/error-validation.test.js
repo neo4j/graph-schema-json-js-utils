@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import path from "path";
-import { SchemaValidationError, validateSchema } from "../../src/index.js";
+import { SchemaValidationError, validateSchema } from "../../src/index.ts";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 import { createRequire } from "module";

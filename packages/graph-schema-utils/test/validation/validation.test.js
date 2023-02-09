@@ -1,10 +1,9 @@
 import { strict as assert } from "node:assert";
-import { fileURLToPath } from "url";
 import path from "path";
-import { validateSchema } from "../../src/index.js";
+import { validateSchema } from "../../src/index";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
-import { InputTypeError } from "../../src/validation.js";
+import { InputTypeError } from "../../src/validation";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
