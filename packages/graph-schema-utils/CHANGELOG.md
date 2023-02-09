@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- 47542b7: Update package config for better tooling discovery
+
 ## 1.0.0-next.2
 
 ### Patch Changes

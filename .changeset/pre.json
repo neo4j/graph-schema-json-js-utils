@@ -6,6 +6,7 @@
     "@neo4j/graph-json-schema": "1.0.0"
   },
   "changesets": [
+    "big-birds-arrive",
     "bright-eels-sniff",
     "cool-chefs-listen",
     "friendly-masks-punch",
