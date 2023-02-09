@@ -1,8 +1,15 @@
 {
   "name": "@neo4j/graph-schema-utils",
   "version": "1.0.0-next.2",
-  "description": "Utilities for the Neo4j Graph Schema JSON representation",
-  "module": "src/index.js",
+  "description": "Utilities for Neo4j Graph Schema JSON representation",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "type": "module",
   "scripts": {
     "test:watch": "vitest",
