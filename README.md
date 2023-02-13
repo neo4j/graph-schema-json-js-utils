@@ -59,8 +59,8 @@ const properties = [
 ];
 
 const nodeObjectTypes = [
-  new model.NodeObjectType("n1", [labels[0]], properties[0]), // (:Person {name}) node type
-  new model.NodeObjectType("n2", [labels[1]], properties[1]), // (:Movie {title}) node type
+  new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
+  new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
 ];
 
 const relationshipObjectTypes = [
@@ -70,7 +70,7 @@ const relationshipObjectTypes = [
     relationshipTypes[0],
     nodeObjectTypes[0],
     nodeObjectTypes[1],
-    properties[2]
+    [properties[2]]
   ),
 ];
 
