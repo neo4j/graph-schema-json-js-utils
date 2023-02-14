@@ -43,43 +43,43 @@ You can also create a schema model programatically.
 Example:
 
 ```js
-import { model } from "@neo4j/graph-schema-utils";
+import { model } from "@neo4j/graph-schema-utils"
 
 const labels = [
-  new model.NodeLabel("l1", "Person"),
-  new model.NodeLabel("l1", "Movie"),
-];
-
-const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
-
-const properties = [
-  new model.Property("name", new model.PropertyBaseType("string")),
-  new model.Property("title", new model.PropertyBaseType("string")),
-  new model.Property("roles", new model.PropertyArrayType("string")),
-];
-
-const nodeObjectTypes = [
-  new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
-  new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
-];
-
-const relationshipObjectTypes = [
-  // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
-  new model.RelationshipObjectType(
-    "r1",
-    relationshipTypes[0],
-    nodeObjectTypes[0],
-    nodeObjectTypes[1],
-    [properties[2]]
-  ),
-];
-
-const graphSchema = new model.GraphSchema(
-  labels,
-  relationshipTypes,
-  nodeObjectTypes,
-  relationshipObjectTypes
-);
+    new model.NodeLabel("l1", "Person"),
+    new model.NodeLabel("l1", "Movie"),
+  ];
+  
+  const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
+  
+  const properties = [
+    new model.Property("name", new model.PropertyBaseType("string"), true),
+    new model.Property("title", new model.PropertyBaseType("string"), true),
+    new model.Property("roles", new model.PropertyArrayType(new model.PropertyBaseType("string")), false),
+  ];
+  
+  const nodeObjectTypes = [
+    new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
+    new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
+  ];
+  
+  const relationshipObjectTypes = [
+    // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
+    new model.RelationshipObjectType(
+      "r1",
+      relationshipTypes[0],
+      nodeObjectTypes[0],
+      nodeObjectTypes[1],
+      [properties[2]]
+    ),
+  ];
+  
+  const graphSchema = new model.GraphSchema(
+    labels,
+    relationshipTypes,
+    nodeObjectTypes,
+    relationshipObjectTypes
+  );
 
 const myModel = new model.GraphSchemaRepresentation("1.0.0", graphSchema);
 ```
