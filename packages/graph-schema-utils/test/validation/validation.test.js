@@ -31,4 +31,5 @@ describe("Validate if JSON-documen is a string", () => {
     );
     assert.throws(() => validateSchema(JSON_SCHEMA, NON_JSON), InputTypeError);
   });
+  
 });

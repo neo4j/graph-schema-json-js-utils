@@ -258,11 +258,11 @@ export class Property {
   constructor(
     token: string,
     type: PropertyBaseType | PropertyArrayType,
-    mandatory: boolean
+    mandatory?: boolean
   ) {
     this.token = token;
     this.type = type;
-    this.mandatory = mandatory;
+    this.mandatory = mandatory || false;
   }
   toJsonStruct() {
     const typeVal = Array.isArray(this.type)
