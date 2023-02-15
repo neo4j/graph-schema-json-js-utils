@@ -142,7 +142,7 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["token", "type"],
+            "required": ["token", "type", "mandatory"],
             "properties": {
               "token": {
                 "type": "string"
@@ -186,7 +186,7 @@
     "PropertyTypesArrayObject": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["token", "type"],
+      "required": ["token", "type", "mandatory"],
       "properties": {
         "token": {
           "type": "string"

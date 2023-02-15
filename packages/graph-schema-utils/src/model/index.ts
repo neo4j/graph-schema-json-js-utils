@@ -267,7 +267,7 @@ export class Property {
   ) {
     this.token = token;
     this.type = type;
-    this.mandatory = mandatory;
+    this.mandatory = mandatory || false;
     this.$id = $id;
   }
   toJsonStruct() {
