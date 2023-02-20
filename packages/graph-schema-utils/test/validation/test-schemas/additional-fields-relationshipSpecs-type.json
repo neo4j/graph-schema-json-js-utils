@@ -33,6 +33,7 @@
           "properties": [
             {
               "token": "role",
+              "mandatory": false,
               "type": {
                 "type": "array",
                 "items": {
@@ -58,7 +59,8 @@
           "properties": [
             {
               "token": "role",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             }
           ]
         }

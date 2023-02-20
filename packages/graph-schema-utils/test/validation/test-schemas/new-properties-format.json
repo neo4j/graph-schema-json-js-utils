@@ -11,18 +11,21 @@
           "properties": [
             {
               "token": "primitive",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             },
             {
               "token": "many-primitive",
-              "type": [{ "type": "string" }, { "type": "integer" }]
+              "type": [{ "type": "string" }, { "type": "integer" }],
+              "mandatory": false
             },
             {
               "token": "primitive array",
               "type": {
                 "type": "array",
                 "items": { "type": "string" }
-              }
+              },
+              "mandatory": false
             },
             {
               "token": "primitive array + primitive",
@@ -32,7 +35,8 @@
                   "type": "array",
                   "items": { "type": "string" }
                 }
-              ]
+              ],
+              "mandatory": false
             }
           ]
         }

@@ -20,7 +20,8 @@
           "properties": [
             {
               "token": "name",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             }
           ]
         }
