@@ -25,7 +25,8 @@
           "properties": [
             {
               "token": "title",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             }
           ]
         }

@@ -1,3 +1,4 @@
+import { strict as assert} from "node:assert";
 import { describe, test } from "vitest";
 import { model } from "../../src";
 
@@ -17,9 +18,22 @@ describe("Validate 'mandatory' on properties", () => {
       new model.PropertyBaseType("string"),
       true
     );
-    //Skriv assurtions sen. 
-    console.log(notSetProp.mandatory); // should log "false"
+    //Skriv assurtions sen.
+    
+    assert.strictEqual(
+      notSetProp.mandatory, false
+    );
+
+    assert.strictEqual(
+      falseSetProp.mandatory, false
+    );
+
+    assert.strictEqual(
+      trueSetProp.mandatory, true
+    );
+
+    /*console.log(notSetProp.mandatory); // should log "false"
     console.log(falseSetProp.mandatory); // should log "false"
-    console.log(trueSetProp.mandatory); // should log "true"
+    console.log(trueSetProp.mandatory); // should log "true"*/
   });
 });

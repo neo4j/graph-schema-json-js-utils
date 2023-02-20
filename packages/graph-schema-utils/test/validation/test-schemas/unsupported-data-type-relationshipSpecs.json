@@ -20,7 +20,8 @@
           "properties": [
             {
               "token": "name",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             }
           ]
         }
@@ -47,7 +48,8 @@
                 "items": {
                   "type": "unsupporter-data-type-rel.specs"
                 }
-              }
+              },
+              "mandatory": false
             }
           ]
         }
