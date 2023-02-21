@@ -1,6 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, test } from "vitest";
-import { model } from "../../src";
+import { model } from "../../src/index.js";
+import { PropertyTypes } from "../../src/model/index.js";
 
 describe("Programatic model tests", () => {
   test("Can be created programatically", () => {
@@ -24,7 +25,10 @@ describe("Programatic model tests", () => {
     ];
 
     const actedInProperties = [
-      new model.Property("roles", new model.PropertyArrayType("string")),
+      new model.Property(
+        "roles",
+        new model.PropertyArrayType(new model.PropertyBaseType("string"))
+      ),
     ];
     const relationshipObjectTypes = [
       new model.RelationshipObjectType(
@@ -103,7 +107,10 @@ describe("Programatic model tests", () => {
       "roles"
     );
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties[0].type.type,
+      (
+        gRep.graphSchema.relationshipObjectTypes[0].properties[0]
+          .type as PropertyTypes
+      ).type,
       "array"
     );
   });

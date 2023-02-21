@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import path from "path";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
-import { model, validateSchema } from "../../src";
+import { model, validateSchema } from "../../src/index.js";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
@@ -30,6 +30,7 @@ describe("Serializer tests", () => {
 
   test("Throws if label refs aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    // @ts-ignore - we want to test this
     parsed.graphSchema.nodeObjectTypes[0].labels[0] = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -39,6 +40,7 @@ describe("Serializer tests", () => {
 
   test("Throws if type ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    // @ts-ignore - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].type = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -48,6 +50,7 @@ describe("Serializer tests", () => {
 
   test("Throws if from ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    // @ts-ignore - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].from = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -57,6 +60,7 @@ describe("Serializer tests", () => {
 
   test("Throws if to ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    // @ts-ignore - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].to = undefined;
     assert.throws(
       () => parsed.toJson(),

@@ -187,7 +187,7 @@ export class NodeObjectType {
   labels: NodeLabel[];
   properties: Property[];
 
-  constructor(id: string, labels: NodeLabel[], properties: Property[]) {
+  constructor(id: string, labels: NodeLabel[], properties: Property[] = []) {
     this.$id = id;
     this.labels = labels;
     this.properties = properties;
@@ -222,7 +222,7 @@ export class RelationshipObjectType {
     type: RelationshipType,
     from: NodeObjectType,
     to: NodeObjectType,
-    properties: Property[]
+    properties: Property[] = []
   ) {
     this.$id = id;
     this.type = type;
@@ -250,15 +250,16 @@ export class RelationshipObjectType {
   }
 }
 
+export type PropertyTypes = PropertyBaseType | PropertyArrayType;
 export class Property {
   token: string;
-  type: PropertyBaseType | PropertyArrayType;
-  mandatory: boolean;
+  type: PropertyTypes | PropertyTypes[];
+  mandatory: boolean | undefined;
 
   constructor(
     token: string,
     type: PropertyBaseType | PropertyArrayType,
-    mandatory: boolean
+    mandatory?: boolean
   ) {
     this.token = token;
     this.type = type;
@@ -268,17 +269,20 @@ export class Property {
     const typeVal = Array.isArray(this.type)
       ? this.type.map((t) => t.toJsonStruct())
       : this.type.toJsonStruct();
-    return {
+    const out = {
       type: typeVal,
       token: this.token,
-      mandatory: this.mandatory,
     };
+    if (this.mandatory !== undefined) {
+      out["mandatory"] = this.mandatory;
+    }
+    return out;
   }
 }
 
 export class PropertyBaseType {
-  type: PropertyTypes;
-  constructor(type: PropertyTypes) {
+  type: PrimitivePropertyTypes;
+  constructor(type: PrimitivePropertyTypes) {
     this.type = type;
   }
   toJsonStruct() {
@@ -316,7 +320,7 @@ export class PropertyType {
   }
 }
 
-type PropertyTypes =
+type PrimitivePropertyTypes =
   | "integer"
   | "string"
   | "float"
