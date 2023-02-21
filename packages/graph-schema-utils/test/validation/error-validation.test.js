@@ -300,8 +300,7 @@ describe("Validate type errors", () => {
     );
     assert.throws(
       () => validateSchema(JSON_SCHEMA, missingRequiredNodeLabels),
-      SchemaValidationError
-      
+      SchemaValidationError 
     );
     
     const NUM_MISSING_NODELABELS = 2;
@@ -359,7 +358,6 @@ describe("Validate type errors", () => {
       NUM_MISSING_NODESPECS_PROPERTIES
     );
     
-
     const missingRequiredPropertiesNodeSpecsRoot = readFile(
       path.resolve(
         __dirname,

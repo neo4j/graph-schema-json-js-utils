@@ -29,8 +29,11 @@
               ],
               "mandatory": false
             },
-            { "token": "name", "type": { "type": "string" },
-            "mandatory": false },
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "mandatory": false
+            },
             {
               "token": "born",
               "type": {
@@ -45,22 +48,37 @@
           "$id": "n:Director:Person",
           "labels": [{ "$ref": "#nl:Person" }, { "$ref": "#nl:Director" }],
           "properties": [
-            { "token": "id", "type": { "type": "string" },
-            "mandatory": false },
-            { "token": "name", "type": { "type": "string" },
-            "mandatory": false },
-            { "token": "born", "type": { "type": "integer" },
-            "mandatory": false }
+            {
+              "token": "id",
+              "type": { "type": "string" },
+              "mandatory": false
+            },
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "mandatory": false
+            },
+            {
+              "token": "born",
+              "type": { "type": "integer" },
+              "mandatory": false
+            }
           ]
         },
         {
           "$id": "n:Movie",
           "labels": [{ "$ref": "#nl:Movie" }],
           "properties": [
-            { "token": "title", "type": { "type": "string" },
-            "mandatory": false },
-            { "token": "release", "type": { "type": "date" },
-            "mandatory": false }
+            {
+              "token": "title",
+              "type": { "type": "string" },
+              "mandatory": false
+            },
+            {
+              "token": "release",
+              "type": { "type": "date" },
+              "mandatory": false
+            }
           ]
         }
       ],
@@ -75,7 +93,6 @@
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
               "mandatory": false
-
             }
           ]
         },
