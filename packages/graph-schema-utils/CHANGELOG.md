@@ -1,5 +1,12 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- 108665d: Fix TS errors on Property Types
+- cdf7455: Update README with programatical usage example and TS build instructions
+
 ## 1.0.0-next.3
 
 ### Patch Changes
