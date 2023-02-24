@@ -44,7 +44,11 @@
           "properties": [
             { "token": "id", "mandatory": false, "type": { "type": "string" } },
             { "token": "name", "type": { "type": "string" } },
-            { "token": "born", "type": { "type": "integer" } }
+            {
+              "$id": "born-property",
+              "token": "born",
+              "type": { "type": "integer" }
+            }
           ]
         },
         {

@@ -1,5 +1,5 @@
 import { strict as assert } from "node:assert";
-import { describe, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { model } from "../../src/index.js";
 import { PropertyTypes } from "../../src/model/index.js";
 
@@ -113,5 +113,35 @@ describe("Programatic model tests", () => {
       ).type,
       "array"
     );
+  });
+  test("Handles optional id:s on properties", () => {
+    const properties = [
+      new model.Property("name", new model.PropertyBaseType("string")),
+      new model.Property(
+        "age",
+        new model.PropertyBaseType("integer"),
+        true,
+        "test-id"
+      ),
+    ];
+    const serialized = properties.map((p) => p.toJsonStruct());
+    expect(serialized).toMatchInlineSnapshot(`
+      [
+        {
+          "token": "name",
+          "type": {
+            "type": "string",
+          },
+        },
+        {
+          "$id": "test-id",
+          "mandatory": true,
+          "token": "age",
+          "type": {
+            "type": "integer",
+          },
+        },
+      ]
+    `);
   });
 });

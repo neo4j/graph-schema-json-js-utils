@@ -83,7 +83,8 @@ export class GraphSchema {
             new Property(
               property.token,
               PropertyType.fromJsonStruct(property.type),
-              property.mandatory
+              property.mandatory,
+              property.$id
             )
         )
       );
@@ -125,7 +126,8 @@ export class GraphSchema {
               new Property(
                 property.token,
                 PropertyType.fromJsonStruct(property.type),
-                property.mandatory
+                property.mandatory,
+                property.$id
               )
           )
         );
@@ -255,15 +257,18 @@ export class Property {
   token: string;
   type: PropertyTypes | PropertyTypes[];
   mandatory: boolean | undefined;
+  $id: string | undefined;
 
   constructor(
     token: string,
     type: PropertyBaseType | PropertyArrayType,
-    mandatory?: boolean
+    mandatory?: boolean,
+    $id?: string
   ) {
     this.token = token;
     this.type = type;
     this.mandatory = mandatory;
+    this.$id = $id;
   }
   toJsonStruct() {
     const typeVal = Array.isArray(this.type)
@@ -275,6 +280,9 @@ export class Property {
     };
     if (this.mandatory !== undefined) {
       out["mandatory"] = this.mandatory;
+    }
+    if (this.$id !== undefined) {
+      out["$id"] = this.$id;
     }
     return out;
   }
