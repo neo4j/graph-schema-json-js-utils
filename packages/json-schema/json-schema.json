@@ -1,9 +1,8 @@
 {
-  
   "type": "object",
   "properties": {
-    "$schema":{
-      "type":"string"
+    "$schema": {
+      "type": "string"
     },
     "graphSchemaRepresentation": {
       "type": "object",
@@ -149,6 +148,7 @@
                 "type": "string"
               },
               "mandatory": { "type": "boolean" },
+              "$id": { "type": "string" },
               "type": {
                 "oneOf": [
                   {
