@@ -42,10 +42,10 @@
           "$id": "n:Director:Person",
           "labels": [{ "$ref": "#nl:Person" }, { "$ref": "#nl:Director" }],
           "properties": [
-            { 
-              "token": "id", 
-              "type": { "type": "string" }, 
-              "mandatory": false 
+            {
+              "token": "id",
+              "type": { "type": "string" },
+              "mandatory": false
             },
             {
               "token": "name",

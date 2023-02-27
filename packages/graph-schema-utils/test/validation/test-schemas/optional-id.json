@@ -12,11 +12,13 @@
             {
               "$id": "xxxxx",
               "token": "has-id",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             },
             {
               "token": "no-id",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "mandatory": false
             }
           ]
         }

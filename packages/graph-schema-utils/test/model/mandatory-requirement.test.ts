@@ -18,7 +18,7 @@ describe("Validate 'mandatory' on properties", () => {
       new model.PropertyBaseType("string"),
       true
     );
-    //Skriv assurtions sen.
+    
     
     assert.strictEqual(
       notSetProp.mandatory, false
@@ -32,8 +32,5 @@ describe("Validate 'mandatory' on properties", () => {
       trueSetProp.mandatory, true
     );
 
-    /*console.log(notSetProp.mandatory); // should log "false"
-    console.log(falseSetProp.mandatory); // should log "false"
-    console.log(trueSetProp.mandatory); // should log "true"*/
   });
 });

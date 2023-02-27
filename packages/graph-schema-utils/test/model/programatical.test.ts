@@ -128,6 +128,7 @@ describe("Programatic model tests", () => {
     expect(serialized).toMatchInlineSnapshot(`
       [
         {
+          "mandatory": false,
           "token": "name",
           "type": {
             "type": "string",
