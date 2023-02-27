@@ -2,7 +2,8 @@ import { strict as assert } from "node:assert";
 import path from "path";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
-import { model } from "../../src";
+import { model } from "../../src/index.js";
+import { PropertyTypes } from "../../src/model/index.js";
 
 describe("Parser tests", () => {
   const fullSchema = readFile(
@@ -39,7 +40,10 @@ describe("Parser tests", () => {
     // handles array of types
     assert.deepEqual(
       // the map here is just to make it a plain object to pass the comparison
-      parsed.graphSchema.nodeObjectTypes[0].properties[0].type.map((pbt) => ({
+      (
+        parsed.graphSchema.nodeObjectTypes[0].properties[0]
+          .type as PropertyTypes[]
+      ).map((pbt) => ({
         ...pbt,
       })),
       rawParsed.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0]
@@ -56,7 +60,10 @@ describe("Parser tests", () => {
       "roles"
     );
     assert.strictEqual(
-      parsed.graphSchema.relationshipObjectTypes[0].properties[0].type.type,
+      (
+        parsed.graphSchema.relationshipObjectTypes[0].properties[0]
+          .type as PropertyTypes
+      ).type,
       "array"
     );
     assert.strictEqual(

@@ -300,7 +300,7 @@ describe("Validate type errors", () => {
     );
     assert.throws(
       () => validateSchema(JSON_SCHEMA, missingRequiredNodeLabels),
-      SchemaValidationError 
+      SchemaValidationError
     );
     
     const NUM_MISSING_NODELABELS = 2;

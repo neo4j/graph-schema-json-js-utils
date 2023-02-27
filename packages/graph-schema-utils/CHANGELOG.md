@@ -1,5 +1,18 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.5
+
+### Patch Changes
+
+- c0f97e3: Add support for optional $id fields on node and relationship object types
+
+## 1.0.0-next.4
+
+### Patch Changes
+
+- 108665d: Fix TS errors on Property Types
+- cdf7455: Update README with programatical usage example and TS build instructions
+
 ## 1.0.0-next.3
 
 ### Patch Changes

@@ -3,13 +3,17 @@
   "tag": "next",
   "initialVersions": {
     "@neo4j/graph-schema-utils": "0.0.1",
-    "@neo4j/graph-json-schema": "1.0.0"
+    "@neo4j/graph-json-schema": "0.0.1"
   },
   "changesets": [
     "big-birds-arrive",
     "bright-eels-sniff",
     "cool-chefs-listen",
     "friendly-masks-punch",
-    "rude-camels-speak"
+    "great-falcons-move",
+    "polite-ears-help",
+    "rude-camels-speak",
+    "slow-wombats-try",
+    "yellow-avocados-flash"
   ]
 }

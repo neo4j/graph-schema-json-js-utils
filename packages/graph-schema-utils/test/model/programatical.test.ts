@@ -1,6 +1,7 @@
 import { strict as assert } from "node:assert";
-import { describe, test } from "vitest";
-import { model } from "../../src";
+import { describe, expect, test } from "vitest";
+import { model } from "../../src/index.js";
+import { PropertyTypes } from "../../src/model/index.js";
 
 describe("Programatic model tests", () => {
   test("Can be created programatically", () => {
@@ -24,7 +25,10 @@ describe("Programatic model tests", () => {
     ];
 
     const actedInProperties = [
-      new model.Property("roles", new model.PropertyArrayType("string")),
+      new model.Property(
+        "roles",
+        new model.PropertyArrayType(new model.PropertyBaseType("string"))
+      ),
     ];
     const relationshipObjectTypes = [
       new model.RelationshipObjectType(
@@ -103,8 +107,41 @@ describe("Programatic model tests", () => {
       "roles"
     );
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties[0].type.type,
+      (
+        gRep.graphSchema.relationshipObjectTypes[0].properties[0]
+          .type as PropertyTypes
+      ).type,
       "array"
     );
+  });
+  test("Handles optional id:s on properties", () => {
+    const properties = [
+      new model.Property("name", new model.PropertyBaseType("string")),
+      new model.Property(
+        "age",
+        new model.PropertyBaseType("integer"),
+        true,
+        "test-id"
+      ),
+    ];
+    const serialized = properties.map((p) => p.toJsonStruct());
+    expect(serialized).toMatchInlineSnapshot(`
+      [
+        {
+          "token": "name",
+          "type": {
+            "type": "string",
+          },
+        },
+        {
+          "$id": "test-id",
+          "mandatory": true,
+          "token": "age",
+          "type": {
+            "type": "integer",
+          },
+        },
+      ]
+    `);
   });
 });
