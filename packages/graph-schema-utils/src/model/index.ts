@@ -262,12 +262,12 @@ export class Property {
   constructor(
     token: string,
     type: PropertyBaseType | PropertyArrayType,
-    mandatory?: boolean,
+    mandatory: boolean,
     $id?: string
   ) {
     this.token = token;
     this.type = type;
-    this.mandatory = mandatory || false;
+    this.mandatory = mandatory;
     this.$id = $id;
   }
   toJsonStruct() {

@@ -4,10 +4,7 @@ import { model } from "../../src";
 
 describe("Validate 'mandatory' on properties", () => {
   test("Identifies if mandatory is non required", () => {
-    const notSetProp = new model.Property(
-      "name",
-      new model.PropertyBaseType("string")
-    );
+  
     const falseSetProp = new model.Property(
       "name",
       new model.PropertyBaseType("string"),
@@ -17,11 +14,6 @@ describe("Validate 'mandatory' on properties", () => {
       "name",
       new model.PropertyBaseType("string"),
       true
-    );
-    
-    
-    assert.strictEqual(
-      notSetProp.mandatory, false
     );
 
     assert.strictEqual(

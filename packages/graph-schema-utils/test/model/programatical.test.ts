@@ -16,7 +16,7 @@ describe("Programatic model tests", () => {
       new model.RelationshipType("rt3", "IS_GENRE"),
     ];
     const personProperties = [
-      new model.Property("name", new model.PropertyBaseType("string")),
+      new model.Property("name", new model.PropertyBaseType("string"), false),
     ];
     const nodeObjectTypes = [
       new model.NodeObjectType("n1", [labels[0]], personProperties),
@@ -27,7 +27,7 @@ describe("Programatic model tests", () => {
     const actedInProperties = [
       new model.Property(
         "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string"))
+        new model.PropertyArrayType(new model.PropertyBaseType("string")), false
       ),
     ];
     const relationshipObjectTypes = [
@@ -116,7 +116,7 @@ describe("Programatic model tests", () => {
   });
   test("Handles optional id:s on properties", () => {
     const properties = [
-      new model.Property("name", new model.PropertyBaseType("string")),
+      new model.Property("name", new model.PropertyBaseType("string"), false),
       new model.Property(
         "age",
         new model.PropertyBaseType("integer"),
