@@ -1,6 +1,6 @@
 import { strict as assert } from "node:assert";
 import path from "path";
-import { SchemaValidationError, validateSchema } from "../../src/index.ts";
+import { SchemaValidationError, validateSchema } from "../../src/index";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 import { createRequire } from "module";
@@ -38,6 +38,8 @@ describe("Validate type errors", () => {
   });
 
   test("Identifies additional fields/properties", () => {
+
+    
     //schema properties
     const additionalFieldsGraphSchema = readFile(
       path.resolve(
@@ -45,7 +47,7 @@ describe("Validate type errors", () => {
         "./test-schemas/additional-fields-graphSchema.json"
       )
     );
-
+    
     assert.throws(
       () => validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema),
       SchemaValidationError
@@ -60,6 +62,7 @@ describe("Validate type errors", () => {
     }
     assert.equal(allErrors.length, NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA);
     assert.equal(allErrors[0].keyword, "additionalProperties");
+    
     //------------
     //NodeLabel
     const additionalNodeLabelRoot = readFile(
