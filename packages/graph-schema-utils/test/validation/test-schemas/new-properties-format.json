@@ -12,12 +12,12 @@
             {
               "token": "primitive",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "many-primitive",
               "type": [{ "type": "string" }, { "type": "integer" }],
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "primitive array",
@@ -25,7 +25,7 @@
                 "type": "array",
                 "items": { "type": "string" }
               },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "primitive array + primitive",
@@ -36,7 +36,7 @@
                   "items": { "type": "string" }
                 }
               ],
-              "mandatory": false
+              "nullable": false
             }
           ]
         }

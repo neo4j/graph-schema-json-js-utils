@@ -33,7 +33,7 @@
             {
               "token": "role",
               "type": { "type": "array", "items": { "type": "string" } },
-              "mandatory": false
+              "nullable": false
             }
           ]
         },

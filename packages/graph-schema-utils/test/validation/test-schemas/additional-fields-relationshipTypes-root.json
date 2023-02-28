@@ -39,7 +39,7 @@
                   "type": "string"
                 }
               },
-              "mandatory": false
+              "nullable": false
             }
           ]
         },
@@ -60,7 +60,7 @@
             {
               "token": "role",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }

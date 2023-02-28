@@ -27,7 +27,8 @@ describe("Programatic model tests", () => {
     const actedInProperties = [
       new model.Property(
         "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string")), false
+        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        false
       ),
     ];
     const relationshipObjectTypes = [
@@ -128,7 +129,7 @@ describe("Programatic model tests", () => {
     expect(serialized).toMatchInlineSnapshot(`
       [
         {
-          "mandatory": false,
+          "nullable": false,
           "token": "name",
           "type": {
             "type": "string",
@@ -136,7 +137,7 @@ describe("Programatic model tests", () => {
         },
         {
           "$id": "test-id",
-          "mandatory": true,
+          "nullable": true,
           "token": "age",
           "type": {
             "type": "integer",

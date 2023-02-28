@@ -13,12 +13,12 @@
               "$id": "xxxxx",
               "token": "has-id",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "no-id",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }

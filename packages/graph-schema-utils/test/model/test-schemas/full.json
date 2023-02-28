@@ -24,17 +24,17 @@
                 { "type": "integer" },
                 { "type": "array", "items": { "type": "string" } }
               ],
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "name",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "born",
               "type": { "type": "array", "items": { "type": "string" } },
-              "mandatory": false
+              "nullable": false
             }
           ]
         },
@@ -45,17 +45,17 @@
             {
               "token": "id",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "name",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "born",
               "type": { "type": "integer" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         },
@@ -66,12 +66,12 @@
             {
               "token": "title",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             },
             {
               "token": "release",
               "type": { "type": "date" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }
@@ -86,7 +86,7 @@
             {
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
-              "mandatory": false
+              "nullable": false
             }
           ]
         },

@@ -1,10 +1,9 @@
-import { strict as assert} from "node:assert";
+import { strict as assert } from "node:assert";
 import { describe, test } from "vitest";
 import { model } from "../../src";
 
-describe("Validate 'mandatory' on properties", () => {
-  test("Identifies if mandatory is non required", () => {
-  
+describe("Validate 'nullable' on properties", () => {
+  test("Identifies if nullable is non required", () => {
     const falseSetProp = new model.Property(
       "name",
       new model.PropertyBaseType("string"),
@@ -16,13 +15,8 @@ describe("Validate 'mandatory' on properties", () => {
       true
     );
 
-    assert.strictEqual(
-      falseSetProp.mandatory, false
-    );
+    assert.strictEqual(falseSetProp.nullable, false);
 
-    assert.strictEqual(
-      trueSetProp.mandatory, true
-    );
-
+    assert.strictEqual(trueSetProp.nullable, true);
   });
 });

@@ -26,7 +26,7 @@
           "properties": [
             {
               "token": "name",
-              "mandatory": false,
+              "nullable": false,
               "type": { "type": "string" }
             }
           ]
@@ -42,7 +42,7 @@
             {
               "token": "title",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }

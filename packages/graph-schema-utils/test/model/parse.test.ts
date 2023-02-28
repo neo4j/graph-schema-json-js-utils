@@ -26,7 +26,7 @@ describe("Parser tests", () => {
       3
     );
     assert.strictEqual(
-      parsed.graphSchema.nodeObjectTypes[1].properties[0].mandatory,
+      parsed.graphSchema.nodeObjectTypes[1].properties[0].nullable,
       false
     );
     assert.strictEqual(

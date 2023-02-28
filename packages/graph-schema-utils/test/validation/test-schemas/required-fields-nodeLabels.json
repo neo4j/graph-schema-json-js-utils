@@ -16,7 +16,7 @@
             {
               "token": "name",
               "type": { "type": "string" },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }
@@ -43,7 +43,7 @@
                   "type": "string"
                 }
               },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }

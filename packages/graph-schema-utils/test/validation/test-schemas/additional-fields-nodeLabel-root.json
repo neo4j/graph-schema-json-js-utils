@@ -26,7 +26,7 @@
           "properties": [
             {
               "token": "id",
-              "mandatory": false,
+              "nullable": false,
               "type": { "type": "string" }
             }
           ]
@@ -45,7 +45,7 @@
           "properties": [
             {
               "token": "role",
-              "mandatory": false,
+              "nullable": false,
               "type": { "type": "array", "items": { "type": "string" } }
             }
           ]
@@ -66,7 +66,7 @@
             {
               "token": "role",
               "type": { "type": "array", "items": { "type": "string" } },
-              "mandatory": false
+              "nullable": false
             }
           ]
         }
