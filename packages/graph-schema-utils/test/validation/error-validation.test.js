@@ -357,7 +357,6 @@ describe("Validate type errors", () => {
       allErrorNodespecsProperties.length,
       NUM_MISSING_NODESPECS_PROPERTIES
     );
-    
     const missingRequiredPropertiesNodeSpecsRoot = readFile(
       path.resolve(
         __dirname,
