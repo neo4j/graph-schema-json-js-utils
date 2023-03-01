@@ -278,9 +278,6 @@ export class Property {
       type: typeVal,
       token: this.token,
     };
-    if (this.nullable !== undefined) {
-      out["nullable"] = this.nullable;
-    }
     if (this.$id !== undefined) {
       out["$id"] = this.$id;
     }

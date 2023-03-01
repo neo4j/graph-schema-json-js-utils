@@ -302,7 +302,7 @@ describe("Validate type errors", () => {
       () => validateSchema(JSON_SCHEMA, missingRequiredNodeLabels),
       SchemaValidationError
     );
-    
+
     const NUM_MISSING_NODELABELS = 2;
     let allErrorsNodeLabels = [];
     try {
