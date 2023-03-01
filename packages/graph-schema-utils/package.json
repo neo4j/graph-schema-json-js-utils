@@ -1,6 +1,6 @@
 {
   "name": "@neo4j/graph-schema-utils",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0-next.6",
   "description": "Utilities for Neo4j Graph Schema JSON representation",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,6 +37,6 @@
   "devDependencies": {
     "@vitest/coverage-c8": "^0.25.3",
     "vitest": "^0.25.3",
-    "@neo4j/graph-json-schema": "1.0.0-next.1"
+    "@neo4j/graph-json-schema": "1.0.0-next.2"
   }
 }

@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.2
+
+### Minor Changes
+
+- 33865d9: Add required nullable field to all properties
+
 ## 1.0.0-next.1
 
 ### Patch Changes

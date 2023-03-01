@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.6
+
+### Minor Changes
+
+- 33865d9: Add required nullable field to all properties
+
 ## 1.0.0-next.5
 
 ### Patch Changes
