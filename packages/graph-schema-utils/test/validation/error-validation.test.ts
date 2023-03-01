@@ -38,8 +38,6 @@ describe("Validate type errors", () => {
   });
 
   test("Identifies additional fields/properties", () => {
-
-    
     //schema properties
     const additionalFieldsGraphSchema = readFile(
       path.resolve(
@@ -47,7 +45,6 @@ describe("Validate type errors", () => {
         "./test-schemas/additional-fields-graphSchema.json"
       )
     );
-    
     assert.throws(
       () => validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema),
       SchemaValidationError
@@ -327,7 +324,7 @@ describe("Validate type errors", () => {
     //RelationshipType
     const missingRequiredRelationshipTypeRoot = readFile(
       path.resolve(
-        __dirname,
+        __dirname,// @ts-ignore
         "./test-schemas/required-fields-relationshipType-root.json"
       )
     );
