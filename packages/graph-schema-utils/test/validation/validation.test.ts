@@ -19,13 +19,14 @@ describe("Validate if JSON-documen is a string", () => {
     const fullSchema = readFile(
       path.resolve(__dirname, "./test-schemas/full.json")
     );
-
+    // @ts-ignore
     assert.throws(() => validateSchema(NON_STRING, fullSchema), InputTypeError);
     assert.throws(() => validateSchema(NON_JSON, fullSchema), InputTypeError);
   });
 
   test("Identifies if graph schema is a string and is parseble JSON", () => {
     assert.throws(
+      // @ts-ignore
       () => validateSchema(JSON_SCHEMA, NON_STRING),
       InputTypeError
     );
