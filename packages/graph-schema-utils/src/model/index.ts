@@ -277,6 +277,7 @@ export class Property {
     const out = {
       type: typeVal,
       token: this.token,
+      nullable: this.nullable,
     };
     if (this.$id !== undefined) {
       out["$id"] = this.$id;
