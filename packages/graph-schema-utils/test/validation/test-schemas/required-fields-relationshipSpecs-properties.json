@@ -32,7 +32,8 @@
           "properties": [
             {
               "token": "role",
-              "type": { "type": "array", "items": { "type": "string" } }
+              "type": { "type": "array", "items": { "type": "string" } },
+              "nullable": false
             }
           ]
         },

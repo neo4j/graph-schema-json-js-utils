@@ -20,7 +20,8 @@
           "properties": [
             {
               "token": "name",
-              "type": { "type": "unsupported-type" }
+              "type": { "type": "unsupported-type" },
+              "nullable": false
             }
           ]
         }

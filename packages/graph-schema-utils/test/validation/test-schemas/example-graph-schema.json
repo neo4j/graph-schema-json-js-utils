@@ -44,10 +44,12 @@
           "properties": [
             {
               "token": "name",
+              "nullable": false,
               "type": { "type": "string" }
             },
             {
               "token": "born",
+              "nullable": false,
               "type": { "type": "integer" }
             }
           ]
@@ -83,10 +85,12 @@
           "properties": [
             {
               "token": "title",
+              "nullable": false,
               "type": { "type": "string" }
             },
             {
               "token": "release",
+              "nullable": false,
               "type": { "type": "date" }
             }
           ]
@@ -110,6 +114,7 @@
           "properties": [
             {
               "token": "role",
+              "nullable": false,
               "type": {
                 "type": "array",
 
@@ -136,7 +141,8 @@
           "properties": [
             {
               "token": "role",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "nullable": false
             }
           ]
         }

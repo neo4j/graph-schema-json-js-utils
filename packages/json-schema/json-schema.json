@@ -142,12 +142,12 @@
           {
             "type": "object",
             "additionalProperties": false,
-            "required": ["token", "type"],
+            "required": ["token", "type", "nullable"],
             "properties": {
               "token": {
                 "type": "string"
               },
-              "mandatory": { "type": "boolean" },
+              "nullable": { "type": "boolean" },
               "$id": { "type": "string" },
               "type": {
                 "oneOf": [
@@ -186,7 +186,7 @@
     "PropertyTypesArrayObject": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["token", "type"],
+      "required": ["token", "type", "nullable"],
       "properties": {
         "token": {
           "type": "string"
@@ -194,7 +194,7 @@
         "type": {
           "$ref": "#/$defs/PropertyTypesArray"
         },
-        "mandatory": { "type": "boolean" }
+        "nullable": { "type": "boolean" }
       }
     },
     "PropertyTypes": {

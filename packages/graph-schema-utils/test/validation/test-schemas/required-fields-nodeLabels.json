@@ -15,7 +15,8 @@
           "properties": [
             {
               "token": "name",
-              "type": { "type": "string" }
+              "type": { "type": "string" },
+              "nullable": false
             }
           ]
         }
@@ -41,7 +42,8 @@
                 "items": {
                   "type": "string"
                 }
-              }
+              },
+              "nullable": false
             }
           ]
         }

@@ -21,6 +21,7 @@
             {
               "token": "name",
               "type": { "type": "string" },
+              "nullable": false,
               "illegal-field": "illegal-field"
             }
           ]

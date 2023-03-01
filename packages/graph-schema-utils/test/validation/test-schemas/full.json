@@ -26,15 +26,21 @@
                   "type": "array",
                   "items": { "type": "string" }
                 }
-              ]
+              ],
+              "nullable": false
             },
-            { "token": "name", "type": { "type": "string" } },
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "nullable": false
+            },
             {
               "token": "born",
               "type": {
                 "type": "array",
                 "items": { "type": "string" }
-              }
+              },
+              "nullable": false
             }
           ]
         },
@@ -42,18 +48,37 @@
           "$id": "n:Director:Person",
           "labels": [{ "$ref": "#nl:Person" }, { "$ref": "#nl:Director" }],
           "properties": [
-            { "token": "id",
-            "mandatory":true, "type": { "type": "string" } },
-            { "token": "name", "type": { "type": "string" } },
-            { "token": "born", "type": { "type": "integer" } }
+            {
+              "token": "id",
+              "type": { "type": "string" },
+              "nullable": false
+            },
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "nullable": false
+            },
+            {
+              "token": "born",
+              "type": { "type": "integer" },
+              "nullable": false
+            }
           ]
         },
         {
           "$id": "n:Movie",
           "labels": [{ "$ref": "#nl:Movie" }],
           "properties": [
-            { "token": "title", "type": { "type": "string" } },
-            { "token": "release", "type": { "type": "date" } }
+            {
+              "token": "title",
+              "type": { "type": "string" },
+              "nullable": false
+            },
+            {
+              "token": "release",
+              "type": { "type": "date" },
+              "nullable": false
+            }
           ]
         }
       ],
@@ -67,8 +92,7 @@
             {
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
-              "mandatory": false
-
+              "nullable": false
             }
           ]
         },
