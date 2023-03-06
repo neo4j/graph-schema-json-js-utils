@@ -8,12 +8,16 @@ export class GraphSchemaRepresentation {
   }
 
   toJson() {
-    return JSON.stringify({
+    return JSON.stringify(this.toJsonStruct());
+  }
+
+  toJsonStruct() {
+    return {
       graphSchemaRepresentation: {
         version: this.version,
         graphSchema: this.graphSchema.toJsonStruct(),
       },
-    });
+    };
   }
 
   static parseJson(jsonString) {
@@ -250,6 +254,11 @@ export class RelationshipObjectType {
       properties: this.properties.map((property) => property.toJsonStruct()),
     };
   }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
+  }
 }
 
 export type PropertyTypes = PropertyBaseType | PropertyArrayType;
@@ -261,7 +270,7 @@ export class Property {
 
   constructor(
     token: string,
-    type: PropertyBaseType | PropertyArrayType,
+    type: PropertyTypes | PropertyTypes[],
     nullable: boolean,
     $id?: string
   ) {
@@ -283,6 +292,11 @@ export class Property {
       out["$id"] = this.$id;
     }
     return out;
+  }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
   }
 }
 
