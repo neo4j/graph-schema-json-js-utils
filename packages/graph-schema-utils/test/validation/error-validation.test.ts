@@ -58,9 +58,9 @@ describe("Validate type errors", () => {
       allErrors = e.messages;
     }
     assert.equal(allErrors.length, NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA);
-    // @ts-ignore
+    // @ts-expect-error
     assert.equal(allErrors[0].keyword, "additionalProperties");
-    
+
     //------------
     //NodeLabel
     const additionalNodeLabelRoot = readFile(
@@ -85,7 +85,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_NODELABEL_ROOT
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalNodeLabelsRoot[0].keyword,
       "additionalProperties"
     );
@@ -113,7 +113,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_RELATIONSHIP_TYPES_ROOT
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalRelationshipTypeRoot[0].keyword,
       "additionalProperties"
     );
@@ -141,7 +141,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_NODESPEC_ROOT
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalNodeSpecsRoot[0].keyword,
       "additionalProperties"
     );
@@ -168,7 +168,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_NODESPECS_PROPERTIRES
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalNodeSpecsProperties[0].keyword,
       "additionalProperties"
     );
@@ -195,7 +195,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_NODESPEC_LABELS
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalNodeSpecsLabels[0].keyword,
       "additionalProperties"
     );
@@ -223,7 +223,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_RELATIONSHIP_SPECS_TYPE
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalRelationshipSpecsType[0].keyword,
       "additionalProperties"
     );
@@ -250,7 +250,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalRelationshipSpecsProperties[0].keyword,
       "additionalProperties"
     );
@@ -277,7 +277,7 @@ describe("Validate type errors", () => {
       NUM_ADDITIONAL_RELATIONSHIP_SPECS_ROOT
     );
     assert.equal(
-      // @ts-ignore
+      // @ts-expect-error
       allErrorsAddittionalRelationshipSpecsRoot[0].keyword,
       "additionalProperties"
     );
@@ -324,7 +324,7 @@ describe("Validate type errors", () => {
     //RelationshipType
     const missingRequiredRelationshipTypeRoot = readFile(
       path.resolve(
-        __dirname,// @ts-ignore
+        __dirname, // @ts-ignore
         "./test-schemas/required-fields-relationshipType-root.json"
       )
     );
