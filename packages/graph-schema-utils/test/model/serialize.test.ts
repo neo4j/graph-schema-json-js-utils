@@ -22,10 +22,16 @@ describe("Serializer tests", () => {
     assert.strictEqual(validation, true);
   });
 
-  test("Can parse a graph schema and serialize it to be the same", () => {
+  test("Can parse a graph schema and serialize it to be the same string", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
     const serialized = parsed.toJson();
     assert.deepEqual(JSON.parse(serialized), JSON.parse(fullSchema));
+  });
+
+  test("Can parse a graph schema and serialize it to be the same json struct", () => {
+    const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    const serializedStruct = parsed.toJsonStruct();
+    assert.deepEqual(serializedStruct, JSON.parse(fullSchema));
   });
 
   test("Throws if label refs aren't connected", () => {

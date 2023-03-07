@@ -99,6 +99,9 @@ describe("Programatic model tests", () => {
       gRep.graphSchema.relationshipObjectTypes[0].to,
       nodeObjectTypes[1]
     );
+    assert.deepEqual(gRep.graphSchema.relationshipObjectTypes[0].toRef(), {
+      $ref: "#r1",
+    });
     assert.strictEqual(
       gRep.graphSchema.relationshipObjectTypes[0].properties.length,
       1
@@ -142,6 +145,75 @@ describe("Programatic model tests", () => {
           "type": {
             "type": "integer",
           },
+        },
+      ]
+    `);
+    expect(properties[0]?.toRef()).toEqual(null);
+    expect(properties[1]?.toRef()).toEqual({ $ref: "#test-id" });
+  });
+  test("Allows creation of properties with complicated types", () => {
+    const properties = [
+      new model.Property(
+        "name",
+        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        false
+      ),
+      new model.Property(
+        "id",
+        [
+          new model.PropertyBaseType("integer"),
+          new model.PropertyBaseType("string"),
+        ],
+        false
+      ),
+      new model.Property(
+        "another",
+        [
+          new model.PropertyBaseType("float"),
+          new model.PropertyArrayType(new model.PropertyBaseType("datetime")),
+        ],
+        false
+      ),
+    ];
+    const serialized = properties.map((p) => p.toJsonStruct());
+    expect(serialized).toMatchInlineSnapshot(`
+      [
+        {
+          "nullable": false,
+          "token": "name",
+          "type": {
+            "items": PropertyBaseType {
+              "type": "string",
+            },
+            "type": "array",
+          },
+        },
+        {
+          "nullable": false,
+          "token": "id",
+          "type": [
+            {
+              "type": "integer",
+            },
+            {
+              "type": "string",
+            },
+          ],
+        },
+        {
+          "nullable": false,
+          "token": "another",
+          "type": [
+            {
+              "type": "float",
+            },
+            {
+              "items": PropertyBaseType {
+                "type": "datetime",
+              },
+              "type": "array",
+            },
+          ],
         },
       ]
     `);
