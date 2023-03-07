@@ -294,9 +294,7 @@ export class Property {
     return out;
   }
   toRef() {
-    return {
-      $ref: `#${this.$id}`,
-    };
+    return this.$id !== undefined ? { $ref: `#${this.$id}` } : null;
   }
 }
 
