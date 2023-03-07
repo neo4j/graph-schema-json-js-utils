@@ -182,7 +182,7 @@ describe("Programatic model tests", () => {
           "nullable": false,
           "token": "name",
           "type": {
-            "items": PropertyBaseType {
+            "items": {
               "type": "string",
             },
             "type": "array",
@@ -208,7 +208,7 @@ describe("Programatic model tests", () => {
               "type": "float",
             },
             {
-              "items": PropertyBaseType {
+              "items": {
                 "type": "datetime",
               },
               "type": "array",

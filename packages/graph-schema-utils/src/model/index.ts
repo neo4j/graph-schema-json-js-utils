@@ -321,7 +321,7 @@ export class PropertyArrayType {
   toJsonStruct() {
     return {
       type: this.type,
-      items: this.items,
+      items: this.items.toJsonStruct(),
     };
   }
 }
@@ -332,7 +332,7 @@ export class PropertyType {
       return json.map((item) => PropertyType.fromJsonStruct(item));
     }
     if (json.type === "array") {
-      return new PropertyArrayType(json.items);
+      return new PropertyArrayType(new PropertyBaseType(json.items.type));
     }
     return new PropertyBaseType(json.type);
   }
