@@ -265,7 +265,7 @@ export type PropertyTypes = PropertyBaseType | PropertyArrayType;
 export class Property {
   token: string;
   type: PropertyTypes | PropertyTypes[];
-  nullable: boolean | undefined;
+  nullable: boolean;
   $id: string | undefined;
 
   constructor(
