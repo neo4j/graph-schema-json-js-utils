@@ -7,6 +7,28 @@ export class GraphSchemaRepresentation {
     this.graphSchema = graphSchema;
   }
 
+  getAllNodeLabelTokens() {
+    return this.graphSchema.nodeLabels.map((nodeLabel) => nodeLabel.token);
+  }
+
+  getAllRelationshipTypeTokens() {
+    return this.graphSchema.relationshipTypes.map(
+      (relationshipType) => relationshipType.token
+    );
+  }
+
+  getAllPropertyTokens() {
+    const nodeProperties = this.graphSchema.nodeObjectTypes.flatMap(
+      (nodeObjectType) => nodeObjectType.getPropertyTokens()
+    );
+    const relationshipProperties =
+      this.graphSchema.relationshipObjectTypes.flatMap(
+        (relationshipObjectType) => relationshipObjectType.getPropertyTokens()
+      );
+    // return all tokens without duplicates
+    return [...new Set([...nodeProperties, ...relationshipProperties])];
+  }
+
   toJson() {
     return JSON.stringify(this.toJsonStruct());
   }
@@ -214,6 +236,9 @@ export class NodeObjectType {
       $ref: `#${this.$id}`,
     };
   }
+  getPropertyTokens() {
+    return this.properties.map((property) => property.token);
+  }
 }
 
 export class RelationshipObjectType {
@@ -258,6 +283,9 @@ export class RelationshipObjectType {
     return {
       $ref: `#${this.$id}`,
     };
+  }
+  getPropertyTokens() {
+    return this.properties.map((property) => property.token);
   }
 }
 
