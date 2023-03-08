@@ -7,28 +7,6 @@ export class GraphSchemaRepresentation {
     this.graphSchema = graphSchema;
   }
 
-  getAllNodeLabelTokens() {
-    return this.graphSchema.nodeLabels.map((nodeLabel) => nodeLabel.token);
-  }
-
-  getAllRelationshipTypeTokens() {
-    return this.graphSchema.relationshipTypes.map(
-      (relationshipType) => relationshipType.token
-    );
-  }
-
-  getAllPropertyTokens() {
-    const nodeProperties = this.graphSchema.nodeObjectTypes.flatMap(
-      (nodeObjectType) => nodeObjectType.getPropertyTokens()
-    );
-    const relationshipProperties =
-      this.graphSchema.relationshipObjectTypes.flatMap(
-        (relationshipObjectType) => relationshipObjectType.getPropertyTokens()
-      );
-    // return all tokens without duplicates
-    return [...new Set([...nodeProperties, ...relationshipProperties])];
-  }
-
   toJson() {
     return JSON.stringify(this.toJsonStruct());
   }
@@ -82,6 +60,27 @@ export class GraphSchema {
         (relationshipObjectType) => relationshipObjectType.toJsonStruct()
       ),
     };
+  }
+
+  getAllNodeLabelTokens() {
+    return this.nodeLabels.map((nodeLabel) => nodeLabel.token);
+  }
+
+  getAllRelationshipTypeTokens() {
+    return this.relationshipTypes.map(
+      (relationshipType) => relationshipType.token
+    );
+  }
+
+  getAllPropertyTokens() {
+    const nodeProperties = this.nodeObjectTypes.flatMap((nodeObjectType) =>
+      nodeObjectType.getPropertyTokens()
+    );
+    const relationshipProperties = this.relationshipObjectTypes.flatMap(
+      (relationshipObjectType) => relationshipObjectType.getPropertyTokens()
+    );
+    // return all tokens without duplicates
+    return [...new Set([...nodeProperties, ...relationshipProperties])];
   }
 
   static fromJsonStruct(json) {
