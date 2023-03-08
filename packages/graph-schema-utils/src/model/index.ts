@@ -8,12 +8,16 @@ export class GraphSchemaRepresentation {
   }
 
   toJson() {
-    return JSON.stringify({
+    return JSON.stringify(this.toJsonStruct());
+  }
+
+  toJsonStruct() {
+    return {
       graphSchemaRepresentation: {
         version: this.version,
         graphSchema: this.graphSchema.toJsonStruct(),
       },
-    });
+    };
   }
 
   static parseJson(jsonString) {
@@ -250,18 +254,23 @@ export class RelationshipObjectType {
       properties: this.properties.map((property) => property.toJsonStruct()),
     };
   }
+  toRef() {
+    return {
+      $ref: `#${this.$id}`,
+    };
+  }
 }
 
 export type PropertyTypes = PropertyBaseType | PropertyArrayType;
 export class Property {
   token: string;
   type: PropertyTypes | PropertyTypes[];
-  nullable: boolean | undefined;
+  nullable: boolean;
   $id: string | undefined;
 
   constructor(
     token: string,
-    type: PropertyBaseType | PropertyArrayType,
+    type: PropertyTypes | PropertyTypes[],
     nullable: boolean,
     $id?: string
   ) {
@@ -283,6 +292,9 @@ export class Property {
       out["$id"] = this.$id;
     }
     return out;
+  }
+  toRef() {
+    return this.$id !== undefined ? { $ref: `#${this.$id}` } : null;
   }
 }
 
@@ -309,7 +321,7 @@ export class PropertyArrayType {
   toJsonStruct() {
     return {
       type: this.type,
-      items: this.items,
+      items: this.items.toJsonStruct(),
     };
   }
 }
@@ -320,7 +332,7 @@ export class PropertyType {
       return json.map((item) => PropertyType.fromJsonStruct(item));
     }
     if (json.type === "array") {
-      return new PropertyArrayType(json.items);
+      return new PropertyArrayType(new PropertyBaseType(json.items.type));
     }
     return new PropertyBaseType(json.type);
   }

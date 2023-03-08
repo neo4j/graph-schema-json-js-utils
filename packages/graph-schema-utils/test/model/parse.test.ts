@@ -39,13 +39,10 @@ describe("Parser tests", () => {
     );
     // handles array of types
     assert.deepEqual(
-      // the map here is just to make it a plain object to pass the comparison
       (
         parsed.graphSchema.nodeObjectTypes[0].properties[0]
           .type as PropertyTypes[]
-      ).map((pbt) => ({
-        ...pbt,
-      })),
+      ).map((pbt) => pbt.toJsonStruct()),
       rawParsed.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0]
         .properties[0].type
     );
