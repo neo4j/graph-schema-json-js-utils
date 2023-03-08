@@ -1,5 +1,13 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- d2237f5: Add GHA to run TS checks (incl. test files) in addition to tests and builds
+- 3312196: Add model helper functions and fix Property type issues
+- 31faf52: Add convenient extraction methods to GraphSchema
+
 ## 1.0.0-next.6
 
 ### Minor Changes

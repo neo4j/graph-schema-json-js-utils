@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- d2237f5: Add GHA to run TS checks (incl. test files) in addition to tests and builds
+
 ## 1.0.0-next.2
 
 ### Minor Changes
