@@ -30,7 +30,6 @@ describe("Serializer tests", () => {
 
   test("Throws if label refs aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
-    // @ts-expect-error - we want to test this
     parsed.graphSchema.nodeObjectTypes[0].labels[0] = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -40,7 +39,6 @@ describe("Serializer tests", () => {
 
   test("Throws if type ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
-    // @ts-expect-error - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].type = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -50,7 +48,6 @@ describe("Serializer tests", () => {
 
   test("Throws if from ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
-    // @ts-expect-error - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].from = undefined;
     assert.throws(
       () => parsed.toJson(),
@@ -60,7 +57,6 @@ describe("Serializer tests", () => {
 
   test("Throws if to ref aren't connected", () => {
     const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
-    // @ts-expect-error - we want to test this
     parsed.graphSchema.relationshipObjectTypes[0].to = undefined;
     assert.throws(
       () => parsed.toJson(),

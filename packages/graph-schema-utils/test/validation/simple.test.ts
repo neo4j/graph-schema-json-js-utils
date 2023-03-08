@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { fileURLToPath } from "url";
 import path from "path";
-import { validateSchema } from "../../src/index";
+import { validateSchema } from "../../src/index.js";
 import { readFile } from "../fs.utils.js";
 import { describe, test } from "vitest";
 import { createRequire } from "module";

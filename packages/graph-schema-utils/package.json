@@ -14,7 +14,8 @@
   "scripts": {
     "test:watch": "vitest",
     "test": "vitest run",
-    "build": "tsc"
+    "build": "tsc --project tsconfig.build.json",
+    "check": "tsc --project tsconfig.check.json"
   },
   "files": [
     "dist"

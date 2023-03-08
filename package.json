@@ -5,6 +5,7 @@
   "description": "Monorepo for Graph Schema JSON Utils",
   "scripts": {
     "test": "npm run test --workspaces",
+    "check": "npm run check --workspaces",
     "build": "npm run build --workspaces",
     "changeset": "changeset"
   },
