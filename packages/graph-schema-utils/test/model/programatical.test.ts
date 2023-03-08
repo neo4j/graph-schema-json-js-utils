@@ -218,4 +218,92 @@ describe("Programatic model tests", () => {
       ]
     `);
   });
+  test("getAllLabelTokes returns all label tokens", () => {
+    // call getAllLabelTokens on a graph schema with 3 labels
+    const labels = [
+      new model.NodeLabel("l1", "Person"),
+      new model.NodeLabel("l2", "Movie"),
+      new model.NodeLabel("l3", "Genre"),
+    ];
+    const schema = new model.GraphSchema(labels, [], [], []);
+
+    const tokens = schema.getAllNodeLabelTokens();
+    expect(tokens).toMatchInlineSnapshot(`
+      [
+        "Person",
+        "Movie",
+        "Genre",
+      ]
+    `);
+  });
+  test("getAllRelationshipTypeTokens returns all relationship type tokens", () => {
+    // call getAllRelationshipTypeTokens on a graph schema with 3 relationship types
+    const relationshipTypes = [
+      new model.RelationshipType("rt1", "ACTED_IN"),
+      new model.RelationshipType("rt2", "DIRECTED"),
+      new model.RelationshipType("rt3", "IS_GENRE"),
+    ];
+    const schema = new model.GraphSchema([], relationshipTypes, [], []);
+    const tokens = schema.getAllRelationshipTypeTokens();
+    expect(tokens).toMatchInlineSnapshot(`
+      [
+        "ACTED_IN",
+        "DIRECTED",
+        "IS_GENRE",
+      ]
+    `);
+  });
+  test("getAllPropertyTokens returns all unique property tokens", () => {
+    // call getAllPropertyTokens on a graph schema with 3 node object types and 3 relationship object types
+    const labels = [
+      new model.NodeLabel("l1", "Person"),
+      new model.NodeLabel("l2", "Dog"),
+      new model.NodeLabel("l3", "Movie"),
+    ];
+    const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
+    const properties = [
+      new model.Property("name", new model.PropertyBaseType("string"), false),
+      new model.Property("name", new model.PropertyBaseType("string"), false),
+      new model.Property(
+        "roles",
+        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        false
+      ),
+    ];
+    const nodeObjectTypes = [
+      new model.NodeObjectType("n1", [labels[0]], [properties[0]]),
+      new model.NodeObjectType("n2", [labels[1]], [properties[1]]),
+      new model.NodeObjectType("n3", [labels[2]]),
+    ];
+
+    const relationshipObjectTypes = [
+      new model.RelationshipObjectType(
+        "r1",
+        relationshipTypes[0],
+        nodeObjectTypes[0],
+        nodeObjectTypes[2],
+        [properties[2]]
+      ),
+      new model.RelationshipObjectType(
+        "r2",
+        relationshipTypes[0],
+        nodeObjectTypes[1],
+        nodeObjectTypes[2]
+      ),
+    ];
+
+    const schema = new model.GraphSchema(
+      labels,
+      relationshipTypes,
+      nodeObjectTypes,
+      relationshipObjectTypes
+    );
+    const tokens = schema.getAllPropertyTokens();
+    expect(tokens).toMatchInlineSnapshot(`
+      [
+        "name",
+        "roles",
+      ]
+    `);
+  });
 });
