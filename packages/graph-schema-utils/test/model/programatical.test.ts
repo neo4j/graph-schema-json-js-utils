@@ -267,11 +267,12 @@ describe("Programatic model tests", () => {
     ];
     const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
     const properties = [
-      new model.Property("name", new model.PropertyBaseType("string")),
-      new model.Property("name", new model.PropertyBaseType("string")),
+      new model.Property("name", new model.PropertyBaseType("string"), false),
+      new model.Property("name", new model.PropertyBaseType("string"), false),
       new model.Property(
         "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string"))
+        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        false
       ),
     ];
     const nodeObjectTypes = [
