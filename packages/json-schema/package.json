@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "exit 0",
+    "check": "exit 0",
     "build": "exit 0"
   },
   "files": [
