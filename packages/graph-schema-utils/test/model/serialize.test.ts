@@ -29,9 +29,11 @@ describe("Serializer tests", () => {
   });
 
   test("Can parse a graph schema and serialize it to be the same json struct", () => {
-    const parsed = model.GraphSchemaRepresentation.parseJson(fullSchema);
+    const fullSchemaJsonStruct = JSON.parse(fullSchema);
+    const parsed =
+      model.GraphSchemaRepresentation.parseJsonStruct(fullSchemaJsonStruct);
     const serializedStruct = parsed.toJsonStruct();
-    assert.deepEqual(serializedStruct, JSON.parse(fullSchema));
+    assert.deepEqual(serializedStruct, fullSchemaJsonStruct);
   });
 
   test("Throws if label refs aren't connected", () => {
