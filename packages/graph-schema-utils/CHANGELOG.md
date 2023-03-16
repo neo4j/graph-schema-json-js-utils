@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- b487356: Add json struct helpers
+
 ## 1.0.0-next.7
 
 ### Patch Changes
