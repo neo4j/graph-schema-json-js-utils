@@ -20,8 +20,14 @@ export class GraphSchemaRepresentation {
     };
   }
 
-  static parseJson(jsonString) {
+  static parseJson(jsonString: string) {
     const json = JSON.parse(jsonString);
+    return this.parseJsonStruct(json);
+  }
+
+  static parseJsonStruct(json: {
+    graphSchemaRepresentation: GraphSchemaRepresentationJsonStruct;
+  }) {
     const version = json.graphSchemaRepresentation.version;
     const graphSchema = GraphSchema.fromJsonStruct(
       json.graphSchemaRepresentation.graphSchema
@@ -29,6 +35,46 @@ export class GraphSchemaRepresentation {
     return new GraphSchemaRepresentation(version, graphSchema);
   }
 }
+
+export type GraphSchemaRepresentationJsonStruct = {
+  version: string;
+  graphSchema: {
+    nodeLabels: { $id: string; token: string }[];
+    relationshipTypes: { $id: string; token: string }[];
+    nodeObjectTypes: {
+      $id: string;
+      labels: { $ref: string }[];
+      properties: {
+        token: string;
+        type:
+          | { type: PrimitivePropertyTypes }
+          | { type: "array"; items: { type: PrimitivePropertyTypes } }
+          | (
+              | { type: PrimitivePropertyTypes }
+              | { type: "array"; items: { type: PrimitivePropertyTypes } }
+            )[];
+        nullable: boolean;
+      }[];
+      relationshipObjectTypes: {
+        $id: string;
+        type: { $ref: string };
+        from: { $ref: string };
+        to: { $ref: string };
+        properties: {
+          token: string;
+          type:
+            | { type: string }
+            | { type: "array"; items: { type: "string" } }
+            | (
+                | { type: string }
+                | { type: "array"; items: { type: "string" } }
+              )[];
+          nullable: boolean;
+        }[];
+      }[];
+    }[];
+  };
+};
 
 export class GraphSchema {
   nodeLabels: NodeLabel[];
