@@ -36,46 +36,6 @@ export class GraphSchemaRepresentation {
   }
 }
 
-export type GraphSchemaRepresentationJsonStruct = {
-  version: string;
-  graphSchema: {
-    nodeLabels: { $id: string; token: string }[];
-    relationshipTypes: { $id: string; token: string }[];
-    nodeObjectTypes: {
-      $id: string;
-      labels: { $ref: string }[];
-      properties: {
-        token: string;
-        type:
-          | { type: PrimitivePropertyTypes }
-          | { type: "array"; items: { type: PrimitivePropertyTypes } }
-          | (
-              | { type: PrimitivePropertyTypes }
-              | { type: "array"; items: { type: PrimitivePropertyTypes } }
-            )[];
-        nullable: boolean;
-      }[];
-      relationshipObjectTypes: {
-        $id: string;
-        type: { $ref: string };
-        from: { $ref: string };
-        to: { $ref: string };
-        properties: {
-          token: string;
-          type:
-            | { type: string }
-            | { type: "array"; items: { type: "string" } }
-            | (
-                | { type: string }
-                | { type: "array"; items: { type: "string" } }
-              )[];
-          nullable: boolean;
-        }[];
-      }[];
-    }[];
-  };
-};
-
 export class GraphSchema {
   nodeLabels: NodeLabel[];
   relationshipTypes: RelationshipType[];
@@ -129,7 +89,7 @@ export class GraphSchema {
     return [...new Set([...nodeProperties, ...relationshipProperties])];
   }
 
-  static fromJsonStruct(json) {
+  static fromJsonStruct(json: GraphSchemaJsonStruct) {
     const nodeLabels = json.nodeLabels.map(
       (nodeLabel) => new NodeLabel(nodeLabel.$id, nodeLabel.token)
     );
@@ -400,7 +360,7 @@ export class PropertyArrayType {
 }
 
 export class PropertyType {
-  static fromJsonStruct(json) {
+  static fromJsonStruct(json: PropertyTypeJsonStruct) {
     if (Array.isArray(json)) {
       return json.map((item) => PropertyType.fromJsonStruct(item));
     }
@@ -423,3 +383,48 @@ type PrimitivePropertyTypes =
   | "localtime"
   | "localdatetime"
   | "duration";
+
+export type GraphSchemaRepresentationJsonStruct = {
+  version: string;
+  graphSchema: GraphSchemaJsonStruct;
+};
+
+export type GraphSchemaJsonStruct = {
+  nodeLabels: NodeLabelJsonStruct[];
+  relationshipTypes: RelationshipTypeJsonStruct[];
+  nodeObjectTypes: NodeObjectTypeJsonStruct[];
+  relationshipObjectTypes: RelationshipObjectTypeJsonStruct[];
+};
+
+export type NodeLabelJsonStruct = { $id: string; token: string };
+
+export type RelationshipTypeJsonStruct = { $id: string; token: string };
+
+export type NodeObjectTypeJsonStruct = {
+  $id: string;
+  labels: { $ref: string }[];
+  properties: PropertyJsonStruct[];
+};
+
+export type RelationshipObjectTypeJsonStruct = {
+  $id: string;
+  type: { $ref: string };
+  from: { $ref: string };
+  to: { $ref: string };
+  properties: PropertyJsonStruct[];
+};
+
+export type PropertyJsonStruct = {
+  $id?: string;
+  token: string;
+  type: PropertyTypeJsonStruct;
+  nullable: boolean;
+};
+
+export type PropertyTypeJsonStruct =
+  | { type: PrimitivePropertyTypes }
+  | { type: "array"; items: { type: PrimitivePropertyTypes } }
+  | (
+      | { type: PrimitivePropertyTypes }
+      | { type: "array"; items: { type: PrimitivePropertyTypes } }
+    )[];
