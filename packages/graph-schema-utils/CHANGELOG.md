@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- e87db42: Improve json struct types
+
 ## 1.0.0-next.8
 
 ### Patch Changes
