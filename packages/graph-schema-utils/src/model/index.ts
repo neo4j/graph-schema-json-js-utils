@@ -371,7 +371,7 @@ export class PropertyType {
   }
 }
 
-type PrimitivePropertyTypes =
+export type PrimitivePropertyTypes =
   | "integer"
   | "string"
   | "float"
