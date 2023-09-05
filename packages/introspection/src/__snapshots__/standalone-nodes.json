@@ -1,0 +1,76 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "repo-test",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "Person",
+          "token": "Person"
+        },
+        {
+          "$id": "Genre",
+          "token": "Genre"
+        },
+        {
+          "$id": "Movie",
+          "token": "Movie"
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "Person",
+          "labels": [
+            {
+              "$ref": "#Person"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "name",
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "Genre",
+          "labels": [
+            {
+              "$ref": "#Genre"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "name",
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "Movie",
+          "labels": [
+            {
+              "$ref": "#Movie"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "title",
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": []
+    }
+  }
+}

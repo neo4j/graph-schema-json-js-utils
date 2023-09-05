@@ -54,8 +54,6 @@ describe("Programatic model tests", () => {
     ];
 
     const graphSchema = new model.GraphSchema(
-      labels,
-      relationshipTypes,
       nodeObjectTypes,
       relationshipObjectTypes
     );
@@ -225,7 +223,12 @@ describe("Programatic model tests", () => {
       new model.NodeLabel("l2", "Movie"),
       new model.NodeLabel("l3", "Genre"),
     ];
-    const schema = new model.GraphSchema(labels, [], [], []);
+    const nodes = [
+      new model.NodeObjectType("n1", [labels[0]]),
+      new model.NodeObjectType("n2", [labels[1]]),
+      new model.NodeObjectType("n3", [labels[2]]),
+    ];
+    const schema = new model.GraphSchema(nodes, []);
 
     const tokens = schema.getAllNodeLabelTokens();
     expect(tokens).toMatchInlineSnapshot(`
@@ -243,7 +246,31 @@ describe("Programatic model tests", () => {
       new model.RelationshipType("rt2", "DIRECTED"),
       new model.RelationshipType("rt3", "IS_GENRE"),
     ];
-    const schema = new model.GraphSchema([], relationshipTypes, [], []);
+    const nodes = [
+      new model.NodeObjectType("n1", []),
+      new model.NodeObjectType("n2", []),
+    ];
+    const rels = [
+      new model.RelationshipObjectType(
+        "r1",
+        relationshipTypes[0],
+        nodes[0],
+        nodes[1]
+      ),
+      new model.RelationshipObjectType(
+        "r2",
+        relationshipTypes[1],
+        nodes[0],
+        nodes[1]
+      ),
+      new model.RelationshipObjectType(
+        "r3",
+        relationshipTypes[2],
+        nodes[0],
+        nodes[1]
+      ),
+    ];
+    const schema = new model.GraphSchema(nodes, rels);
     const tokens = schema.getAllRelationshipTypeTokens();
     expect(tokens).toMatchInlineSnapshot(`
       [
@@ -293,8 +320,6 @@ describe("Programatic model tests", () => {
     ];
 
     const schema = new model.GraphSchema(
-      labels,
-      relationshipTypes,
       nodeObjectTypes,
       relationshipObjectTypes
     );

@@ -7,8 +7,8 @@ export class GraphSchemaRepresentation {
     this.graphSchema = graphSchema;
   }
 
-  toJson() {
-    return JSON.stringify(this.toJsonStruct());
+  toJson(space: string | number | undefined = undefined) {
+    return JSON.stringify(this.toJsonStruct(), null, space);
   }
 
   toJsonStruct() {
@@ -43,15 +43,25 @@ export class GraphSchema {
   relationshipObjectTypes: RelationshipObjectType[];
 
   constructor(
-    nodeLabels: NodeLabel[],
-    relationshipTypes: RelationshipType[],
     nodeObjectTypes: NodeObjectType[],
     relationshipObjectTypes: RelationshipObjectType[]
   ) {
-    this.nodeLabels = nodeLabels;
-    this.relationshipTypes = relationshipTypes;
     this.nodeObjectTypes = nodeObjectTypes;
     this.relationshipObjectTypes = relationshipObjectTypes;
+    this.extractNodeLabels();
+    this.extractRelationshipTypes();
+  }
+  private extractNodeLabels() {
+    const nodeLabels = this.nodeObjectTypes.flatMap(
+      (nodeObjectType) => nodeObjectType.labels
+    );
+    this.nodeLabels = [...new Set(nodeLabels)];
+  }
+  private extractRelationshipTypes() {
+    const relationshipTypes = this.relationshipObjectTypes.flatMap(
+      (relationshipObjectType) => relationshipObjectType.type
+    );
+    this.relationshipTypes = [...new Set(relationshipTypes)];
   }
   toJsonStruct() {
     return {
@@ -164,12 +174,7 @@ export class GraphSchema {
         );
       }
     );
-    return new GraphSchema(
-      nodeLabels,
-      relationshipTypes,
-      nodeObjectTypes,
-      relationshipObjectTypes
-    );
+    return new GraphSchema(nodeObjectTypes, relationshipObjectTypes);
   }
 }
 
