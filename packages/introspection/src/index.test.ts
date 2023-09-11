@@ -1,4 +1,4 @@
-import neo4j, { Session, session } from "neo4j-driver";
+import neo4j, { Session, session as sessionMode } from "neo4j-driver";
 import {
   afterAll,
   afterEach,
@@ -12,11 +12,11 @@ import { validateSchema } from "@neo4j/graph-schema-utils";
 const JSON_SCHEMA = JSON.stringify(
   require("@neo4j/graph-json-schema/json-schema.json")
 );
-import { introspect } from "./index.js";
+import { introspect, sessionFactory } from "./index.js";
 
 describe("Introspection tests", () => {
   let driver: neo4j.Driver;
-  let sessionFactory: () => Session;
+  let writeSessionFactory: () => Session;
 
   beforeAll(async () => {
     driver = neo4j.driver(
@@ -26,7 +26,7 @@ describe("Introspection tests", () => {
         import.meta.env.VITE_TESTING_BOLT_PASSWORD
       )
     );
-    sessionFactory = () => driver.session({ defaultAccessMode: session.WRITE });
+    writeSessionFactory = sessionFactory(driver, sessionMode.WRITE);
   });
 
   afterAll(async () => {
@@ -34,18 +34,18 @@ describe("Introspection tests", () => {
   });
 
   beforeEach(async () => {
-    const session = sessionFactory();
+    const session = writeSessionFactory();
     await session.run("MATCH (n) DETACH DELETE n");
     await session.close();
   });
 
   afterEach(async () => {
-    const session = sessionFactory();
+    const session = writeSessionFactory();
     await session.run("MATCH (n) DETACH DELETE n");
     await session.close();
   });
   test("can introspect empty db", async () => {
-    const res = await introspect(sessionFactory);
+    const res = await introspect(writeSessionFactory);
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/empty.json"
     );
@@ -54,10 +54,10 @@ describe("Introspection tests", () => {
   });
 
   test("can introspect standalone nodes", async () => {
-    const session = sessionFactory();
+    const session = writeSessionFactory();
     await session.run(standaloneNodesGraphQuery);
     await session.close();
-    const res = await introspect(sessionFactory);
+    const res = await introspect(writeSessionFactory);
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/standalone-nodes.json"
     );
@@ -66,10 +66,10 @@ describe("Introspection tests", () => {
   });
 
   test("can introspect matrix", async () => {
-    const session = sessionFactory();
+    const session = writeSessionFactory();
     await session.run(matrixQuery);
     await session.close();
-    const res = await introspect(sessionFactory);
+    const res = await introspect(writeSessionFactory);
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/matrix.json"
     );

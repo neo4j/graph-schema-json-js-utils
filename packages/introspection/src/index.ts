@@ -7,6 +7,8 @@ import {
   RelationshipTypePropertiesRecord,
 } from "./types.js";
 
+export { sessionFactory } from "./session-factory.utils.js";
+
 export async function introspect(sessionFactory: () => Session) {
   const nodes = await introspectNodes(sessionFactory);
   const rels = await introspectRelationships(sessionFactory, nodes);
