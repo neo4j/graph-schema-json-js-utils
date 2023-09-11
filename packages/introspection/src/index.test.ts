@@ -20,8 +20,11 @@ describe("Introspection tests", () => {
 
   beforeAll(async () => {
     driver = neo4j.driver(
-      "bolt://localhost:7687",
-      neo4j.auth.basic("neo4j", "password")
+      import.meta.env.VITE_TESTING_BOLT_URL,
+      neo4j.auth.basic(
+        import.meta.env.VITE_TESTING_BOLT_USER,
+        import.meta.env.VITE_TESTING_BOLT_PASSWORD
+      )
     );
     sessionFactory = () => driver.session({ defaultAccessMode: session.WRITE });
   });
