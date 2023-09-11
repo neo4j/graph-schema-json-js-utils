@@ -243,7 +243,7 @@ export class NodeObjectType {
         .sort((a, b) => (a.$id > b.$id ? 1 : -1))
         .map((label) => label.toRef()),
       properties: this.properties
-        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
         .map((property) => property.toJsonStruct()),
     };
   }
@@ -293,7 +293,7 @@ export class RelationshipObjectType {
       from: this.from.toRef(),
       to: this.to.toRef(),
       properties: this.properties
-        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
         .map((property) => property.toJsonStruct()),
     };
   }

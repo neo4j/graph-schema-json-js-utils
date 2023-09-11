@@ -203,13 +203,13 @@ describe("Programatic model tests", () => {
           "token": "another",
           "type": [
             {
-              "type": "float",
-            },
-            {
               "items": {
                 "type": "datetime",
               },
               "type": "array",
+            },
+            {
+              "type": "float",
             },
           ],
         },
