@@ -4,37 +4,20 @@
     "graphSchema": {
       "nodeLabels": [
         {
-          "$id": "Person",
-          "token": "Person"
-        },
-        {
           "$id": "Genre",
           "token": "Genre"
         },
         {
           "$id": "Movie",
           "token": "Movie"
+        },
+        {
+          "$id": "Person",
+          "token": "Person"
         }
       ],
       "relationshipTypes": [],
       "nodeObjectTypes": [
-        {
-          "$id": "Person",
-          "labels": [
-            {
-              "$ref": "#Person"
-            }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "String"
-              },
-              "token": "name",
-              "nullable": false
-            }
-          ]
-        },
         {
           "$id": "Genre",
           "labels": [
@@ -65,6 +48,23 @@
                 "type": "String"
               },
               "token": "title",
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "Person",
+          "labels": [
+            {
+              "$ref": "#Person"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "name",
               "nullable": false
             }
           ]

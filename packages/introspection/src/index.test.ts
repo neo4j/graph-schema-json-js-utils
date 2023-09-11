@@ -8,6 +8,10 @@ import {
   expect,
   test,
 } from "vitest";
+import { validateSchema } from "@neo4j/graph-schema-utils";
+const JSON_SCHEMA = JSON.stringify(
+  require("@neo4j/graph-json-schema/json-schema.json")
+);
 import { introspect } from "./index.js";
 
 describe("Introspection tests", () => {
@@ -42,6 +46,8 @@ describe("Introspection tests", () => {
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/empty.json"
     );
+    const schema = res.toJson();
+    validateSchema(JSON_SCHEMA, schema);
   });
 
   test("can introspect standalone nodes", async () => {
@@ -52,6 +58,8 @@ describe("Introspection tests", () => {
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/standalone-nodes.json"
     );
+    const schema = res.toJson();
+    return validateSchema(schema, JSON_SCHEMA);
   });
 
   test("can introspect matrix", async () => {
@@ -62,6 +70,8 @@ describe("Introspection tests", () => {
     await expect(res.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/matrix.json"
     );
+    const schema = res.toJson();
+    return validateSchema(schema, JSON_SCHEMA);
   });
 });
 

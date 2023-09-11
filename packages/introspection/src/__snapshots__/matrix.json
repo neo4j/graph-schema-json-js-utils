@@ -4,12 +4,12 @@
     "graphSchema": {
       "nodeLabels": [
         {
-          "$id": "Person",
-          "token": "Person"
-        },
-        {
           "$id": "Movie",
           "token": "Movie"
+        },
+        {
+          "$id": "Person",
+          "token": "Person"
         }
       ],
       "relationshipTypes": [
@@ -40,6 +40,37 @@
       ],
       "nodeObjectTypes": [
         {
+          "$id": "Movie",
+          "labels": [
+            {
+              "$ref": "#Movie"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "Long"
+              },
+              "token": "released",
+              "nullable": false
+            },
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "tagline",
+              "nullable": true
+            },
+            {
+              "type": {
+                "type": "String"
+              },
+              "token": "title",
+              "nullable": false
+            }
+          ]
+        },
+        {
           "$id": "Person",
           "labels": [
             {
@@ -59,37 +90,6 @@
                 "type": "String"
               },
               "token": "name",
-              "nullable": false
-            }
-          ]
-        },
-        {
-          "$id": "Movie",
-          "labels": [
-            {
-              "$ref": "#Movie"
-            }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "String"
-              },
-              "token": "tagline",
-              "nullable": true
-            },
-            {
-              "type": {
-                "type": "String"
-              },
-              "token": "title",
-              "nullable": false
-            },
-            {
-              "type": {
-                "type": "Long"
-              },
-              "token": "released",
               "nullable": false
             }
           ]
@@ -170,16 +170,16 @@
           "properties": [
             {
               "type": {
-                "type": "String"
+                "type": "Long"
               },
-              "token": "summary",
+              "token": "rating",
               "nullable": false
             },
             {
               "type": {
-                "type": "Long"
+                "type": "String"
               },
-              "token": "rating",
+              "token": "summary",
               "nullable": false
             }
           ]
