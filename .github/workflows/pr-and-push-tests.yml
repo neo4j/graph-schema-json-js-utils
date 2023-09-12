@@ -42,7 +42,7 @@ jobs:
         with:
           node-version: 18.x
       - name: Copy .env file to use for integration tests
-        run: cp .env.example .env
+        run: cp packages/introspection/.env.example packages/introspection/.env
       - name: Install deps
         run: npm ci
       - name: Build
