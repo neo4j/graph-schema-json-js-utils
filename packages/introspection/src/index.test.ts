@@ -54,7 +54,7 @@ describe("Introspection tests", () => {
   });
 
   afterAll(async () => {
-    const session = writeSessionFactory();
+    const session = driver.session({ defaultAccessMode: sessionMode.WRITE });
     try {
       await session.executeWrite((tx) =>
         tx.run("DROP DATABASE integration.tests")
