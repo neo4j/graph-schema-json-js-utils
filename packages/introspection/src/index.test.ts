@@ -8,11 +8,11 @@ import {
   expect,
   test,
 } from "vitest";
-import { validateSchema } from "@neo4j/graph-schema-utils";
-const JSON_SCHEMA = JSON.stringify(
-  require("@neo4j/graph-json-schema/json-schema.json")
-);
+import { model, validateSchema } from "@neo4j/graph-schema-utils";
+import jsonSchema from "@neo4j/graph-json-schema/json-schema.json";
 import { introspect, sessionFactory } from "./index.js";
+
+const JSON_SCHEMA = JSON.stringify(jsonSchema);
 
 describe("Introspection tests", () => {
   let driver: neo4j.Driver;
@@ -29,7 +29,9 @@ describe("Introspection tests", () => {
     try {
       const session = driver.session({ defaultAccessMode: sessionMode.WRITE });
       // Create database named "integration.tests" for testing
-      await session.run("CREATE DATABASE integration.tests");
+      await session.executeWrite((tx) =>
+        tx.run("CREATE DATABASE integration.tests")
+      );
       // Sleep 1 second so let db creation finish
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -54,7 +56,9 @@ describe("Introspection tests", () => {
   afterAll(async () => {
     const session = writeSessionFactory();
     try {
-      await session.run("DROP DATABASE integration.tests");
+      await session.executeWrite((tx) =>
+        tx.run("DROP DATABASE integration.tests")
+      );
     } catch (e) {
       // Ignore teardown errors
     }
@@ -64,21 +68,23 @@ describe("Introspection tests", () => {
 
   beforeEach(async () => {
     const session = writeSessionFactory();
-    await session.run("MATCH (n) DETACH DELETE n");
+    await session.executeWrite((tx) => tx.run("MATCH (n) DETACH DELETE n"));
     await session.close();
   });
 
   afterEach(async () => {
     const session = writeSessionFactory();
-    await session.run("MATCH (n) DETACH DELETE n");
+    await session.executeWrite((tx) => tx.run("MATCH (n) DETACH DELETE n"));
     await session.close();
   });
+
   test("can introspect empty db", async () => {
     const res = await introspect(writeSessionFactory);
-    await expect(res.toJson(2)).toMatchFileSnapshot(
+    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
+    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/empty.json"
     );
-    const schema = res.toJson();
+    const schema = schemaRep.toJson();
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -87,10 +93,11 @@ describe("Introspection tests", () => {
     await session.run(standaloneNodesGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(res.toJson(2)).toMatchFileSnapshot(
+    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
+    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/standalone-nodes.json"
     );
-    const schema = res.toJson();
+    const schema = schemaRep.toJson();
     return validateSchema(schema, JSON_SCHEMA);
   });
 
@@ -99,10 +106,11 @@ describe("Introspection tests", () => {
     await session.run(matrixQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(res.toJson(2)).toMatchFileSnapshot(
+    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
+    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
       "./__snapshots__/matrix.json"
     );
-    const schema = res.toJson();
+    const schema = schemaRep.toJson();
     return validateSchema(schema, JSON_SCHEMA);
   });
 });

@@ -4,6 +4,7 @@
 
 ```ts
 import neo4j, { session } from "neo4j-driver";
+import { model } from "@neo4j/graph-schema-utils";
 import { introspect, sessionFactory } from "@neo4j/graph-introspection";
 
 async function main() {
@@ -15,8 +16,15 @@ async function main() {
   // We want a session factory here so we can work in multiple sessions
   const graphSchema = await introspect(sessionFactory(driver, session.READ));
 
-  // outputs JSON representation
-  console.log(graphSchema.toJson(2));
+  // Put it in the JSON representation wrapper
+  // this is only required if the serialized representation is the end goal
+  const wrappedSchema = new model.GraphSchemaRepresentation(
+    "1.0.0",
+    graphSchema
+  );
+
+  // outputs standard graph schema JSON representation
+  console.log(wrappedSchema.toJson(2));
 
   await driver.close();
 }

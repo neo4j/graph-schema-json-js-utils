@@ -16,9 +16,7 @@ export async function introspect(sessionFactory: () => Session) {
     Object.values(nodes),
     Object.values(rels)
   );
-  const myRep = new model.GraphSchemaRepresentation("repo-test", myModel);
-
-  return myRep;
+  return myModel;
 }
 
 async function introspectNodes(
@@ -26,7 +24,7 @@ async function introspectNodes(
 ): Promise<NodeMap> {
   const nodes: NodeMap = {};
   const session = sessionFactory();
-  const labelPropsRes = await session.readTransaction((tx) =>
+  const labelPropsRes = await session.executeRead((tx) =>
     tx.run(`CALL db.schema.nodeTypeProperties()
     YIELD nodeType, nodeLabels, propertyName, propertyTypes, mandatory
     RETURN *`)
@@ -75,7 +73,7 @@ async function introspectRelationships(
   const rels: RelationshipMap = {};
 
   // Find all relationship types and their properties (if any)
-  const typePropsRes = await relSession.readTransaction((tx) =>
+  const typePropsRes = await relSession.executeRead((tx) =>
     tx.run(`CALL db.schema.relTypeProperties() YIELD relType, propertyName, propertyTypes, mandatory
         WITH substring(relType, 2, size(relType)-3) AS relType, propertyName, propertyTypes, mandatory
         CALL {
