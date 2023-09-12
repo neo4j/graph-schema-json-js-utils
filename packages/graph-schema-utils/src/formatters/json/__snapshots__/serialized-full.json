@@ -1,0 +1,182 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.0",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "nl:Actor",
+          "token": "Actor"
+        },
+        {
+          "$id": "nl:Director",
+          "token": "Director"
+        },
+        {
+          "$id": "nl:Movie",
+          "token": "Movie"
+        },
+        {
+          "$id": "nl:Person",
+          "token": "Person"
+        }
+      ],
+      "relationshipTypes": [
+        {
+          "$id": "rt:ACTED_IN",
+          "token": "ACTED_IN"
+        },
+        {
+          "$id": "rt:DIRECTED",
+          "token": "DIRECTED"
+        }
+      ],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:Actor:Person",
+          "labels": [
+            {
+              "$ref": "#nl:Actor"
+            },
+            {
+              "$ref": "#nl:Person"
+            }
+          ],
+          "properties": [
+            {
+              "token": "born",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nullable": false
+            },
+            {
+              "token": "id",
+              "type": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "nullable": false
+            },
+            {
+              "token": "name",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "n:Director:Person",
+          "labels": [
+            {
+              "$ref": "#nl:Director"
+            },
+            {
+              "$ref": "#nl:Person"
+            }
+          ],
+          "properties": [
+            {
+              "token": "born",
+              "type": {
+                "type": "integer"
+              },
+              "nullable": false
+            },
+            {
+              "token": "id",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "token": "name",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "n:Movie",
+          "labels": [
+            {
+              "$ref": "#nl:Movie"
+            }
+          ],
+          "properties": [
+            {
+              "token": "release",
+              "type": {
+                "type": "date"
+              },
+              "nullable": false
+            },
+            {
+              "token": "title",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": [
+        {
+          "$id": "r:ACTED_IN",
+          "type": {
+            "$ref": "#rt:ACTED_IN"
+          },
+          "from": {
+            "$ref": "#n:Actor:Person"
+          },
+          "to": {
+            "$ref": "#n:Movie"
+          },
+          "properties": [
+            {
+              "token": "roles",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "r:DIRECTED",
+          "type": {
+            "$ref": "#rt:DIRECTED"
+          },
+          "from": {
+            "$ref": "#n:Director:Person"
+          },
+          "to": {
+            "$ref": "#n:Movie"
+          },
+          "properties": []
+        }
+      ]
+    }
+  }
+}
