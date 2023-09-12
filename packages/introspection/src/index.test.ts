@@ -26,10 +26,39 @@ describe("Introspection tests", () => {
         import.meta.env.VITE_TESTING_BOLT_PASSWORD
       )
     );
-    writeSessionFactory = sessionFactory(driver, sessionMode.WRITE);
+    try {
+      const session = driver.session({ defaultAccessMode: sessionMode.WRITE });
+      // Create database named "integration.tests" for testing
+      await session.run("CREATE DATABASE integration.tests");
+      // Sleep 1 second so let db creation finish
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await session.close();
+    } catch (e) {
+      // Ignore error if database already exists
+      if (!e.message.includes("already exists")) {
+        console.error(
+          `Could not create test database. Are you running Neo4j Enterprise?`
+        );
+        throw e;
+      }
+    }
+
+    writeSessionFactory = sessionFactory(
+      driver,
+      sessionMode.WRITE,
+      "integration.tests"
+    );
   });
 
   afterAll(async () => {
+    const session = writeSessionFactory();
+    try {
+      await session.run("DROP DATABASE integration.tests");
+    } catch (e) {
+      // Ignore teardown errors
+    }
+    await session.close();
     await driver.close();
   });
 

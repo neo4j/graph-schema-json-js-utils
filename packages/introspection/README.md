@@ -26,7 +26,8 @@ main();
 
 ### Testing
 
-Running `npm run test:integration` will **empty the database** it's connecting to (put credentials in `.env` file).
+Running `npm run test:integration` will create a new database named `integration.tests` and delete it after the tests finish.  
+This means you'd need Neo4j Enterprise to run the integration tests and put credentials in `.env` file.
 
 To spin up a docker container for running tests, run this command:
 
@@ -37,5 +38,5 @@ docker run \
     -p7474:7474 -p7687:7687 \
     --env NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \
     --env NEO4J_AUTH=neo4j/password \
-    neo4j:latest
+    neo4j:enterprise
 ```
