@@ -1,0 +1,48 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "repo-test",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "Node",
+          "token": "Node"
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:Node",
+          "labels": [
+            {
+              "$ref": "#Node"
+            }
+          ],
+          "properties": [
+            {
+              "type": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "float"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "token": "prop1",
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": []
+    }
+  }
+}

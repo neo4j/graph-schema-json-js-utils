@@ -1,11 +1,14 @@
 import type { Session } from "neo4j-driver";
 import { model } from "@neo4j/graph-schema-utils";
 import {
+  Neo4jPropertyArrayType,
+  Neo4jPropertyType,
   NodeMap,
   NodeTypePropertiesRecord,
   RelationshipMap,
   RelationshipTypePropertiesRecord,
 } from "./types.js";
+import { toJSONType } from "./to-json-type.utils.js";
 
 export { sessionFactory } from "./session-factory.utils.js";
 
@@ -48,14 +51,21 @@ async function introspectNodes(
         return;
       }
       const { nodeLabels } = propertiesRows[0];
-      const id = nodeLabels.join(":");
+      const id = `n:` + nodeLabels.join(":");
       const properties = propertiesRows
         .filter((p) => p.propertyName)
         .map((p) => {
-          const type = new model.PropertyBaseType(
-            p.propertyTypes[0] as model.PropertyBaseType["type"]
+          const neo4jTypes = p.propertyTypes as Array<
+            Neo4jPropertyType | Neo4jPropertyArrayType
+          >;
+
+          const types = neo4jTypes.map(createPropertyInstance);
+
+          return new model.Property(
+            p.propertyName,
+            types.length > 1 ? types : types.pop(),
+            !p.mandatory
           );
-          return new model.Property(p.propertyName, type, !p.mandatory);
         });
       const node = new model.NodeObjectType(
         id,
@@ -108,10 +118,17 @@ async function introspectRelationships(
       const properties = propertiesRows
         .filter((p) => p.propertyName)
         .map((p) => {
-          const type = new model.PropertyBaseType(
-            p.propertyTypes[0] as model.PropertyBaseType["type"]
+          const neo4jTypes = p.propertyTypes as Array<
+            Neo4jPropertyType | Neo4jPropertyArrayType
+          >;
+
+          const types = neo4jTypes.map(createPropertyInstance);
+
+          return new model.Property(
+            p.propertyName,
+            types.length > 1 ? types : types.pop(),
+            !p.mandatory
           );
-          return new model.Property(p.propertyName, type, !p.mandatory);
         });
       const fromNode = nodes[from.join(":")];
       const toNode = nodes[to.join(":")];
@@ -126,4 +143,13 @@ async function introspectRelationships(
     }
   );
   return rels;
+}
+
+function createPropertyInstance(t: Neo4jPropertyType | Neo4jPropertyArrayType) {
+  if (t.endsWith("Array")) {
+    const itemType = t.slice(0, -5) as Neo4jPropertyType;
+    const type = toJSONType(itemType);
+    return new model.PropertyArrayType(new model.PropertyBaseType(type));
+  }
+  return new model.PropertyBaseType(toJSONType(t as Neo4jPropertyType));
 }

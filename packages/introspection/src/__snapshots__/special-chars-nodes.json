@@ -4,42 +4,48 @@
     "graphSchema": {
       "nodeLabels": [
         {
-          "$id": "Genre",
-          "token": "Genre"
+          "$id": "Label-1",
+          "token": "Label-1"
         },
         {
-          "$id": "Movie",
-          "token": "Movie"
+          "$id": "Label-2",
+          "token": "Label-2"
         },
         {
-          "$id": "Person",
-          "token": "Person"
+          "$id": "Spec`ial",
+          "token": "Spec`ial"
         }
       ],
       "relationshipTypes": [],
       "nodeObjectTypes": [
         {
-          "$id": "n:Genre",
+          "$id": "n:Label-1:Label-2",
           "labels": [
             {
-              "$ref": "#Genre"
+              "$ref": "#Label-1"
+            },
+            {
+              "$ref": "#Label-2"
             }
           ],
           "properties": [
             {
               "type": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
               },
-              "token": "name",
+              "token": "prop",
               "nullable": false
             }
           ]
         },
         {
-          "$id": "n:Movie",
+          "$id": "n:Spec`ial",
           "labels": [
             {
-              "$ref": "#Movie"
+              "$ref": "#Spec`ial"
             }
           ],
           "properties": [
@@ -47,24 +53,7 @@
               "type": {
                 "type": "string"
               },
-              "token": "title",
-              "nullable": false
-            }
-          ]
-        },
-        {
-          "$id": "n:Person",
-          "labels": [
-            {
-              "$ref": "#Person"
-            }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "string"
-              },
-              "token": "name",
+              "token": "na`me",
               "nullable": false
             }
           ]

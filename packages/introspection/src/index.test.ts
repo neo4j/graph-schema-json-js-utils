@@ -98,7 +98,33 @@ describe("Introspection tests", () => {
       "./__snapshots__/standalone-nodes.json"
     );
     const schema = schemaRep.toJson();
-    return validateSchema(schema, JSON_SCHEMA);
+    validateSchema(JSON_SCHEMA, schema);
+  });
+
+  test("can handle special characters", async () => {
+    const session = writeSessionFactory();
+    await session.run(specialCharactersGraphQuery);
+    await session.close();
+    const res = await introspect(writeSessionFactory);
+    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
+    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+      "./__snapshots__/special-chars-nodes.json"
+    );
+    const schema = schemaRep.toJson();
+    validateSchema(JSON_SCHEMA, schema);
+  });
+
+  test("can handle multiple types in same property", async () => {
+    const session = writeSessionFactory();
+    await session.run(multiTypesPropertiesGraphQuery);
+    await session.close();
+    const res = await introspect(writeSessionFactory);
+    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
+    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+      "./__snapshots__/multi-types-props.json"
+    );
+    const schema = schemaRep.toJson();
+    validateSchema(JSON_SCHEMA, schema);
   });
 
   test("can introspect matrix", async () => {
@@ -111,7 +137,7 @@ describe("Introspection tests", () => {
       "./__snapshots__/matrix.json"
     );
     const schema = schemaRep.toJson();
-    return validateSchema(schema, JSON_SCHEMA);
+    validateSchema(JSON_SCHEMA, schema);
   });
 });
 
@@ -120,6 +146,14 @@ CREATE (p:Person {name: "Keanu Reeves"})
 CREATE (m:Movie {title: "The Matrix"})
 CREATE (g:Genre {name: "Science Fiction"})
 `;
+
+const specialCharactersGraphQuery =
+  "CREATE (:`Spec``ial` {`na``me`: 'Dude'}), (:`Label-1`:`Label-2` {prop: [1, 2]})";
+
+const multiTypesPropertiesGraphQuery = `CREATE (:Node {prop1: 1}), 
+ (:Node {prop1: 1.1}),
+ (:Node {prop1: "string"}),
+ (:Node {prop1: ["string", "array"]})`;
 
 const matrixQuery = `CREATE (TheMatrix:Movie {title:'The Matrix', released:1999, tagline:'Welcome to the Real World'})
 CREATE (Keanu:Person {name:'Keanu Reeves', born:1964})
