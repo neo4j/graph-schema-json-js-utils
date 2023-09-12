@@ -9,9 +9,12 @@ import {
 
 export { sessionFactory } from "./session-factory.utils.js";
 
-export async function introspect(sessionFactory: () => Session) {
+export async function introspect(
+  sessionFactory: () => Session,
+  sample: boolean = true
+) {
   const nodes = await introspectNodes(sessionFactory);
-  const rels = await introspectRelationships(sessionFactory, nodes);
+  const rels = await introspectRelationships(sessionFactory, nodes, sample);
   const myModel = new model.GraphSchema(
     Object.values(nodes),
     Object.values(rels)
@@ -26,7 +29,7 @@ async function introspectNodes(
   const session = sessionFactory();
   const labelPropsRes = await session.executeRead((tx) =>
     tx.run(`CALL db.schema.nodeTypeProperties()
-    YIELD nodeType, nodeLabels, propertyName, propertyTypes, mandatory
+    YIELD nodeLabels, propertyName, propertyTypes, mandatory
     RETURN *`)
   );
   await session.close();
@@ -67,7 +70,8 @@ async function introspectNodes(
 
 async function introspectRelationships(
   sessionFactory: () => Session,
-  nodes: NodeMap
+  nodes: NodeMap,
+  sample: boolean = true
 ): Promise<RelationshipMap> {
   const relSession = sessionFactory();
   const rels: RelationshipMap = {};
@@ -80,7 +84,7 @@ async function introspectRelationships(
             WITH relType, propertyName
             MATCH (n)-[r]->(m) WHERE type(r) = relType AND (r[propertyName] IS NOT NULL OR propertyName IS NULL)
             WITH n, r, m
-            // LIMIT
+            ${sample ? "LIMIT 100" : ""}
             WITH DISTINCT labels(n) AS from, labels(m) AS to
             RETURN from, to
         }
