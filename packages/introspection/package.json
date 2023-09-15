@@ -1,7 +1,7 @@
 {
-  "name": "@neo4j/graph-schema-utils",
-  "version": "1.0.0-next.9",
-  "description": "Utilities for Neo4j Graph Schema JSON representation",
+  "name": "@neo4j/graph-introspection",
+  "version": "1.0.0-next.0",
+  "description": "Library for introspecting Neo4j graph schemas",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -12,8 +12,9 @@
   },
   "type": "module",
   "scripts": {
-    "test:watch": "vitest",
-    "test": "vitest run",
+    "test:integration:watch": "vitest",
+    "test:integration": "vitest run",
+    "test": "exit 0",
     "build": "tsc --project tsconfig.build.json",
     "check": "tsc --project tsconfig.check.json"
   },
@@ -29,13 +30,11 @@
     "url": "https://github.com/neo4j/graph-schema-json-js-utils/issues"
   },
   "homepage": "https://github.com/neo4j/graph-schema-json-js-utils#readme",
-  "dependencies": {
-    "ajv": "^8.11.0"
-  },
   "keywords": [
     "graph schema"
   ],
   "devDependencies": {
-    "@neo4j/graph-json-schema": "1.0.0-next.3"
+    "@neo4j/graph-json-schema": "*",
+    "neo4j-driver": "^5.12.0"
   }
 }

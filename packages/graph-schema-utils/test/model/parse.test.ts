@@ -30,21 +30,21 @@ describe("Parser tests", () => {
       false
     );
     assert.strictEqual(
-      parsed.graphSchema.nodeObjectTypes[0].labels[0].$id,
+      parsed.graphSchema.nodeObjectTypes[0].labels[1].$id,
       "nl:Person"
     );
     assert.strictEqual(
-      parsed.graphSchema.nodeObjectTypes[0].labels[0].token,
+      parsed.graphSchema.nodeObjectTypes[1].labels[1].token,
       "Person"
     );
     // handles array of types
     assert.deepEqual(
       (
-        parsed.graphSchema.nodeObjectTypes[0].properties[0]
+        parsed.graphSchema.nodeObjectTypes[0].properties[1]
           .type as PropertyTypes[]
       ).map((pbt) => pbt.toJsonStruct()),
       rawParsed.graphSchemaRepresentation.graphSchema.nodeObjectTypes[0]
-        .properties[0].type
+        .properties[1].type
     );
 
     // relationship object types, connected to relationship types and from/to nodes -> label

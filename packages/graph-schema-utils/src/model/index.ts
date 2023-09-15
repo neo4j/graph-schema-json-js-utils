@@ -7,8 +7,8 @@ export class GraphSchemaRepresentation {
     this.graphSchema = graphSchema;
   }
 
-  toJson() {
-    return JSON.stringify(this.toJsonStruct());
+  toJson(space: string | number | undefined = undefined) {
+    return JSON.stringify(this.toJsonStruct(), null, space);
   }
 
   toJsonStruct() {
@@ -43,28 +43,40 @@ export class GraphSchema {
   relationshipObjectTypes: RelationshipObjectType[];
 
   constructor(
-    nodeLabels: NodeLabel[],
-    relationshipTypes: RelationshipType[],
     nodeObjectTypes: NodeObjectType[],
     relationshipObjectTypes: RelationshipObjectType[]
   ) {
-    this.nodeLabels = nodeLabels;
-    this.relationshipTypes = relationshipTypes;
     this.nodeObjectTypes = nodeObjectTypes;
     this.relationshipObjectTypes = relationshipObjectTypes;
+    this.extractNodeLabels();
+    this.extractRelationshipTypes();
+  }
+  private extractNodeLabels() {
+    const nodeLabels = this.nodeObjectTypes.flatMap(
+      (nodeObjectType) => nodeObjectType.labels
+    );
+    this.nodeLabels = [...new Set(nodeLabels)];
+  }
+  private extractRelationshipTypes() {
+    const relationshipTypes = this.relationshipObjectTypes.flatMap(
+      (relationshipObjectType) => relationshipObjectType.type
+    );
+    this.relationshipTypes = [...new Set(relationshipTypes)];
   }
   toJsonStruct() {
     return {
-      nodeLabels: this.nodeLabels.map((nodeLabel) => nodeLabel.toJsonStruct()),
-      relationshipTypes: this.relationshipTypes.map((relationshipType) =>
-        relationshipType.toJsonStruct()
-      ),
-      nodeObjectTypes: this.nodeObjectTypes.map((nodeObjectType) =>
-        nodeObjectType.toJsonStruct()
-      ),
-      relationshipObjectTypes: this.relationshipObjectTypes.map(
-        (relationshipObjectType) => relationshipObjectType.toJsonStruct()
-      ),
+      nodeLabels: this.nodeLabels
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((nodeLabel) => nodeLabel.toJsonStruct()),
+      relationshipTypes: this.relationshipTypes
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((relationshipType) => relationshipType.toJsonStruct()),
+      nodeObjectTypes: this.nodeObjectTypes
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((nodeObjectType) => nodeObjectType.toJsonStruct()),
+      relationshipObjectTypes: this.relationshipObjectTypes
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((relationshipObjectType) => relationshipObjectType.toJsonStruct()),
     };
   }
 
@@ -164,12 +176,7 @@ export class GraphSchema {
         );
       }
     );
-    return new GraphSchema(
-      nodeLabels,
-      relationshipTypes,
-      nodeObjectTypes,
-      relationshipObjectTypes
-    );
+    return new GraphSchema(nodeObjectTypes, relationshipObjectTypes);
   }
 }
 
@@ -232,8 +239,12 @@ export class NodeObjectType {
     }
     return {
       $id: this.$id,
-      labels: this.labels.map((label) => label.toRef()),
-      properties: this.properties.map((property) => property.toJsonStruct()),
+      labels: this.labels
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((label) => label.toRef()),
+      properties: this.properties
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
+        .map((property) => property.toJsonStruct()),
     };
   }
   toRef() {
@@ -281,7 +292,9 @@ export class RelationshipObjectType {
       type: this.type.toRef(),
       from: this.from.toRef(),
       to: this.to.toRef(),
-      properties: this.properties.map((property) => property.toJsonStruct()),
+      properties: this.properties
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
+        .map((property) => property.toJsonStruct()),
     };
   }
   toRef() {
@@ -314,7 +327,9 @@ export class Property {
   }
   toJsonStruct() {
     const typeVal = Array.isArray(this.type)
-      ? this.type.map((t) => t.toJsonStruct())
+      ? this.type
+          .sort((a, b) => (a.type > b.type ? 1 : -1))
+          .map((t) => t.toJsonStruct())
       : this.type.toJsonStruct();
     const out = {
       type: typeVal,

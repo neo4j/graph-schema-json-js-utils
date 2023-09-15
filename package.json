@@ -5,6 +5,8 @@
   "description": "Monorepo for Graph Schema JSON Utils",
   "scripts": {
     "test": "npm run test --workspaces",
+    "test:integration": "npm run test:integration -w packages/introspection",
+    "test:ci": "npm run test && npm run test:integration",
     "check": "npm run check --workspaces",
     "build": "npm run build --workspaces",
     "changeset": "changeset"
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.26.0",
     "@types/node": "^18.13.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vitest": "^0.34.3"
   }
 }

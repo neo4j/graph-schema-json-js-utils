@@ -1,0 +1,65 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "repo-test",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "Label-1",
+          "token": "Label-1"
+        },
+        {
+          "$id": "Label-2",
+          "token": "Label-2"
+        },
+        {
+          "$id": "Spec`ial",
+          "token": "Spec`ial"
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:Label-1:Label-2",
+          "labels": [
+            {
+              "$ref": "#Label-1"
+            },
+            {
+              "$ref": "#Label-2"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "token": "prop",
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "n:Spec`ial",
+          "labels": [
+            {
+              "$ref": "#Spec`ial"
+            }
+          ],
+          "properties": [
+            {
+              "type": {
+                "type": "string"
+              },
+              "token": "na`me",
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": []
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "repo-test",
+    "graphSchema": {
+      "nodeLabels": [],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": []
+    }
+  }
+}
