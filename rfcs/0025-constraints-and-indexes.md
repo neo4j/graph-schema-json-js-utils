@@ -42,9 +42,9 @@ The key challenge is that currently properties are stored on the `[node|relation
 
 This example shows what the schema would look like and gives a feel for the downsides of moving properties to the `nodeLabel`s and `relationshipType`s. In this example, there are `Person+Actor` and `Person+Director` nodes in the database, and there's an Actor-specific property and a Director-specific property. Issues:
 
-- We can't see as easily what properties the `nodeObjectType`s have (in fact, the `nodeObjectType`s have lost a lot of their value as they now only show the `nodeLabel` combinations)
+- We can't see as easily what properties the `nodeObjectType`s have (but the `*ObjectType` structure is still valuable as it shows how node labels can be combined and how relationships are defined between multi-label nodes)
 - The actor-specific properties are repeated twice (assuming that the graph schema inference algorithm wouldn't reasonably be able to infer anything cleverer than "this property appears on the Person label and Actor label"), the director-specific property is also repeated twice, and the person-specific properties are repeated three times. In each case, this is one more time than in the previous iteration of the graph schema (properties on the `nodeObjectType`s)
-- It's not clear how user tools which import data and support multi-label nodes will be able to specify different sets of properties depending on the node label combo
+- It's not as straightforward how user tools which import data and support multi-label nodes will be able to specify different sets of properties. That said, this difficulty looks manageable - Data Importer can use its `nodeMappings` object to store properties per `nodeObjectType`, and overall the schema better matching what the database does will be better
 
 ```
 {
