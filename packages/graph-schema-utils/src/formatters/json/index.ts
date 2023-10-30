@@ -1,1 +1,1 @@
-export { toJson, fromJson } from "./extensions.js";
+export { toJson, fromJson, VERSION } from "./extensions.js";

@@ -20,8 +20,9 @@ import {
   RootSchemaJsonStruct,
 } from "./types.js";
 
+export const VERSION = "0.0.1";
+
 export function toJson(
-  version: string,
   schema: GraphSchema,
   space: string | number | undefined = undefined
 ) {
@@ -39,7 +40,7 @@ export function toJson(
     .map(relationshipObjectType.extract);
   const out: RootSchemaJsonStruct = {
     graphSchemaRepresentation: {
-      version: version,
+      version: VERSION,
       graphSchema: {
         nodeLabels: labels,
         relationshipTypes,
