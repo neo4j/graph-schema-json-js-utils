@@ -1,6 +1,6 @@
 {
   "graphSchemaRepresentation": {
-    "version": "repo-test",
+    "version": "0.0.1",
     "graphSchema": {
       "nodeLabels": [
         {
@@ -27,10 +27,10 @@
           ],
           "properties": [
             {
+              "token": "name",
               "type": {
                 "type": "string"
               },
-              "token": "name",
               "nullable": false
             }
           ]
@@ -44,10 +44,10 @@
           ],
           "properties": [
             {
+              "token": "title",
               "type": {
                 "type": "string"
               },
-              "token": "title",
               "nullable": false
             }
           ]
@@ -61,10 +61,10 @@
           ],
           "properties": [
             {
+              "token": "name",
               "type": {
                 "type": "string"
               },
-              "token": "name",
               "nullable": false
             }
           ]

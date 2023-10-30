@@ -91,7 +91,7 @@ If you need to transport or persist the schema, you can serialize the model into
 ```js
 import { formatters } from "@neo4j/graph-schema-utils";
 
-const serialized = formatters.json.toJson("<version>", graphSchema);
+const serialized = formatters.json.toJson(graphSchema);
 ```
 
 ## Contribute

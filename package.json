@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run test --workspaces",
     "test:integration": "npm run test:integration -w packages/introspection",
-    "test:ci": "npm run test && npm run test:integration",
+    "test:ci": "npm run build && npm run test && npm run test:integration",
     "check": "npm run check --workspaces",
     "build": "npm run build --workspaces",
     "changeset": "changeset"

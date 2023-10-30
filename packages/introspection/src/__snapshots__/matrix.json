@@ -1,6 +1,6 @@
 {
   "graphSchemaRepresentation": {
-    "version": "repo-test",
+    "version": "0.0.1",
     "graphSchema": {
       "nodeLabels": [
         {
@@ -48,24 +48,24 @@
           ],
           "properties": [
             {
+              "token": "released",
               "type": {
                 "type": "integer"
               },
-              "token": "released",
               "nullable": false
             },
             {
+              "token": "tagline",
               "type": {
                 "type": "string"
               },
-              "token": "tagline",
               "nullable": true
             },
             {
+              "token": "title",
               "type": {
                 "type": "string"
               },
-              "token": "title",
               "nullable": false
             }
           ]
@@ -79,17 +79,17 @@
           ],
           "properties": [
             {
+              "token": "born",
               "type": {
                 "type": "integer"
               },
-              "token": "born",
               "nullable": true
             },
             {
+              "token": "name",
               "type": {
                 "type": "string"
               },
-              "token": "name",
               "nullable": false
             }
           ]
@@ -109,13 +109,13 @@
           },
           "properties": [
             {
+              "token": "roles",
               "type": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "token": "roles",
               "nullable": false
             }
           ]
@@ -172,17 +172,17 @@
           },
           "properties": [
             {
+              "token": "rating",
               "type": {
                 "type": "integer"
               },
-              "token": "rating",
               "nullable": false
             },
             {
+              "token": "summary",
               "type": {
                 "type": "string"
               },
-              "token": "summary",
               "nullable": false
             }
           ]

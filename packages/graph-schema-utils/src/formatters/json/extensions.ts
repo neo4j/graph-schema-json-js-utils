@@ -190,7 +190,9 @@ const nodeObjectType = {
   extract: (nodeObjectType: NodeObjectType): NodeObjectTypeJsonStruct => ({
     $id: nodeObjectType.$id,
     labels: nodeObjectType.labels.map(nodeLabel.toRef),
-    properties: nodeObjectType.properties.map(property.extract),
+    properties: nodeObjectType.properties
+      .sort((a, b) => (a.token < b.token ? -1 : 1))
+      .map(property.extract),
   }),
   create: (
     nodeObjectType: NodeObjectTypeJsonStruct,
@@ -218,7 +220,9 @@ const relationshipObjectType = {
     type: relationshipType.toRef(relationshipObjectType.type),
     from: nodeObjectType.toRef(relationshipObjectType.from),
     to: nodeObjectType.toRef(relationshipObjectType.to),
-    properties: relationshipObjectType.properties.map(property.extract),
+    properties: relationshipObjectType.properties
+      .sort((a, b) => (a.token < b.token ? -1 : 1))
+      .map(property.extract),
   }),
   create: (
     relationshipObjectType: RelationshipObjectTypeJsonStruct,
