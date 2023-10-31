@@ -225,4 +225,4 @@ This example shows what the schema would look like. In this example, there are `
 }
 ```
 
-N.B. With this change we have lost some of the benefit of the `*ObjectType`s as they no longer show properties. The `*ObjectType` structure is still valuable as it shows how node labels can be combined and how relationships are defined between `nodeObjectType`s. Additionally, we will mitigate this downside by adding a `getProperties` function to the hydrated `*ObjectType` classes.
+N.B. With this change we have lost some of the benefit of the `*ObjectType`s as they no longer show properties. The `*ObjectType` structure is still valuable though as it shows how node labels can be combined and how relationships are defined between `nodeObjectType`s. Additionally, we will mitigate this downside by adding a `getProperties` function to the hydrated `*ObjectType` classes.
