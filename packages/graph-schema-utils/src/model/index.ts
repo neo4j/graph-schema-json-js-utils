@@ -120,7 +120,19 @@ export class GraphSchema {
     );
     const relationshipTypes = json.relationshipTypes.map(
       (relationshipType) =>
-        new RelationshipType(relationshipType.$id, relationshipType.token)
+        new RelationshipType(
+          relationshipType.$id,
+          relationshipType.token,
+          relationshipType.properties.map(
+            (property) =>
+              new Property(
+                property.token,
+                PropertyType.fromJsonStruct(property.type),
+                property.nullable,
+                property.$id
+              )
+          )
+        )
     );
     const nodeObjectTypes = json.nodeObjectTypes.map((nodeObjectType) => {
       const labels = nodeObjectType.labels
@@ -164,16 +176,7 @@ export class GraphSchema {
           relationshipObjectType.$id,
           type,
           from,
-          to,
-          relationshipObjectType.properties.map(
-            (property) =>
-              new Property(
-                property.token,
-                PropertyType.fromJsonStruct(property.type),
-                property.nullable,
-                property.$id
-              )
-          )
+          to
         );
       }
     );
@@ -214,21 +217,29 @@ export class NodeLabel {
 export class RelationshipType {
   $id: string;
   token: string;
+  properties: Property[];
 
-  constructor(id: string, token: string) {
+  constructor(id: string, token: string, properties: Property[] = []) {
     this.$id = id;
     this.token = token;
+    this.properties = properties;
   }
   toJsonStruct() {
     return {
       $id: this.$id,
       token: this.token,
+      properties: this.properties
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
+        .map((property) => property.toJsonStruct()),
     };
   }
   toRef() {
     return {
       $ref: `#${this.$id}`,
     };
+  }
+  getPropertyTokens() {
+    return this.properties.map((property) => property.token);
   }
 }
 
@@ -270,20 +281,17 @@ export class RelationshipObjectType {
   type: RelationshipType;
   from: NodeObjectType;
   to: NodeObjectType;
-  properties: Property[];
 
   constructor(
     id: string,
     type: RelationshipType,
     from: NodeObjectType,
-    to: NodeObjectType,
-    properties: Property[] = []
+    to: NodeObjectType
   ) {
     this.$id = id;
     this.type = type;
     this.from = from;
     this.to = to;
-    this.properties = properties;
   }
   toJsonStruct() {
     if (!this.type) {
@@ -300,9 +308,6 @@ export class RelationshipObjectType {
       type: this.type.toRef(),
       from: this.from.toRef(),
       to: this.to.toRef(),
-      properties: this.properties
-        .sort((a, b) => (a.token > b.token ? 1 : -1))
-        .map((property) => property.toJsonStruct()),
     };
   }
   toRef() {
@@ -310,8 +315,11 @@ export class RelationshipObjectType {
       $ref: `#${this.$id}`,
     };
   }
+  getProperties() {
+    return this.type.properties;
+  }
   getPropertyTokens() {
-    return this.properties.map((property) => property.token);
+    return this.getProperties().map((property) => property.token);
   }
 }
 
@@ -425,7 +433,11 @@ export type NodeLabelJsonStruct = {
   properties: PropertyJsonStruct[];
 };
 
-export type RelationshipTypeJsonStruct = { $id: string; token: string };
+export type RelationshipTypeJsonStruct = {
+  $id: string;
+  token: string;
+  properties: PropertyJsonStruct[];
+};
 
 export type NodeObjectTypeJsonStruct = {
   $id: string;
@@ -437,7 +449,6 @@ export type RelationshipObjectTypeJsonStruct = {
   type: { $ref: string };
   from: { $ref: string };
   to: { $ref: string };
-  properties: PropertyJsonStruct[];
 };
 
 export type PropertyJsonStruct = {

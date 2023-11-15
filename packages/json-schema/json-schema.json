@@ -40,10 +40,11 @@
                   },
                   "token": {
                     "type": "string"
-                  }
+                  },
+                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
                 },
                 "additionalProperties": false,
-                "required": ["$id", "token"]
+                "required": ["$id", "token", "properties"]
               }
             },
             "nodeObjectTypes": {
@@ -110,11 +111,10 @@
                         "type": "string"
                       }
                     }
-                  },
-                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
+                  }
                 },
                 "additionalProperties": false,
-                "required": ["$id", "type", "from", "to", "properties"]
+                "required": ["$id", "type", "from", "to"]
               }
             }
           },

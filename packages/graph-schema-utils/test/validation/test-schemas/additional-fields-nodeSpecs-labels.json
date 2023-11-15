@@ -18,7 +18,8 @@
       "relationshipTypes": [
         {
           "$id": "rt1",
-          "token": "ACTED_IN"
+          "token": "ACTED_IN",
+          "properties": []
         }
       ],
       "nodeObjectTypes": [

@@ -324,7 +324,7 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
 
-    const NUM_MISSING_RELATIONSHIPTYPE_ROOT = 2;
+    const NUM_MISSING_RELATIONSHIPTYPE_ROOT = 3;
     let allErrorsRelationshipTypeRoot = [];
     try {
       validateSchema(JSON_SCHEMA, missingRequiredRelationshipTypeRoot);

@@ -26,19 +26,7 @@
           },
           "to": {
             "$ref": "#n3"
-          },
-          "properties": [
-            {
-              "token": "role",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "nullable": false
-            }
-          ]
+          }
         }
       ]
     }

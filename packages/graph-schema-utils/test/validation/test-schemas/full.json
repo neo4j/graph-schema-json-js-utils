@@ -104,8 +104,22 @@
         }
       ],
       "relationshipTypes": [
-        { "$id": "rt:ACTED_IN", "token": "ACTED_IN" },
-        { "$id": "rt:DIRECTED", "token": "DIRECTED" }
+        {
+          "$id": "rt:ACTED_IN",
+          "token": "ACTED_IN",
+          "properties": [
+            {
+              "token": "roles",
+              "type": { "type": "array", "items": { "type": "string" } },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "rt:DIRECTED",
+          "token": "DIRECTED",
+          "properties": []
+        }
       ],
       "nodeObjectTypes": [
         {
@@ -126,21 +140,13 @@
           "$id": "r:ACTED_IN",
           "type": { "$ref": "#rt:ACTED_IN" },
           "from": { "$ref": "#n:Actor:Person" },
-          "to": { "$ref": "#n:Movie" },
-          "properties": [
-            {
-              "token": "roles",
-              "type": { "type": "array", "items": { "type": "string" } },
-              "nullable": false
-            }
-          ]
+          "to": { "$ref": "#n:Movie" }
         },
         {
           "$id": "r:DIRECTED",
           "type": { "$ref": "#rt:DIRECTED" },
           "from": { "$ref": "#n:Actor:Director" },
-          "to": { "$ref": "#n:Movie" },
-          "properties": []
+          "to": { "$ref": "#n:Movie" }
         }
       ]
     }

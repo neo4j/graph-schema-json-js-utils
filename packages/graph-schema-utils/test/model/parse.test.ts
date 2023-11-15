@@ -46,16 +46,16 @@ describe("Parser tests", () => {
 
     // relationship object types, connected to relationship types and from/to nodes -> label
     assert.strictEqual(
-      parsed.graphSchema.relationshipObjectTypes[0].properties.length,
+      parsed.graphSchema.relationshipTypes[0].properties.length,
       1
     );
     assert.strictEqual(
-      parsed.graphSchema.relationshipObjectTypes[0].properties[0].token,
+      parsed.graphSchema.relationshipTypes[0].properties[0].token,
       "roles"
     );
     assert.strictEqual(
       (
-        parsed.graphSchema.relationshipObjectTypes[0].properties[0]
+        parsed.graphSchema.relationshipTypes[0].properties[0]
           .type as PropertyTypes
       ).type,
       "array"

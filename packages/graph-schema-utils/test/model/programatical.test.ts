@@ -13,8 +13,15 @@ describe("Programatic model tests", () => {
       new model.NodeLabel("l2", "Movie"),
       new model.NodeLabel("l3", "Genre"),
     ];
+    const actedInProperties = [
+      new model.Property(
+        "roles",
+        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        false
+      ),
+    ];
     const relationshipTypes = [
-      new model.RelationshipType("rt1", "ACTED_IN"),
+      new model.RelationshipType("rt1", "ACTED_IN", actedInProperties),
       new model.RelationshipType("rt2", "DIRECTED"),
       new model.RelationshipType("rt3", "IS_GENRE"),
     ];
@@ -24,20 +31,12 @@ describe("Programatic model tests", () => {
       new model.NodeObjectType("n3", [labels[2]]),
     ];
 
-    const actedInProperties = [
-      new model.Property(
-        "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string")),
-        false
-      ),
-    ];
     const relationshipObjectTypes = [
       new model.RelationshipObjectType(
         "r1",
         relationshipTypes[0],
         nodeObjectTypes[0],
-        nodeObjectTypes[1],
-        actedInProperties
+        nodeObjectTypes[1]
       ),
       new model.RelationshipObjectType(
         "r2",
@@ -98,16 +97,16 @@ describe("Programatic model tests", () => {
       $ref: "#r1",
     });
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties.length,
+      gRep.graphSchema.relationshipTypes[0].properties.length,
       1
     );
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties[0].token,
+      gRep.graphSchema.relationshipTypes[0].properties[0].token,
       "roles"
     );
     assert.strictEqual(
       (
-        gRep.graphSchema.relationshipObjectTypes[0].properties[0]
+        gRep.graphSchema.relationshipTypes[0].properties[0]
           .type as PropertyTypes
       ).type,
       "array"
@@ -293,7 +292,9 @@ describe("Programatic model tests", () => {
       new model.NodeLabel("l2", "Dog", [properties[1]]),
       new model.NodeLabel("l3", "Movie"),
     ];
-    const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
+    const relationshipTypes = [
+      new model.RelationshipType("rt1", "ACTED_IN", [properties[2]]),
+    ];
 
     const nodeObjectTypes = [
       new model.NodeObjectType("n1", [labels[0]]),
@@ -306,8 +307,7 @@ describe("Programatic model tests", () => {
         "r1",
         relationshipTypes[0],
         nodeObjectTypes[0],
-        nodeObjectTypes[2],
-        [properties[2]]
+        nodeObjectTypes[2]
       ),
       new model.RelationshipObjectType(
         "r2",

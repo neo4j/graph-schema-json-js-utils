@@ -19,7 +19,14 @@
       "relationshipTypes": [
         {
           "$id": "rt1",
-          "token": "ACTED_IN"
+          "token": "ACTED_IN",
+          "properties": [
+            {
+              "token": "role",
+              "type": { "type": "array", "items": { "type": "string" } },
+              "nullable": false
+            }
+          ]
         }
       ],
       "nodeObjectTypes": [
@@ -41,14 +48,7 @@
           },
           "to": {
             "$ref": "#n3"
-          },
-          "properties": [
-            {
-              "token": "role",
-              "nullable": false,
-              "type": { "type": "array", "items": { "type": "string" } }
-            }
-          ]
+          }
         },
         {
           "$id": "r1",
@@ -61,14 +61,7 @@
           },
           "to": {
             "$ref": "#n3"
-          },
-          "properties": [
-            {
-              "token": "role",
-              "type": { "type": "array", "items": { "type": "string" } },
-              "nullable": false
-            }
-          ]
+          }
         }
       ]
     }
