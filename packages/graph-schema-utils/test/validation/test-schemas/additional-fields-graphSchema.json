@@ -5,7 +5,14 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
+          "token": "Person",
+          "properties": [
+            {
+              "token": "title",
+              "type": { "type": "string" },
+              "nullable": false
+            }
+          ]
         }
       ],
       "relationshipTypes": [
@@ -20,13 +27,6 @@
           "labels": [
             {
               "$ref": "#l4"
-            }
-          ],
-          "properties": [
-            {
-              "token": "title",
-              "type": { "type": "string" },
-              "nullable": false
             }
           ]
         }

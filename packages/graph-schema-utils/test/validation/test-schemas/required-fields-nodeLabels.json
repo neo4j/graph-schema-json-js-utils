@@ -11,13 +11,6 @@
             {
               "$ref": "#l1"
             }
-          ],
-          "properties": [
-            {
-              "token": "name",
-              "type": { "type": "string" },
-              "nullable": false
-            }
           ]
         }
       ],

@@ -6,6 +6,13 @@
         {
           "$id": "l1",
           "token": "Person",
+          "properties": [
+            {
+              "token": "id",
+              "nullable": false,
+              "type": { "type": "string" }
+            }
+          ],
           "illegal-field": "illegal-field"
         }
       ],
@@ -21,13 +28,6 @@
           "labels": [
             {
               "$ref": "#l1"
-            }
-          ],
-          "properties": [
-            {
-              "token": "id",
-              "nullable": false,
-              "type": { "type": "string" }
             }
           ]
         }

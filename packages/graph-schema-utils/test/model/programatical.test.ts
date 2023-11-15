@@ -5,8 +5,11 @@ import { PropertyTypes } from "../../src/model/index.js";
 
 describe("Programatic model tests", () => {
   test("Can be created programatically", () => {
+    const personProperties = [
+      new model.Property("name", new model.PropertyBaseType("string"), false),
+    ];
     const labels = [
-      new model.NodeLabel("l1", "Person"),
+      new model.NodeLabel("l1", "Person", personProperties),
       new model.NodeLabel("l2", "Movie"),
       new model.NodeLabel("l3", "Genre"),
     ];
@@ -15,11 +18,8 @@ describe("Programatic model tests", () => {
       new model.RelationshipType("rt2", "DIRECTED"),
       new model.RelationshipType("rt3", "IS_GENRE"),
     ];
-    const personProperties = [
-      new model.Property("name", new model.PropertyBaseType("string"), false),
-    ];
     const nodeObjectTypes = [
-      new model.NodeObjectType("n1", [labels[0]], personProperties),
+      new model.NodeObjectType("n1", [labels[0]]),
       new model.NodeObjectType("n2", [labels[1]]),
       new model.NodeObjectType("n3", [labels[2]]),
     ];
@@ -69,12 +69,9 @@ describe("Programatic model tests", () => {
       gRep.graphSchema.nodeObjectTypes[0].labels[0],
       gRep.graphSchema.nodeLabels[0]
     );
+    assert.strictEqual(gRep.graphSchema.nodeLabels[0].properties.length, 1);
     assert.strictEqual(
-      gRep.graphSchema.nodeObjectTypes[0].properties.length,
-      1
-    );
-    assert.strictEqual(
-      gRep.graphSchema.nodeObjectTypes[0].properties[0].token,
+      gRep.graphSchema.nodeLabels[0].properties[0].token,
       "name"
     );
     assert.strictEqual(
@@ -282,12 +279,6 @@ describe("Programatic model tests", () => {
   });
   test("getAllPropertyTokens returns all unique property tokens", () => {
     // call getAllPropertyTokens on a graph schema with 3 node object types and 3 relationship object types
-    const labels = [
-      new model.NodeLabel("l1", "Person"),
-      new model.NodeLabel("l2", "Dog"),
-      new model.NodeLabel("l3", "Movie"),
-    ];
-    const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
     const properties = [
       new model.Property("name", new model.PropertyBaseType("string"), false),
       new model.Property("name", new model.PropertyBaseType("string"), false),
@@ -297,9 +288,16 @@ describe("Programatic model tests", () => {
         false
       ),
     ];
+    const labels = [
+      new model.NodeLabel("l1", "Person", [properties[0]]),
+      new model.NodeLabel("l2", "Dog", [properties[1]]),
+      new model.NodeLabel("l3", "Movie"),
+    ];
+    const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
+
     const nodeObjectTypes = [
-      new model.NodeObjectType("n1", [labels[0]], [properties[0]]),
-      new model.NodeObjectType("n2", [labels[1]], [properties[1]]),
+      new model.NodeObjectType("n1", [labels[0]]),
+      new model.NodeObjectType("n2", [labels[1]]),
       new model.NodeObjectType("n3", [labels[2]]),
     ];
 

@@ -2,12 +2,10 @@
   "graphSchemaRepresentation": {
     "version": "1.0.1",
     "graphSchema": {
-      "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
-      "relationshipTypes": [],
-      "nodeObjectTypes": [
+      "nodeLabels": [
         {
-          "$id": "xxxxx",
-          "labels": [{ "$ref": "#nl:Person" }],
+          "$id": "nl:Person",
+          "token": "Person",
           "properties": [
             {
               "token": "primitive",
@@ -39,6 +37,13 @@
               "nullable": false
             }
           ]
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "xxxxx",
+          "labels": [{ "$ref": "#nl:Person" }]
         }
       ],
       "relationshipObjectTypes": []

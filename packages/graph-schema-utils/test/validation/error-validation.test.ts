@@ -303,7 +303,7 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
 
-    const NUM_MISSING_NODELABELS = 2;
+    const NUM_MISSING_NODELABELS = 3;
     let allErrorsNodeLabels = [];
     try {
       validateSchema(JSON_SCHEMA, missingRequiredNodeLabels);
@@ -368,7 +368,7 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
 
-    const NUM_MISSING_NODESPECS_ROOT = 3;
+    const NUM_MISSING_NODESPECS_ROOT = 2;
     let allErrorNodespecsRoot = [];
     try {
       validateSchema(JSON_SCHEMA, missingRequiredPropertiesNodeSpecsRoot);

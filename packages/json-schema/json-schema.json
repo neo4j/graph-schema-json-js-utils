@@ -23,10 +23,11 @@
                   },
                   "token": {
                     "type": "string"
-                  }
+                  },
+                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
                 },
                 "additionalProperties": false,
-                "required": ["$id", "token"]
+                "required": ["$id", "token", "properties"]
               }
             },
             "relationshipTypes": {
@@ -65,11 +66,10 @@
                       "additionalProperties": false,
                       "required": ["$ref"]
                     }
-                  },
-                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
+                  }
                 },
                 "additionalProperties": false,
-                "required": ["$id", "labels", "properties"]
+                "required": ["$id", "labels"]
               }
             },
             "relationshipObjectTypes": {

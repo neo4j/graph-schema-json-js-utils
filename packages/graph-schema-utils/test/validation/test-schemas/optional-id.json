@@ -7,20 +7,7 @@
       "nodeObjectTypes": [
         {
           "$id": "test-id",
-          "labels": [{ "$ref": "#nl:Person" }],
-          "properties": [
-            {
-              "$id": "xxxxx",
-              "token": "has-id",
-              "type": { "type": "string" },
-              "nullable": false
-            },
-            {
-              "token": "no-id",
-              "type": { "type": "string" },
-              "nullable": false
-            }
-          ]
+          "labels": [{ "$ref": "#nl:Person" }]
         }
       ],
       "relationshipObjectTypes": []
