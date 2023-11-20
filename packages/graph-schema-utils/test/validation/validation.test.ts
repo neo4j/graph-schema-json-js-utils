@@ -40,3 +40,13 @@ describe("Validate if JSON-documen is a string", () => {
     assert.doesNotThrow(() => validateSchema(JSON_SCHEMA, schema));
   });
 });
+
+describe("Validate no errors in example", () => {
+  test("Validates no error in example-graph-schema.json", () => {
+    const schema = readFile(
+      path.resolve(__dirname, "./test-schemas/example-graph-schema.json")
+    );
+    validateSchema(JSON_SCHEMA, schema);
+    assert.doesNotThrow(() => validateSchema(JSON_SCHEMA, schema));
+  });
+});
