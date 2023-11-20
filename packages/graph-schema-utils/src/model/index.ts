@@ -41,13 +41,16 @@ export class GraphSchema {
   relationshipTypes: RelationshipType[];
   nodeObjectTypes: NodeObjectType[];
   relationshipObjectTypes: RelationshipObjectType[];
+  constraints: Constraint[];
 
   constructor(
     nodeObjectTypes: NodeObjectType[],
-    relationshipObjectTypes: RelationshipObjectType[]
+    relationshipObjectTypes: RelationshipObjectType[],
+    constraints: Constraint[] = []
   ) {
     this.nodeObjectTypes = nodeObjectTypes;
     this.relationshipObjectTypes = relationshipObjectTypes;
+    this.constraints = constraints;
     this.extractNodeLabels();
     this.extractRelationshipTypes();
   }
@@ -77,6 +80,9 @@ export class GraphSchema {
       relationshipObjectTypes: this.relationshipObjectTypes
         .sort((a, b) => (a.$id > b.$id ? 1 : -1))
         .map((relationshipObjectType) => relationshipObjectType.toJsonStruct()),
+      constraints: this.constraints
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((constraint) => constraint.toJsonStruct()),
     };
   }
 
@@ -180,7 +186,39 @@ export class GraphSchema {
         );
       }
     );
-    return new GraphSchema(nodeObjectTypes, relationshipObjectTypes);
+    const constraints = json.constraints.map((constraint) => {
+      let nodeLabel = undefined;
+      if (constraint.nodeLabel !== undefined) {
+        nodeLabel = nodeLabels.find(
+          (nodeLabel) => nodeLabel.$id === constraint.nodeLabel.$ref.slice(1)
+        );
+        if (!nodeLabel) {
+          throw new Error("Not all node labels in constraints are defined");
+        }
+      }
+
+      return new Constraint(
+        constraint.$id,
+        constraint.name,
+        constraint.constraintType,
+        constraint.entityType,
+        nodeLabel,
+        constraint.properties.map(
+          (property) =>
+            new Property(
+              property.token,
+              PropertyType.fromJsonStruct(property.type),
+              property.nullable,
+              property.$id
+            )
+        )
+      );
+    });
+    return new GraphSchema(
+      nodeObjectTypes,
+      relationshipObjectTypes,
+      constraints
+    );
   }
 }
 
@@ -323,6 +361,53 @@ export class RelationshipObjectType {
   }
 }
 
+export class Constraint {
+  $id: string;
+  name: string;
+  constraintType: ConstraintType;
+  entityType: EntityType;
+  nodeLabel?: NodeLabel;
+  properties: Property[];
+
+  constructor(
+    $id: string,
+    name: string,
+    constraintType: ConstraintType,
+    entityType: EntityType,
+    nodeLabel?: NodeLabel,
+    properties: Property[] = []
+  ) {
+    this.$id = $id;
+    this.name = name;
+    this.constraintType = constraintType;
+    this.entityType = entityType;
+    this.nodeLabel = nodeLabel;
+    this.properties = properties;
+  }
+
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      name: this.name,
+      constraintType: this.constraintType,
+      entityType: this.entityType,
+      nodeLabel:
+        this.nodeLabel === undefined ? undefined : this.nodeLabel.toRef(),
+      properties: this.properties
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
+        .map((property) => property.toJsonStruct()),
+    };
+  }
+}
+
+export type ConstraintType =
+  | "uniqueness"
+  | "propertyExistence"
+  | "propertyType"
+  | "key";
+
+export type EntityType = "node" | "relationship";
+
 export type PropertyTypes = PropertyBaseType | PropertyArrayType;
 export class Property {
   token: string;
@@ -425,6 +510,7 @@ export type GraphSchemaJsonStruct = {
   relationshipTypes: RelationshipTypeJsonStruct[];
   nodeObjectTypes: NodeObjectTypeJsonStruct[];
   relationshipObjectTypes: RelationshipObjectTypeJsonStruct[];
+  constraints: ConstraintJsonStruct[];
 };
 
 export type NodeLabelJsonStruct = {
@@ -449,6 +535,15 @@ export type RelationshipObjectTypeJsonStruct = {
   type: { $ref: string };
   from: { $ref: string };
   to: { $ref: string };
+};
+
+export type ConstraintJsonStruct = {
+  $id: string;
+  name: string;
+  constraintType: ConstraintType;
+  entityType: EntityType;
+  nodeLabel?: { $ref: string };
+  properties: PropertyJsonStruct[];
 };
 
 export type PropertyJsonStruct = {

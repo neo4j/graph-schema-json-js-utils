@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert";
 import { describe, expect, test } from "vitest";
 import { model } from "../../src/index.js";
-import { PropertyTypes } from "../../src/model/index.js";
+import { Property, PropertyTypes } from "../../src/model/index.js";
 
 describe("Programatic model tests", () => {
   test("Can be created programatically", () => {
@@ -52,9 +52,20 @@ describe("Programatic model tests", () => {
       ),
     ];
 
+    const constraint1 = new model.Constraint(
+      "c1",
+      "UNIQUE",
+      "uniqueness",
+      "node",
+      labels[0],
+      personProperties
+    );
+    const constraints = [constraint1];
+
     const graphSchema = new model.GraphSchema(
       nodeObjectTypes,
-      relationshipObjectTypes
+      relationshipObjectTypes,
+      constraints
     );
 
     const gRep = new model.GraphSchemaRepresentation("1.0.1", graphSchema);
@@ -110,6 +121,25 @@ describe("Programatic model tests", () => {
           .type as PropertyTypes
       ).type,
       "array"
+    );
+    assert.strictEqual(gRep.graphSchema.constraints.length, 1);
+    assert.strictEqual(gRep.graphSchema.constraints[0].properties.length, 1);
+    assert.strictEqual(
+      gRep.graphSchema.constraints[0].properties[0].token,
+      "name"
+    );
+    assert.strictEqual(gRep.graphSchema.constraints[0].name, "UNIQUE");
+    assert.strictEqual(gRep.graphSchema.constraints[0].$id, "c1");
+    assert.strictEqual(
+      gRep.graphSchema.constraints[0].constraintType,
+      "uniqueness"
+    );
+    assert.strictEqual(gRep.graphSchema.constraints[0].entityType, "node");
+    assert.strictEqual(gRep.graphSchema.constraints[0].nodeLabel, labels[0]);
+    assert.strictEqual(
+      (gRep.graphSchema.constraints[0].properties[0].type as PropertyTypes)
+        .type,
+      "string"
     );
   });
   test("Handles optional id:s on properties", () => {

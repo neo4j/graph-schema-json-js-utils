@@ -77,7 +77,6 @@
               "type": "array",
               "items": {
                 "type": "object",
-
                 "properties": {
                   "$id": {
                     "type": "string"
@@ -116,6 +115,71 @@
                 "additionalProperties": false,
                 "required": ["$id", "type", "from", "to"]
               }
+            },
+            "constraints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "$id": {
+                    "type": "string"
+                  },
+                  "constraintType": {
+                    "type": "string",
+                    "enum": [
+                      "uniqueness",
+                      "propertyExistence",
+                      "propertyType",
+                      "key"
+                    ]
+                  },
+                  "entityType": {
+                    "type": "string",
+                    "enum": ["node", "relationship"]
+                  },
+                  "nodeLabel": {
+                    "type": "object",
+                    "properties": {
+                      "$ref": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "relationshipType": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
+                },
+                "oneOf": [
+                  {
+                    "properties": {
+                      "entityType": {
+                        "const": "node"
+                      }
+                    },
+                    "required": ["nodeLabel"]
+                  },
+                  {
+                    "properties": {
+                      "entityType": {
+                        "const": "relationship"
+                      }
+                    },
+                    "required": ["relationshipType"]
+                  }
+                ]
+              },
+              "additionalProperties": false,
+              "required": [
+                "$id",
+                "constaintType",
+                "entityType",
+                "name",
+                "properties"
+              ]
             }
           },
           "additionalProperties": false,
@@ -123,7 +187,8 @@
             "nodeLabels",
             "relationshipTypes",
             "nodeObjectTypes",
-            "relationshipObjectTypes"
+            "relationshipObjectTypes",
+            "constraints"
           ]
         }
       }

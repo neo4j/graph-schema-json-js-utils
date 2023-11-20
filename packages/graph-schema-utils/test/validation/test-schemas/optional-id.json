@@ -10,7 +10,8 @@
           "labels": [{ "$ref": "#nl:Person" }]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": []
     }
   }
 }

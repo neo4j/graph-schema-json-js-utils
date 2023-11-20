@@ -20,7 +20,8 @@
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": []
     }
   }
 }

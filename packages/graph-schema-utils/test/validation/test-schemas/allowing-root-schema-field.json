@@ -133,7 +133,8 @@
           "from": { "$ref": "#n:Actor:Director" },
           "to": { "$ref": "#n:Movie" }
         }
-      ]
+      ],
+      "constraints": []
     }
   }
 }

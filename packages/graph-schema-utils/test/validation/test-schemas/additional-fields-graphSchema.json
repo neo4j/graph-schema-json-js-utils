@@ -33,6 +33,7 @@
         }
       ],
       "relationshipObjectTypes": [],
+      "constraints": [],
       "illegal-field": []
     }
   }

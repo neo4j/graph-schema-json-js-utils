@@ -136,6 +136,16 @@
           "from": { "$ref": "#n:Director:Person" },
           "to": { "$ref": "#n:Movie" }
         }
+      ],
+      "constraints": [
+        {
+          "$id": "c:name_unique",
+          "constraintType": "uniqueness",
+          "entityType": "node",
+          "nodeLabel": { "$ref": "#nl:Actor" },
+          "name": "uniqueness_constraint",
+          "properties": []
+        }
       ]
     }
   }

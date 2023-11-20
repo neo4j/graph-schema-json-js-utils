@@ -285,7 +285,7 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
 
-    const NUM_MISSING_GRAPH_SCHEMA_ITEMS = 4;
+    const NUM_MISSING_GRAPH_SCHEMA_ITEMS = 5;
     let allErrors = [];
     try {
       validateSchema(JSON_SCHEMA, missingRequireGraphSchema);
