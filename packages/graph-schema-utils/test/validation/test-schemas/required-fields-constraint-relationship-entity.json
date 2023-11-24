@@ -1,0 +1,53 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "nl:Actor",
+          "token": "Actor",
+          "properties": [
+            {
+              "token": "id",
+              "type": [
+                { "type": "string" },
+                { "type": "integer" },
+                {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              ],
+              "nullable": false
+            },
+            {
+              "token": "name",
+              "type": { "type": "string" },
+              "nullable": false
+            },
+            {
+              "token": "born",
+              "type": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": [],
+      "constraints": [
+        {
+          "$id": "c:1",
+          "constraintType": "uniqueness",
+          "entityType": "relationship",
+          "nodeLabel": { "$ref": "#nl:Actor" },
+          "name": "uniqueness_constraint",
+          "properties": []
+        }
+      ]
+    }
+  }
+}

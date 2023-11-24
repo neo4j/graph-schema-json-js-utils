@@ -146,7 +146,12 @@
                     }
                   },
                   "relationshipType": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "$ref": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "name": {
                     "type": "string"
@@ -170,16 +175,16 @@
                     },
                     "required": ["relationshipType"]
                   }
+                ],
+                "additionalProperties": false,
+                "required": [
+                  "$id",
+                  "constraintType",
+                  "entityType",
+                  "name",
+                  "properties"
                 ]
-              },
-              "additionalProperties": false,
-              "required": [
-                "$id",
-                "constaintType",
-                "entityType",
-                "name",
-                "properties"
-              ]
+              }
             }
           },
           "additionalProperties": false,

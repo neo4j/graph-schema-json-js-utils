@@ -376,5 +376,76 @@ describe("Validate type errors", () => {
       allErrorNodespecsRoot = e.messages;
     }
     assert.equal(allErrorNodespecsRoot.length, NUM_MISSING_NODESPECS_ROOT);
+
+    // Constraints
+    const NUM_MISSING_CONSTRAINTS = 8;
+    const missingRequiredInConstraints = readFile(
+      path.resolve(__dirname, "./test-schemas/required-fields-constraints.json")
+    );
+    let constraintErrors = [];
+    try {
+      validateSchema(JSON_SCHEMA, missingRequiredInConstraints);
+    } catch (e) {
+      constraintErrors = e.messages;
+    }
+    assert.equal(constraintErrors.length, NUM_MISSING_CONSTRAINTS);
+
+    const NUM_ERRORS_MISMATCH_NODE_CONSTRAINT = 3;
+    const missingRequiredInNodeConstraints = readFile(
+      path.resolve(
+        __dirname,
+        "./test-schemas/required-fields-constraint-node-entity.json"
+      )
+    );
+    let nodeConstraintErrors = [];
+    try {
+      validateSchema(JSON_SCHEMA, missingRequiredInNodeConstraints);
+    } catch (e) {
+      nodeConstraintErrors = e.messages;
+    }
+    assert.equal(
+      nodeConstraintErrors.length,
+      NUM_ERRORS_MISMATCH_NODE_CONSTRAINT
+    );
+    assert.equal(
+      nodeConstraintErrors.some(
+        (e) => e.params?.missingProperty === "nodeLabel"
+      ),
+      true
+    );
+    assert.equal(
+      nodeConstraintErrors.some((e) => e.params?.passingSchemas === null),
+      true
+    );
+
+    const NUM_ERRORS_MISMATCH_RELATIONSHIP_CONSTRAINT = 3;
+    const missingRequiredInRelationshipConstraints = readFile(
+      path.resolve(
+        __dirname,
+        "./test-schemas/required-fields-constraint-relationship-entity.json"
+      )
+    );
+    let relationshipConstraintErrors = [];
+    try {
+      validateSchema(JSON_SCHEMA, missingRequiredInRelationshipConstraints);
+    } catch (e) {
+      relationshipConstraintErrors = e.messages;
+    }
+    assert.equal(
+      relationshipConstraintErrors.length,
+      NUM_ERRORS_MISMATCH_RELATIONSHIP_CONSTRAINT
+    );
+    assert.equal(
+      relationshipConstraintErrors.some(
+        (e) => e.params?.missingProperty === "relationshipType"
+      ),
+      true
+    );
+    assert.equal(
+      relationshipConstraintErrors.some(
+        (e) => e.params?.passingSchemas === null
+      ),
+      true
+    );
   });
 });

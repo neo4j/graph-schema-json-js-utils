@@ -151,18 +151,18 @@
       ],
       "constraints": [
         {
+          "$id": "c:name_existence",
+          "constraintType": "propertyExistence",
+          "entityType": "relationship",
+          "relationshipType": { "$ref": "#rt:ACTED_IN" },
+          "name": "existence_constraint",
+          "properties": []
+        },
+        {
           "$id": "c:name_unique",
           "constraintType": "uniqueness",
           "entityType": "node",
           "nodeLabel": { "$ref": "#nl:Actor" },
-          "name": "uniqueness_constraint",
-          "properties": []
-        },
-        {
-          "$id": "c:roles_",
-          "constraintType": "propertyExistence",
-          "entityType": "relationship",
-          "relationshipType": "TODO",
           "name": "uniqueness_constraint",
           "properties": []
         }

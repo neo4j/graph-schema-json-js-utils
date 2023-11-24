@@ -1,0 +1,33 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [],
+      "relationshipTypes": [
+        {
+          "$id": "rt:ACTED_IN",
+          "token": "ACTED_IN",
+          "properties": [
+            {
+              "token": "roles",
+              "type": { "type": "array", "items": { "type": "string" } },
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": [],
+      "constraints": [
+        {
+          "$id": "c:1",
+          "constraintType": "uniqueness",
+          "entityType": "node",
+          "relationshipType": { "$ref": "#rt:ACTED_IN" },
+          "name": "uniqueness_constraint",
+          "properties": []
+        }
+      ]
+    }
+  }
+}

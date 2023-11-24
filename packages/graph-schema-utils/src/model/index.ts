@@ -187,32 +187,66 @@ export class GraphSchema {
       }
     );
     const constraints = json.constraints.map((constraint) => {
-      let nodeLabel = undefined;
-      if (constraint.nodeLabel !== undefined) {
-        nodeLabel = nodeLabels.find(
+      if (constraint.entityType === "node") {
+        if (constraint.nodeLabel === undefined) {
+          throw new Error(
+            "Not all node labels in node constraints are defined"
+          );
+        }
+        const nodeLabel = nodeLabels.find(
           (nodeLabel) => nodeLabel.$id === constraint.nodeLabel.$ref.slice(1)
         );
         if (!nodeLabel) {
-          throw new Error("Not all node labels in constraints are defined");
+          throw new Error(
+            "Not all node labels references in node constraints are defined"
+          );
         }
+        return new NodeConstraint(
+          constraint.$id,
+          constraint.name,
+          constraint.constraintType,
+          nodeLabel,
+          constraint.properties.map(
+            (property) =>
+              new Property(
+                property.token,
+                PropertyType.fromJsonStruct(property.type),
+                property.nullable,
+                property.$id
+              )
+          )
+        );
+      } else if (constraint.entityType === "relationship") {
+        if (constraint.relationshipType === undefined) {
+          throw new Error(
+            "Not all relationship types in relationship constraints are defined"
+          );
+        }
+        const relationshipType = relationshipTypes.find(
+          (relationshipType) =>
+            relationshipType.$id === constraint.relationshipType.$ref.slice(1)
+        );
+        if (!relationshipType) {
+          throw new Error(
+            "Not all relationship types in relationship constraints are defined"
+          );
+        }
+        return new RelationshipConstraint(
+          constraint.$id,
+          constraint.name,
+          constraint.constraintType,
+          relationshipType,
+          constraint.properties.map(
+            (property) =>
+              new Property(
+                property.token,
+                PropertyType.fromJsonStruct(property.type),
+                property.nullable,
+                property.$id
+              )
+          )
+        );
       }
-
-      return new Constraint(
-        constraint.$id,
-        constraint.name,
-        constraint.constraintType,
-        constraint.entityType,
-        nodeLabel,
-        constraint.properties.map(
-          (property) =>
-            new Property(
-              property.token,
-              PropertyType.fromJsonStruct(property.type),
-              property.nullable,
-              property.$id
-            )
-        )
-      );
     });
     return new GraphSchema(
       nodeObjectTypes,
@@ -361,28 +395,79 @@ export class RelationshipObjectType {
   }
 }
 
-export class Constraint {
+export type Constraint = NodeConstraint | RelationshipConstraint;
+
+export const isNodeConstraint = (
+  constraint: Constraint
+): constraint is NodeConstraint => {
+  return constraint.entityType === "node";
+};
+
+export const isRelationshipConstraint = (
+  constraint: Constraint
+): constraint is RelationshipConstraint => {
+  return constraint.entityType === "relationship";
+};
+
+export class NodeConstraint {
   $id: string;
   name: string;
   constraintType: ConstraintType;
-  entityType: EntityType;
-  nodeLabel?: NodeLabel;
+  nodeLabel: NodeLabel;
   properties: Property[];
+  entityType: EntityType;
 
   constructor(
     $id: string,
     name: string,
     constraintType: ConstraintType,
-    entityType: EntityType,
-    nodeLabel?: NodeLabel,
+    nodeLabel: NodeLabel,
     properties: Property[] = []
   ) {
     this.$id = $id;
     this.name = name;
     this.constraintType = constraintType;
-    this.entityType = entityType;
     this.nodeLabel = nodeLabel;
     this.properties = properties;
+    this.entityType = "node";
+  }
+
+  toJsonStruct() {
+    const enityType: EntityType = "node";
+    return {
+      $id: this.$id,
+      name: this.name,
+      constraintType: this.constraintType,
+      entityType: this.entityType,
+      nodeLabel: this.nodeLabel.toRef(),
+      properties: this.properties
+        .sort((a, b) => (a.token > b.token ? 1 : -1))
+        .map((property) => property.toJsonStruct()),
+    };
+  }
+}
+
+export class RelationshipConstraint {
+  $id: string;
+  name: string;
+  constraintType: ConstraintType;
+  relationshipType: RelationshipType;
+  properties: Property[];
+  entityType: EntityType;
+
+  constructor(
+    $id: string,
+    name: string,
+    constraintType: ConstraintType,
+    relationshipType: RelationshipType,
+    properties: Property[] = []
+  ) {
+    this.$id = $id;
+    this.name = name;
+    this.constraintType = constraintType;
+    this.relationshipType = relationshipType;
+    this.properties = properties;
+    this.entityType = "relationship";
   }
 
   toJsonStruct() {
@@ -391,8 +476,7 @@ export class Constraint {
       name: this.name,
       constraintType: this.constraintType,
       entityType: this.entityType,
-      nodeLabel:
-        this.nodeLabel === undefined ? undefined : this.nodeLabel.toRef(),
+      relationshipType: this.relationshipType.toRef(),
       properties: this.properties
         .sort((a, b) => (a.token > b.token ? 1 : -1))
         .map((property) => property.toJsonStruct()),
@@ -543,6 +627,7 @@ export type ConstraintJsonStruct = {
   constraintType: ConstraintType;
   entityType: EntityType;
   nodeLabel?: { $ref: string };
+  relationshipType?: { $ref: string };
   properties: PropertyJsonStruct[];
 };
 
