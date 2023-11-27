@@ -9,6 +9,7 @@
           "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p:1",
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false

@@ -8,16 +8,19 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p1",
               "token": "primitive",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p2",
               "token": "many-primitive",
               "type": [{ "type": "string" }, { "type": "integer" }],
               "nullable": false
             },
             {
+              "$id": "p3",
               "token": "primitive array",
               "type": {
                 "type": "array",
@@ -26,6 +29,7 @@
               "nullable": false
             },
             {
+              "$id": "p4",
               "token": "primitive array + primitive",
               "type": [
                 { "type": "string" },

@@ -5,20 +5,10 @@
       "nodeLabels": [
         {
           "$id": "Node",
-          "token": "Node"
-        }
-      ],
-      "relationshipTypes": [],
-      "nodeObjectTypes": [
-        {
-          "$id": "n:Node",
-          "labels": [
-            {
-              "$ref": "#Node"
-            }
-          ],
+          "token": "Node",
           "properties": [
             {
+              "$id": "Node_prop1",
               "type": [
                 {
                   "type": "array",
@@ -42,7 +32,19 @@
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:Node",
+          "labels": [
+            {
+              "$ref": "#Node"
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": [],
+      "constraints": []
     }
   }
 }

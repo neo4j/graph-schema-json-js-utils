@@ -8,6 +8,7 @@
           "token": "Actor",
           "properties": [
             {
+              "$id": "p:1",
               "token": "id",
               "type": [
                 { "type": "string" },
@@ -20,11 +21,13 @@
               "nullable": false
             },
             {
+              "$id": "p:2",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:3",
               "token": "born",
               "type": {
                 "type": "array",

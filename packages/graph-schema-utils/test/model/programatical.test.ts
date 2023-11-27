@@ -10,7 +10,12 @@ import {
 describe("Programatic model tests", () => {
   test("Can be created programatically", () => {
     const personProperties = [
-      new model.Property("name", new model.PropertyBaseType("string"), false),
+      new model.Property(
+        "p1",
+        "name",
+        new model.PropertyBaseType("string"),
+        false
+      ),
     ];
     const labels = [
       new model.NodeLabel("l1", "Person", personProperties),
@@ -19,6 +24,7 @@ describe("Programatic model tests", () => {
     ];
     const actedInProperties = [
       new model.Property(
+        "p2",
         "roles",
         new model.PropertyArrayType(new model.PropertyBaseType("string")),
         false
@@ -128,6 +134,10 @@ describe("Programatic model tests", () => {
       "roles"
     );
     assert.strictEqual(
+      gRep.graphSchema.relationshipTypes[0].properties[0].$id,
+      "p2"
+    );
+    assert.strictEqual(
       (
         gRep.graphSchema.relationshipTypes[0].properties[0]
           .type as PropertyTypes
@@ -167,47 +177,16 @@ describe("Programatic model tests", () => {
       "relationship"
     );
   });
-  test("Handles optional id:s on properties", () => {
-    const properties = [
-      new model.Property("name", new model.PropertyBaseType("string"), false),
-      new model.Property(
-        "age",
-        new model.PropertyBaseType("integer"),
-        true,
-        "test-id"
-      ),
-    ];
-    const serialized = properties.map((p) => p.toJsonStruct());
-    expect(serialized).toMatchInlineSnapshot(`
-      [
-        {
-          "nullable": false,
-          "token": "name",
-          "type": {
-            "type": "string",
-          },
-        },
-        {
-          "$id": "test-id",
-          "nullable": true,
-          "token": "age",
-          "type": {
-            "type": "integer",
-          },
-        },
-      ]
-    `);
-    expect(properties[0]?.toRef()).toEqual(null);
-    expect(properties[1]?.toRef()).toEqual({ $ref: "#test-id" });
-  });
   test("Allows creation of properties with complicated types", () => {
     const properties = [
       new model.Property(
+        "p1",
         "name",
         new model.PropertyArrayType(new model.PropertyBaseType("string")),
         false
       ),
       new model.Property(
+        "p2",
         "id",
         [
           new model.PropertyBaseType("integer"),
@@ -216,6 +195,7 @@ describe("Programatic model tests", () => {
         false
       ),
       new model.Property(
+        "p3",
         "another",
         [
           new model.PropertyBaseType("float"),
@@ -228,6 +208,7 @@ describe("Programatic model tests", () => {
     expect(serialized).toMatchInlineSnapshot(`
       [
         {
+          "$id": "p1",
           "nullable": false,
           "token": "name",
           "type": {
@@ -238,6 +219,7 @@ describe("Programatic model tests", () => {
           },
         },
         {
+          "$id": "p2",
           "nullable": false,
           "token": "id",
           "type": [
@@ -250,6 +232,7 @@ describe("Programatic model tests", () => {
           ],
         },
         {
+          "$id": "p3",
           "nullable": false,
           "token": "another",
           "type": [
@@ -334,9 +317,20 @@ describe("Programatic model tests", () => {
   test("getAllPropertyTokens returns all unique property tokens", () => {
     // call getAllPropertyTokens on a graph schema with 3 node object types and 3 relationship object types
     const properties = [
-      new model.Property("name", new model.PropertyBaseType("string"), false),
-      new model.Property("name", new model.PropertyBaseType("string"), false),
       new model.Property(
+        "p1",
+        "name",
+        new model.PropertyBaseType("string"),
+        false
+      ),
+      new model.Property(
+        "p2",
+        "name",
+        new model.PropertyBaseType("string"),
+        false
+      ),
+      new model.Property(
+        "p3",
         "roles",
         new model.PropertyArrayType(new model.PropertyBaseType("string")),
         false

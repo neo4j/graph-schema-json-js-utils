@@ -8,6 +8,7 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p:1",
               "token": "id",
               "type": [
                 { "type": "string" },
@@ -20,11 +21,13 @@
               "nullable": false
             },
             {
+              "$id": "p:2",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:3",
               "token": "born",
               "type": {
                 "type": "array",
@@ -39,6 +42,7 @@
           "token": "Actor",
           "properties": [
             {
+              "$id": "p:4",
               "token": "id",
               "type": [
                 { "type": "string" },
@@ -51,11 +55,13 @@
               "nullable": false
             },
             {
+              "$id": "p:5",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:6",
               "token": "born",
               "type": {
                 "type": "array",
@@ -70,16 +76,19 @@
           "token": "Director",
           "properties": [
             {
+              "$id": "p:7",
               "token": "id",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:8",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:9",
               "token": "born",
               "type": { "type": "integer" },
               "nullable": false
@@ -91,11 +100,13 @@
           "token": "Movie",
           "properties": [
             {
+              "$id": "p:10",
               "token": "title",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:11",
               "token": "release",
               "type": { "type": "date" },
               "nullable": false
@@ -109,6 +120,7 @@
           "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p:12",
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false

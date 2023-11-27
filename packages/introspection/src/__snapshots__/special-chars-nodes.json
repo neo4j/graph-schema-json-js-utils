@@ -5,15 +5,51 @@
       "nodeLabels": [
         {
           "$id": "Label-1",
-          "token": "Label-1"
+          "token": "Label-1",
+          "properties": [
+            {
+              "$id": "Label-1_prop",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "token": "prop",
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Label-2",
-          "token": "Label-2"
+          "token": "Label-2",
+          "properties": [
+            {
+              "$id": "Label-2_prop",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "token": "prop",
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Spec`ial",
-          "token": "Spec`ial"
+          "token": "Spec`ial",
+          "properties": [
+            {
+              "$id": "Spec`ial_na`me",
+              "type": {
+                "type": "string"
+              },
+              "token": "na`me",
+              "nullable": false
+            }
+          ]
         }
       ],
       "relationshipTypes": [],
@@ -27,18 +63,6 @@
             {
               "$ref": "#Label-2"
             }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "integer"
-                }
-              },
-              "token": "prop",
-              "nullable": false
-            }
           ]
         },
         {
@@ -47,19 +71,11 @@
             {
               "$ref": "#Spec`ial"
             }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "string"
-              },
-              "token": "na`me",
-              "nullable": false
-            }
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": []
     }
   }
 }

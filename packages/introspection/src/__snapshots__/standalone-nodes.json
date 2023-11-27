@@ -5,15 +5,45 @@
       "nodeLabels": [
         {
           "$id": "Genre",
-          "token": "Genre"
+          "token": "Genre",
+          "properties": [
+            {
+              "$id": "Genre_name",
+              "type": {
+                "type": "string"
+              },
+              "token": "name",
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Movie",
-          "token": "Movie"
+          "token": "Movie",
+          "properties": [
+            {
+              "$id": "Movie_title",
+              "type": {
+                "type": "string"
+              },
+              "token": "title",
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Person",
-          "token": "Person"
+          "token": "Person",
+          "properties": [
+            {
+              "$id": "Person_name",
+              "type": {
+                "type": "string"
+              },
+              "token": "name",
+              "nullable": false
+            }
+          ]
         }
       ],
       "relationshipTypes": [],
@@ -24,15 +54,6 @@
             {
               "$ref": "#Genre"
             }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "string"
-              },
-              "token": "name",
-              "nullable": false
-            }
           ]
         },
         {
@@ -40,15 +61,6 @@
           "labels": [
             {
               "$ref": "#Movie"
-            }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "string"
-              },
-              "token": "title",
-              "nullable": false
             }
           ]
         },
@@ -58,19 +70,11 @@
             {
               "$ref": "#Person"
             }
-          ],
-          "properties": [
-            {
-              "type": {
-                "type": "string"
-              },
-              "token": "name",
-              "nullable": false
-            }
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": []
     }
   }
 }

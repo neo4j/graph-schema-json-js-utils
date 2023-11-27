@@ -116,10 +116,10 @@ export class GraphSchema {
           nodeLabel.properties.map(
             (property) =>
               new Property(
+                property.$id,
                 property.token,
                 PropertyType.fromJsonStruct(property.type),
-                property.nullable,
-                property.$id
+                property.nullable
               )
           )
         )
@@ -132,10 +132,10 @@ export class GraphSchema {
           relationshipType.properties.map(
             (property) =>
               new Property(
+                property.$id,
                 property.token,
                 PropertyType.fromJsonStruct(property.type),
-                property.nullable,
-                property.$id
+                property.nullable
               )
           )
         )
@@ -201,20 +201,25 @@ export class GraphSchema {
             "Not all node labels references in node constraints are defined"
           );
         }
+        const properties = constraint.properties
+          .map((property) => {
+            const propertiesForLabel = nodeLabel.properties;
+            return propertiesForLabel.find(
+              (p) => p.$id === property.$ref.slice(1)
+            );
+          })
+          .filter((p) => p);
+        if (properties.length !== constraint.properties.length) {
+          throw new Error(
+            "Not all properties references in node constraints are defined"
+          );
+        }
         return new NodeConstraint(
           constraint.$id,
           constraint.name,
           constraint.constraintType,
           nodeLabel,
-          constraint.properties.map(
-            (property) =>
-              new Property(
-                property.token,
-                PropertyType.fromJsonStruct(property.type),
-                property.nullable,
-                property.$id
-              )
-          )
+          properties
         );
       } else if (constraint.entityType === "relationship") {
         if (constraint.relationshipType === undefined) {
@@ -231,20 +236,25 @@ export class GraphSchema {
             "Not all relationship types in relationship constraints are defined"
           );
         }
+        const properties = constraint.properties
+          .map((property) => {
+            const propertiesForType = relationshipType.properties;
+            return propertiesForType.find(
+              (p) => p.$id === property.$ref.slice(1)
+            );
+          })
+          .filter((p) => p);
+        if (properties.length !== constraint.properties.length) {
+          throw new Error(
+            "Not all properties references in relationship constraints are defined"
+          );
+        }
         return new RelationshipConstraint(
           constraint.$id,
           constraint.name,
           constraint.constraintType,
           relationshipType,
-          constraint.properties.map(
-            (property) =>
-              new Property(
-                property.token,
-                PropertyType.fromJsonStruct(property.type),
-                property.nullable,
-                property.$id
-              )
-          )
+          properties
         );
       }
     });
@@ -440,9 +450,7 @@ export class NodeConstraint {
       constraintType: this.constraintType,
       entityType: this.entityType,
       nodeLabel: this.nodeLabel.toRef(),
-      properties: this.properties
-        .sort((a, b) => (a.token > b.token ? 1 : -1))
-        .map((property) => property.toJsonStruct()),
+      properties: this.properties.map((property) => property.toRef()),
     };
   }
 }
@@ -477,9 +485,7 @@ export class RelationshipConstraint {
       constraintType: this.constraintType,
       entityType: this.entityType,
       relationshipType: this.relationshipType.toRef(),
-      properties: this.properties
-        .sort((a, b) => (a.token > b.token ? 1 : -1))
-        .map((property) => property.toJsonStruct()),
+      properties: this.properties.map((property) => property.toRef()),
     };
   }
 }
@@ -494,21 +500,21 @@ export type EntityType = "node" | "relationship";
 
 export type PropertyTypes = PropertyBaseType | PropertyArrayType;
 export class Property {
+  $id: string;
   token: string;
   type: PropertyTypes | PropertyTypes[];
   nullable: boolean;
-  $id: string | undefined;
 
   constructor(
+    $id: string,
     token: string,
     type: PropertyTypes | PropertyTypes[],
-    nullable: boolean,
-    $id?: string
+    nullable: boolean
   ) {
+    this.$id = $id;
     this.token = token;
     this.type = type;
     this.nullable = nullable;
-    this.$id = $id;
   }
   toJsonStruct() {
     const typeVal = Array.isArray(this.type)
@@ -516,18 +522,15 @@ export class Property {
           .sort((a, b) => (a.type > b.type ? 1 : -1))
           .map((t) => t.toJsonStruct())
       : this.type.toJsonStruct();
-    const out = {
+    return {
+      $id: this.$id,
       type: typeVal,
       token: this.token,
       nullable: this.nullable,
     };
-    if (this.$id !== undefined) {
-      out["$id"] = this.$id;
-    }
-    return out;
   }
   toRef() {
-    return this.$id !== undefined ? { $ref: `#${this.$id}` } : null;
+    return { $ref: `#${this.$id}` };
   }
 }
 
@@ -628,7 +631,7 @@ export type ConstraintJsonStruct = {
   entityType: EntityType;
   nodeLabel?: { $ref: string };
   relationshipType?: { $ref: string };
-  properties: PropertyJsonStruct[];
+  properties: { $ref: string }[];
 };
 
 export type PropertyJsonStruct = {

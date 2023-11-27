@@ -8,6 +8,7 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p1",
               "token": "title",
               "type": { "type": "string" },
               "nullable": false

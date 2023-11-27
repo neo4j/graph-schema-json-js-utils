@@ -8,11 +8,13 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p1",
               "token": "name",
               "nullable": false,
               "type": { "type": "string" }
             },
             {
+              "$id": "p2",
               "token": "born",
               "nullable": false,
               "type": { "type": "integer" }
@@ -24,11 +26,13 @@
           "token": "Actor",
           "properties": [
             {
+              "$id": "p3",
               "token": "name",
               "nullable": false,
               "type": { "type": "string" }
             },
             {
+              "$id": "p4",
               "token": "born",
               "nullable": false,
               "type": { "type": "integer" }
@@ -40,11 +44,13 @@
           "token": "Director",
           "properties": [
             {
+              "$id": "p5",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p6",
               "token": "born",
               "type": { "type": "integer" },
               "nullable": false
@@ -56,11 +62,13 @@
           "token": "Movie",
           "properties": [
             {
+              "$id": "p7",
               "token": "title",
               "nullable": false,
               "type": { "type": "string" }
             },
             {
+              "$id": "p8",
               "token": "release",
               "nullable": false,
               "type": { "type": "date" }
@@ -74,6 +82,7 @@
           "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p9",
               "token": "role",
               "nullable": false,
               "type": {
@@ -91,6 +100,7 @@
           "token": "DIRECTED",
           "properties": [
             {
+              "$id": "p10",
               "token": "role",
               "type": { "type": "string" },
               "nullable": false

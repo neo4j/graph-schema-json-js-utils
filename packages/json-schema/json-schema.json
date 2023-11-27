@@ -156,7 +156,19 @@
                   "name": {
                     "type": "string"
                   },
-                  "properties": { "$ref": "#/$defs/PropertyTypesOneOf" }
+                  "properties": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "$ref": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": ["$ref"]
+                    }
+                  }
                 },
                 "oneOf": [
                   {
@@ -256,8 +268,11 @@
     "PropertyTypesArrayObject": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["token", "type", "nullable"],
+      "required": ["$id", "token", "type", "nullable"],
       "properties": {
+        "$id": {
+          "type": "string"
+        },
         "token": {
           "type": "string"
         },

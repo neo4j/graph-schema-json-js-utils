@@ -51,27 +51,29 @@ async function introspectNodes(
         return;
       }
       const { nodeLabels } = propertiesRows[0];
-      const id = `n:` + nodeLabels.join(":");
-      const properties = propertiesRows
-        .filter((p) => p.propertyName)
-        .map((p) => {
-          const neo4jTypes = p.propertyTypes as Array<
-            Neo4jPropertyType | Neo4jPropertyArrayType
-          >;
+      const nodeId = `n:` + nodeLabels.join(":");
 
-          const types = neo4jTypes.map(createPropertyInstance);
+      const labels = nodeLabels.map((nl) => {
+        const properties = propertiesRows
+          .filter((p) => p.propertyName)
+          .map((p) => {
+            const neo4jTypes = p.propertyTypes as Array<
+              Neo4jPropertyType | Neo4jPropertyArrayType
+            >;
 
-          return new model.Property(
-            p.propertyName,
-            types.length > 1 ? types : types.pop(),
-            !p.mandatory
-          );
-        });
-      const node = new model.NodeObjectType(
-        id,
-        nodeLabels.map((nl) => new model.NodeLabel(nl, nl)),
-        properties
-      );
+            const types = neo4jTypes.map(createPropertyInstance);
+
+            return new model.Property(
+              `${nl}_${p.propertyName}`,
+              p.propertyName,
+              types.length > 1 ? types : types.pop(),
+              !p.mandatory
+            );
+          });
+        return new model.NodeLabel(nl, nl, properties);
+      });
+
+      const node = new model.NodeObjectType(nodeId, labels);
       nodes[nodeObjectTypeId] = node;
     }
   );
@@ -125,6 +127,7 @@ async function introspectRelationships(
           const types = neo4jTypes.map(createPropertyInstance);
 
           return new model.Property(
+            `${relType}_${p.propertyName}`,
             p.propertyName,
             types.length > 1 ? types : types.pop(),
             !p.mandatory
@@ -134,10 +137,9 @@ async function introspectRelationships(
       const toNode = nodes[to.join(":")];
       const rel = new model.RelationshipObjectType(
         id,
-        new model.RelationshipType(relType, relType),
+        new model.RelationshipType(relType, relType, properties),
         fromNode,
-        toNode,
-        properties
+        toNode
       );
       rels[relType] = rel;
     }

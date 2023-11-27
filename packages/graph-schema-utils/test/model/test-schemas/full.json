@@ -8,11 +8,13 @@
           "token": "Actor",
           "properties": [
             {
+              "$id": "p:1",
               "token": "born",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false
             },
             {
+              "$id": "p:2",
               "token": "id",
               "type": [
                 { "type": "array", "items": { "type": "string" } },
@@ -22,6 +24,7 @@
               "nullable": false
             },
             {
+              "$id": "p:3",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
@@ -33,16 +36,19 @@
           "token": "Director",
           "properties": [
             {
+              "$id": "p:4",
               "token": "born",
               "type": { "type": "integer" },
               "nullable": false
             },
             {
+              "$id": "p:5",
               "token": "id",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:6",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
@@ -54,11 +60,13 @@
           "token": "Movie",
           "properties": [
             {
+              "$id": "p:7",
               "token": "release",
               "type": { "type": "date" },
               "nullable": false
             },
             {
+              "$id": "p:8",
               "token": "title",
               "type": { "type": "string" },
               "nullable": false
@@ -70,11 +78,13 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p:9",
               "token": "born",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false
             },
             {
+              "$id": "p:10",
               "token": "id",
               "type": [
                 { "type": "array", "items": { "type": "string" } },
@@ -84,6 +94,7 @@
               "nullable": false
             },
             {
+              "$id": "p:11",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
@@ -97,6 +108,7 @@
           "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p:12",
               "token": "roles",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false
@@ -144,7 +156,7 @@
           "entityType": "relationship",
           "relationshipType": { "$ref": "#rt:ACTED_IN" },
           "name": "uniqueness_constraint",
-          "properties": []
+          "properties": [{ "$ref": "#p:12" }]
         },
         {
           "$id": "c:name_unique",
@@ -152,7 +164,7 @@
           "entityType": "node",
           "nodeLabel": { "$ref": "#nl:Actor" },
           "name": "uniqueness_constraint",
-          "properties": []
+          "properties": [{ "$ref": "#p:1" }]
         }
       ]
     }

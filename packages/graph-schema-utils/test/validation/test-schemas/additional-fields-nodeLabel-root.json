@@ -8,6 +8,7 @@
           "token": "Person",
           "properties": [
             {
+              "$id": "p1",
               "token": "id",
               "nullable": false,
               "type": { "type": "string" }
@@ -22,6 +23,7 @@
           "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p2",
               "token": "role",
               "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false
