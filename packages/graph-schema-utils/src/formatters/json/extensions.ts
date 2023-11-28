@@ -147,8 +147,17 @@ const property = {
     ),
 };
 
+type PropertyTypeJsonStructRecrsive =
+  | PropertyTypeJsonStruct
+  | Array<PropertyTypeJsonStruct | PropertyTypeJsonStructRecrsive[]>;
+type PropertyTypeRecursive =
+  | PropertyTypes
+  | Array<PropertyTypes | PropertyTypeRecursive[]>;
+
 const propertyType = {
-  extract: (pt: PropertyTypes | PropertyTypes[]) => {
+  extract: (
+    pt: PropertyTypes | PropertyTypes[]
+  ): PropertyTypeJsonStructRecrsive => {
     if (Array.isArray(pt)) {
       return pt.map(propertyType.extract);
     }
@@ -157,8 +166,9 @@ const propertyType = {
     } else if (pt instanceof PropertyArrayType) {
       return propertyArrayType.extract(pt);
     }
+    throw new Error(`Unknown property type ${pt}`);
   },
-  create: (propertyTypeJson: PropertyTypeJsonStruct) => {
+  create: (propertyTypeJson: PropertyTypeJsonStruct): PropertyTypeRecursive => {
     if (Array.isArray(propertyTypeJson)) {
       return propertyTypeJson.map((pt) => propertyType.create(pt));
     }
@@ -170,7 +180,7 @@ const propertyType = {
 };
 
 const propertyBaseType = {
-  extract: (propertyBaseType: PropertyBaseType) => ({
+  extract: (propertyBaseType: PropertyBaseType): PropertyTypeJsonStruct => ({
     type: propertyBaseType.type,
   }),
   create: (btype: { type: PrimitivePropertyTypes }) =>

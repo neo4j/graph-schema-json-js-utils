@@ -1,6 +1,6 @@
 export class GraphSchema {
-  nodeLabels: NodeLabel[];
-  relationshipTypes: RelationshipType[];
+  nodeLabels: NodeLabel[] = [];
+  relationshipTypes: RelationshipType[] = [];
   nodeObjectTypes: NodeObjectType[];
   relationshipObjectTypes: RelationshipObjectType[];
 

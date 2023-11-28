@@ -51,11 +51,11 @@ describe("Validate type errors", () => {
     );
     //--------
     const NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA = 1;
-    let allErrors = [];
+    let allErrors: SchemaValidationError["messages"] = [];
     try {
       validateSchema(JSON_SCHEMA, additionalFieldsGraphSchema);
     } catch (e) {
-      allErrors = e.messages;
+      allErrors = (e as unknown as SchemaValidationError).messages;
     }
     assert.equal(allErrors.length, NUM_ADDITIONAL_FIELDS_GRAPH_SCHEMA);
     assert.equal(allErrors[0].keyword, "additionalProperties");
@@ -73,11 +73,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_NODELABEL_ROOT = 1;
-    let allErrorsAddittionalNodeLabelsRoot = [];
+    let allErrorsAddittionalNodeLabelsRoot: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
     } catch (e) {
-      allErrorsAddittionalNodeLabelsRoot = e.messages;
+      allErrorsAddittionalNodeLabelsRoot = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalNodeLabelsRoot.length,
@@ -100,11 +103,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_RELATIONSHIP_TYPES_ROOT = 1;
-    let allErrorsAddittionalRelationshipTypeRoot = [];
+    let allErrorsAddittionalRelationshipTypeRoot: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
     } catch (e) {
-      allErrorsAddittionalRelationshipTypeRoot = e.messages;
+      allErrorsAddittionalRelationshipTypeRoot = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalRelationshipTypeRoot.length,
@@ -127,11 +133,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_NODESPEC_ROOT = 1;
-    let allErrorsAddittionalNodeSpecsRoot = [];
+    let allErrorsAddittionalNodeSpecsRoot: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
     } catch (e) {
-      allErrorsAddittionalNodeSpecsRoot = e.messages;
+      allErrorsAddittionalNodeSpecsRoot = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalNodeSpecsRoot.length,
@@ -153,11 +162,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_NODESPECS_PROPERTIRES = 1;
-    let allErrorsAddittionalNodeSpecsProperties = [];
+    let allErrorsAddittionalNodeSpecsProperties: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeLabelRoot);
     } catch (e) {
-      allErrorsAddittionalNodeSpecsProperties = e.messages;
+      allErrorsAddittionalNodeSpecsProperties = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalNodeSpecsProperties.length,
@@ -179,11 +191,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_NODESPEC_LABELS = 1;
-    let allErrorsAddittionalNodeSpecsLabels = [];
+    let allErrorsAddittionalNodeSpecsLabels: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
     } catch (e) {
-      allErrorsAddittionalNodeSpecsLabels = e.messages;
+      allErrorsAddittionalNodeSpecsLabels = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalNodeSpecsLabels.length,
@@ -206,11 +221,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_RELATIONSHIP_SPECS_TYPE = 1;
-    let allErrorsAddittionalRelationshipSpecsType = [];
+    let allErrorsAddittionalRelationshipSpecsType: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
     } catch (e) {
-      allErrorsAddittionalRelationshipSpecsType = e.messages;
+      allErrorsAddittionalRelationshipSpecsType = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalRelationshipSpecsType.length,
@@ -232,11 +250,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES = 1;
-    let allErrorsAddittionalRelationshipSpecsProperties = [];
+    let allErrorsAddittionalRelationshipSpecsProperties: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
     } catch (e) {
-      allErrorsAddittionalRelationshipSpecsProperties = e.messages;
+      allErrorsAddittionalRelationshipSpecsProperties = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalRelationshipSpecsProperties.length,
@@ -258,11 +279,14 @@ describe("Validate type errors", () => {
       SchemaValidationError
     );
     const NUM_ADDITIONAL_RELATIONSHIP_SPECS_ROOT = 1;
-    let allErrorsAddittionalRelationshipSpecsRoot = [];
+    let allErrorsAddittionalRelationshipSpecsRoot: SchemaValidationError["messages"] =
+      [];
     try {
       validateSchema(JSON_SCHEMA, additionalNodeSpecsLabels);
     } catch (e) {
-      allErrorsAddittionalRelationshipSpecsRoot = e.messages;
+      allErrorsAddittionalRelationshipSpecsRoot = (
+        e as unknown as SchemaValidationError
+      ).messages;
     }
     assert.equal(
       allErrorsAddittionalRelationshipSpecsRoot.length,
@@ -290,7 +314,7 @@ describe("Validate type errors", () => {
     try {
       validateSchema(JSON_SCHEMA, missingRequireGraphSchema);
     } catch (e) {
-      allErrors = e.messages;
+      allErrors = (e as unknown as SchemaValidationError).messages;
     }
     assert.equal(allErrors.length, NUM_MISSING_GRAPH_SCHEMA_ITEMS);
 
@@ -308,7 +332,7 @@ describe("Validate type errors", () => {
     try {
       validateSchema(JSON_SCHEMA, missingRequiredNodeLabels);
     } catch (e) {
-      allErrorsNodeLabels = e.messages;
+      allErrorsNodeLabels = (e as unknown as SchemaValidationError).messages;
     }
     assert.equal(allErrorsNodeLabels.length, NUM_MISSING_NODELABELS);
     //--------------------------------------------------
@@ -329,7 +353,8 @@ describe("Validate type errors", () => {
     try {
       validateSchema(JSON_SCHEMA, missingRequiredRelationshipTypeRoot);
     } catch (e) {
-      allErrorsRelationshipTypeRoot = e.messages;
+      allErrorsRelationshipTypeRoot = (e as unknown as SchemaValidationError)
+        .messages;
     }
     assert.equal(
       allErrorsRelationshipTypeRoot.length,
@@ -351,7 +376,8 @@ describe("Validate type errors", () => {
     try {
       validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties);
     } catch (e) {
-      allErrorNodespecsProperties = e.messages;
+      allErrorNodespecsProperties = (e as unknown as SchemaValidationError)
+        .messages;
     }
     assert.equal(
       allErrorNodespecsProperties.length,
@@ -373,7 +399,7 @@ describe("Validate type errors", () => {
     try {
       validateSchema(JSON_SCHEMA, missingRequiredPropertiesNodeSpecsRoot);
     } catch (e) {
-      allErrorNodespecsRoot = e.messages;
+      allErrorNodespecsRoot = (e as unknown as SchemaValidationError).messages;
     }
     assert.equal(allErrorNodespecsRoot.length, NUM_MISSING_NODESPECS_ROOT);
   });

@@ -9,8 +9,7 @@ import {
 import { ElementPropertyObject } from "./types.js";
 
 export function toTomaz(schema: GraphSchema): string {
-  let out: string[] = [].concat(
-    [`Node properties are the following:`],
+  let out: string[] = [`Node properties are the following:`].concat(
     schema.nodeObjectTypes.map(nodeObjectTypes).filter(Boolean),
     [`Relationship properties are the following:`],
     schema.relationshipObjectTypes.map(relationshipObjectTypes).filter(Boolean),
@@ -18,7 +17,7 @@ export function toTomaz(schema: GraphSchema): string {
     JSON.stringify(schema.relationshipObjectTypes.map(paths))
   );
 
-  function nodeObjectTypes(nodeObjectType: NodeObjectType): string | undefined {
+  function nodeObjectTypes(nodeObjectType: NodeObjectType): string {
     const out = [];
     const properties = nodeObjectType.properties.map((property) => {
       const base: ElementPropertyObject = {
@@ -31,7 +30,7 @@ export function toTomaz(schema: GraphSchema): string {
       return base;
     });
     if (!properties.length) {
-      return;
+      return "";
     }
     out.push({
       properties: properties,
@@ -42,7 +41,7 @@ export function toTomaz(schema: GraphSchema): string {
 
   function relationshipObjectTypes(
     relationshipObjectType: RelationshipObjectType
-  ): string | undefined {
+  ): string {
     const out = [];
     const properties = relationshipObjectType.properties.map((property) => {
       const base: ElementPropertyObject = {
@@ -55,7 +54,7 @@ export function toTomaz(schema: GraphSchema): string {
       return base;
     });
     if (!properties.length) {
-      return;
+      return "";
     }
     out.push({
       labels: [relationshipObjectType.type.token],
@@ -77,8 +76,7 @@ export function toTomaz(schema: GraphSchema): string {
 }
 
 export function toOskars(schema: GraphSchema): string {
-  let out: string[] = [].concat(
-    [`Node types with their properties + types`],
+  let out: string[] = [`Node types with their properties + types`].concat(
     schema.nodeObjectTypes.map(nodeObjectTypes),
     [`Relationship types with properties + types`],
     schema.relationshipObjectTypes.map(relationshipObjectTypes).filter(Boolean),
@@ -112,7 +110,7 @@ export function toOskars(schema: GraphSchema): string {
       }`;
     });
     if (!properties.length) {
-      return;
+      return "";
     }
     out.push(
       `  [:${relationshipObjectType.type.token}${
@@ -145,7 +143,6 @@ function formatPropertyType(type: PropertyTypes | PropertyTypes[]): string {
   }
   if (type instanceof PropertyBaseType) {
     return type.type;
-  } else if (type instanceof PropertyArrayType) {
-    return `${type.items.type}[]`;
   }
+  return `${type.items.type}[]`;
 }
