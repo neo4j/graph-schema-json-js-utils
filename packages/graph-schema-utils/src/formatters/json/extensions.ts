@@ -215,7 +215,9 @@ const nodeObjectType = {
 };
 
 const relationshipObjectType = {
-  extract: (relationshipObjectType: RelationshipObjectType) => ({
+  extract: (
+    relationshipObjectType: RelationshipObjectType
+  ): RelationshipObjectTypeJsonStruct => ({
     $id: relationshipObjectType.$id,
     type: relationshipType.toRef(relationshipObjectType.type),
     from: nodeObjectType.toRef(relationshipObjectType.from),
