@@ -18,7 +18,7 @@ export function toTomaz(schema: GraphSchema): string {
     JSON.stringify(schema.relationshipObjectTypes.map(paths))
   );
 
-  function nodeObjectTypes(nodeObjectType: NodeObjectType): string {
+  function nodeObjectTypes(nodeObjectType: NodeObjectType): string | undefined {
     const out = [];
     const properties = nodeObjectType.properties.map((property) => {
       const base: ElementPropertyObject = {
@@ -42,7 +42,7 @@ export function toTomaz(schema: GraphSchema): string {
 
   function relationshipObjectTypes(
     relationshipObjectType: RelationshipObjectType
-  ): string {
+  ): string | undefined {
     const out = [];
     const properties = relationshipObjectType.properties.map((property) => {
       const base: ElementPropertyObject = {
