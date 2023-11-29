@@ -1,4 +1,4 @@
-import { PrimitivePropertyTypes } from "../../model/index.js";
+import { PrimitivePropertyTypes, PropertyTypes } from "../../model/index.js";
 
 export type RootSchemaJsonStruct = {
   graphSchemaRepresentation: GraphSchemaRepresentationJsonStruct;
@@ -37,14 +37,21 @@ export type RelationshipObjectTypeJsonStruct = {
 export type PropertyJsonStruct = {
   $id?: string;
   token: string;
-  type: PropertyTypeJsonStruct;
+  type: PropertyTypeJsonStructRecrsive;
   nullable: boolean;
 };
 
+export type PrimitivePropertyTypesType = { type: PrimitivePropertyTypes };
+export type PrimitivePropertyTypesArrayType = {
+  type: "array";
+  items: { type: PrimitivePropertyTypes };
+};
+
 export type PropertyTypeJsonStruct =
-  | { type: PrimitivePropertyTypes }
-  | { type: "array"; items: { type: PrimitivePropertyTypes } }
-  | (
-      | { type: PrimitivePropertyTypes }
-      | { type: "array"; items: { type: PrimitivePropertyTypes } }
-    )[];
+  | PrimitivePropertyTypesArrayType
+  | PrimitivePropertyTypesType
+  | (PrimitivePropertyTypesType | PrimitivePropertyTypesArrayType)[];
+
+export type PropertyTypeJsonStructRecrsive =
+  | PropertyTypeJsonStruct
+  | Array<PropertyTypeJsonStruct | PropertyTypeJsonStructRecrsive[]>;

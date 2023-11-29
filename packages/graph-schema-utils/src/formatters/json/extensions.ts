@@ -2,19 +2,20 @@ import {
   GraphSchema,
   NodeLabel,
   NodeObjectType,
-  PrimitivePropertyTypes,
   Property,
   PropertyArrayType,
   PropertyBaseType,
-  PropertyTypes,
+  PropertyTypeRecursive,
   RelationshipObjectType,
   RelationshipType,
 } from "../../model/index.js";
 import {
   NodeLabelJsonStruct,
   NodeObjectTypeJsonStruct,
+  PrimitivePropertyTypesArrayType,
+  PrimitivePropertyTypesType,
   PropertyJsonStruct,
-  PropertyTypeJsonStruct,
+  PropertyTypeJsonStructRecrsive,
   RelationshipObjectTypeJsonStruct,
   RelationshipTypeJsonStruct,
   RootSchemaJsonStruct,
@@ -133,12 +134,7 @@ const property = {
     type: propertyType.extract(property.type),
     nullable: property.nullable,
   }),
-  create: (property: {
-    $id?: string;
-    token: string;
-    type: PropertyTypeJsonStruct;
-    nullable: boolean;
-  }) =>
+  create: (property: PropertyJsonStruct) =>
     new Property(
       property.token,
       propertyType.create(property.type),
@@ -147,17 +143,8 @@ const property = {
     ),
 };
 
-type PropertyTypeJsonStructRecrsive =
-  | PropertyTypeJsonStruct
-  | Array<PropertyTypeJsonStruct | PropertyTypeJsonStructRecrsive[]>;
-type PropertyTypeRecursive =
-  | PropertyTypes
-  | Array<PropertyTypes | PropertyTypeRecursive[]>;
-
 const propertyType = {
-  extract: (
-    pt: PropertyTypes | PropertyTypes[]
-  ): PropertyTypeJsonStructRecrsive => {
+  extract: (pt: PropertyTypeRecursive): PropertyTypeJsonStructRecrsive => {
     if (Array.isArray(pt)) {
       return pt.map(propertyType.extract);
     }
@@ -168,7 +155,9 @@ const propertyType = {
     }
     throw new Error(`Unknown property type ${pt}`);
   },
-  create: (propertyTypeJson: PropertyTypeJsonStruct): PropertyTypeRecursive => {
+  create: (
+    propertyTypeJson: PropertyTypeJsonStructRecrsive
+  ): PropertyTypeRecursive => {
     if (Array.isArray(propertyTypeJson)) {
       return propertyTypeJson.map((pt) => propertyType.create(pt));
     }
@@ -180,19 +169,23 @@ const propertyType = {
 };
 
 const propertyBaseType = {
-  extract: (propertyBaseType: PropertyBaseType): PropertyTypeJsonStruct => ({
+  extract: (
+    propertyBaseType: PropertyBaseType
+  ): PrimitivePropertyTypesType => ({
     type: propertyBaseType.type,
   }),
-  create: (btype: { type: PrimitivePropertyTypes }) =>
+  create: (btype: PrimitivePropertyTypesType) =>
     new PropertyBaseType(btype.type),
 };
 
 const propertyArrayType = {
-  extract: (propertyArrayType: PropertyArrayType): PropertyTypeJsonStruct => ({
+  extract: (
+    propertyArrayType: PropertyArrayType
+  ): PrimitivePropertyTypesArrayType => ({
     type: "array",
     items: propertyBaseType.extract(propertyArrayType.items),
   }),
-  create: (type: PrimitivePropertyTypes) =>
+  create: (type: PrimitivePropertyTypesArrayType["items"]["type"]) =>
     new PropertyArrayType(propertyBaseType.create({ type })),
 };
 

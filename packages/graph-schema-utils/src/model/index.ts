@@ -109,15 +109,18 @@ export class RelationshipObjectType {
 }
 
 export type PropertyTypes = PropertyBaseType | PropertyArrayType;
+export type PropertyTypeRecursive =
+  | PropertyTypes
+  | Array<PropertyTypes | PropertyTypeRecursive[]>;
 export class Property {
   token: string;
-  type: PropertyTypes | PropertyTypes[];
+  type: PropertyTypeRecursive;
   nullable: boolean;
   $id?: string;
 
   constructor(
     token: string,
-    type: PropertyTypes | PropertyTypes[],
+    type: PropertyTypeRecursive,
     nullable: boolean,
     $id?: string
   ) {

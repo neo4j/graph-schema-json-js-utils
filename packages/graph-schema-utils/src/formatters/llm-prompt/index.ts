@@ -1,8 +1,8 @@
 import {
   GraphSchema,
   NodeObjectType,
-  PropertyArrayType,
   PropertyBaseType,
+  PropertyTypeRecursive,
   PropertyTypes,
   RelationshipObjectType,
 } from "../../model/index.js";
@@ -137,7 +137,7 @@ export function toOskars(schema: GraphSchema): string {
   return out.join("\n");
 }
 
-function formatPropertyType(type: PropertyTypes | PropertyTypes[]): string {
+function formatPropertyType(type: PropertyTypeRecursive): string {
   if (Array.isArray(type)) {
     return type.map(formatPropertyType).join("|");
   }
