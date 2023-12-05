@@ -19,21 +19,20 @@
       "relationshipTypes": [
         {
           "$id": "rt1",
-          "token": "ACTED_IN"
+          "token": "ACTED_IN",
+          "properties": []
         }
       ],
       "nodeObjectTypes": [
         {
           "$id": "n1",
           "illegal-field": "illegal-field",
-          "labels": [
-            {
-              "$ref": "#l1"
-            }
-          ]
+          "labels": [{ "$ref": "#l1" }]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

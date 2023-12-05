@@ -168,7 +168,7 @@
           "entityType": "relationship",
           "relationshipType": { "$ref": "#rt:ACTED_IN" },
           "name": "existence_constraint",
-          "properties": []
+          "properties": [{ "$ref": "#p:12" }]
         },
         {
           "$id": "c:name_unique",
@@ -176,7 +176,31 @@
           "entityType": "node",
           "nodeLabel": { "$ref": "#nl:Actor" },
           "name": "uniqueness_constraint",
-          "properties": []
+          "properties": [{ "$ref": "#p:5" }]
+        }
+      ],
+      "indexes": [
+        {
+          "$id": "i:lookup_node_index",
+          "name": "lookup_node_index",
+          "indexType": "lookup",
+          "entityType": "node"
+        },
+        {
+          "$id": "i:node_text_index",
+          "name": "node_text_index",
+          "indexType": "text",
+          "entityType": "node",
+          "nodeLabel": { "$ref": "#nl:Person" },
+          "properties": [{ "$ref": "#p:2" }]
+        },
+        {
+          "$id": "i:relationship_default_index",
+          "name": "relationship_default_index",
+          "indexType": "default",
+          "entityType": "relationship",
+          "relationshipType": { "$ref": "#rt:ACTED_IN" },
+          "properties": [{ "$ref": "#p:12" }]
         }
       ]
     }

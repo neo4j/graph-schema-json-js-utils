@@ -5,33 +5,17 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
+          "token": "Person",
+          "properties": []
         }
       ],
       "relationshipTypes": [
         {
           "$id": "rt1",
-          "token": "ACTED_IN"
-        }
-      ],
-      "nodeSpecs": [],
-      "relationshipSpecs": [
-        {
-          "$id": "r1",
-          "type": {
-            "type": {
-              "$ref": "#rt1",
-              "illegal-field": "illegal-field"
-            }
-          },
-          "from": {
-            "$ref": "#n1"
-          },
-          "to": {
-            "$ref": "#n3"
-          },
+          "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p1",
               "token": "role",
               "nullable": false,
               "type": {
@@ -42,29 +26,25 @@
               }
             }
           ]
+        }
+      ],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": [
+        {
+          "$id": "r1",
+          "type": { "$ref": "#rt1", "illegal-field": "illegal-field" },
+          "from": { "$ref": "#n1" },
+          "to": { "$ref": "#n3" }
         },
         {
           "$id": "r2",
-          "type": {
-            "type": {
-              "$ref": "#rt2"
-            }
-          },
-          "from": {
-            "$ref": "#n2"
-          },
-          "to": {
-            "$ref": "#n3"
-          },
-          "properties": [
-            {
-              "token": "role",
-              "type": { "type": "string" },
-              "nullable": false
-            }
-          ]
+          "type": { "$ref": "#rt2" },
+          "from": { "$ref": "#n2" },
+          "to": { "$ref": "#n3" }
         }
-      ]
+      ],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

@@ -4,7 +4,10 @@ import { model } from "../../src/index.js";
 import {
   Property,
   PropertyTypes,
-  isNodeConstraint,
+  isLookupIndex,
+  isNodeLabelConstraint,
+  isNodeLabelIndex,
+  isRelationshiptypeIndex,
 } from "../../src/model/index.js";
 
 describe("Programatic model tests", () => {
@@ -62,14 +65,14 @@ describe("Programatic model tests", () => {
       ),
     ];
 
-    const nodeConstraint = new model.NodeConstraint(
+    const nodeConstraint = new model.NodeLabelConstraint(
       "c1",
       "unique",
       "uniqueness",
       labels[0],
       personProperties
     );
-    const relationshipConstraint = new model.RelationshipConstraint(
+    const relationshipConstraint = new model.RelationshipTypeConstraint(
       "c2",
       "existence",
       "propertyExistence",
@@ -78,10 +81,31 @@ describe("Programatic model tests", () => {
     );
     const constraints = [nodeConstraint, relationshipConstraint];
 
+    const nodeLabelIndex = new model.NodeLabelIndex(
+      "i1",
+      "node-index",
+      "default",
+      labels[0],
+      personProperties
+    );
+
+    const relationshipTypeIndex = new model.RelationshipTypeIndex(
+      "i2",
+      "relationship-index",
+      "range",
+      relationshipTypes[0],
+      actedInProperties
+    );
+
+    const lookupIndex = new model.LookupIndex("i3", "lookup-index", "node");
+
+    const indexes = [nodeLabelIndex, relationshipTypeIndex, lookupIndex];
+
     const graphSchema = new model.GraphSchema(
       nodeObjectTypes,
       relationshipObjectTypes,
-      constraints
+      constraints,
+      indexes
     );
 
     const gRep = new model.GraphSchemaRepresentation("1.0.1", graphSchema);
@@ -145,6 +169,7 @@ describe("Programatic model tests", () => {
       "array"
     );
 
+    // Constraints
     assert.strictEqual(gRep.graphSchema.constraints[0].properties.length, 1);
     assert.strictEqual(
       gRep.graphSchema.constraints[0].properties[0].token,
@@ -157,8 +182,11 @@ describe("Programatic model tests", () => {
       "uniqueness"
     );
     assert.strictEqual(gRep.graphSchema.constraints[0].entityType, "node");
-    assert.strictEqual(isNodeConstraint(gRep.graphSchema.constraints[0]), true);
-    if (isNodeConstraint(gRep.graphSchema.constraints[0])) {
+    assert.strictEqual(
+      isNodeLabelConstraint(gRep.graphSchema.constraints[0]),
+      true
+    );
+    if (isNodeLabelConstraint(gRep.graphSchema.constraints[0])) {
       assert.strictEqual(gRep.graphSchema.constraints[0].nodeLabel, labels[0]);
     }
     assert.strictEqual(
@@ -176,6 +204,48 @@ describe("Programatic model tests", () => {
       gRep.graphSchema.constraints[1].entityType,
       "relationship"
     );
+
+    // Indexes
+    assert.strictEqual(gRep.graphSchema.indexes.length, 3);
+    assert.strictEqual(gRep.graphSchema.indexes[0].$id, "i1");
+    assert.strictEqual(gRep.graphSchema.indexes[0].name, "node-index");
+    assert.strictEqual(gRep.graphSchema.indexes[0].indexType, "default");
+    assert.strictEqual(gRep.graphSchema.indexes[0].entityType, "node");
+    assert.strictEqual(isNodeLabelIndex(gRep.graphSchema.indexes[0]), true);
+    if (isNodeLabelIndex(gRep.graphSchema.indexes[0])) {
+      assert.strictEqual(gRep.graphSchema.indexes[0].nodeLabel, labels[0]);
+      assert.strictEqual(gRep.graphSchema.indexes[0].properties.length, 1);
+      assert.strictEqual(
+        (gRep.graphSchema.indexes[0].properties[0].type as PropertyTypes).type,
+        "string"
+      );
+    }
+
+    assert.strictEqual(gRep.graphSchema.indexes[1].$id, "i2");
+    assert.strictEqual(gRep.graphSchema.indexes[1].name, "relationship-index");
+    assert.strictEqual(gRep.graphSchema.indexes[1].indexType, "range");
+    assert.strictEqual(gRep.graphSchema.indexes[1].entityType, "relationship");
+    assert.strictEqual(
+      isRelationshiptypeIndex(gRep.graphSchema.indexes[1]),
+      true
+    );
+    if (isRelationshiptypeIndex(gRep.graphSchema.indexes[1])) {
+      assert.strictEqual(
+        gRep.graphSchema.indexes[1].relationshipType,
+        relationshipTypes[0]
+      );
+      assert.strictEqual(gRep.graphSchema.indexes[1].properties.length, 1);
+      assert.strictEqual(
+        (gRep.graphSchema.indexes[1].properties[0].type as PropertyTypes).type,
+        "array"
+      );
+    }
+
+    assert.strictEqual(gRep.graphSchema.indexes[2].$id, "i3");
+    assert.strictEqual(gRep.graphSchema.indexes[2].name, "lookup-index");
+    assert.strictEqual(gRep.graphSchema.indexes[2].indexType, "lookup");
+    assert.strictEqual(gRep.graphSchema.indexes[2].entityType, "node");
+    assert.strictEqual(isLookupIndex(gRep.graphSchema.indexes[2]), true);
   });
   test("Allows creation of properties with complicated types", () => {
     const properties = [

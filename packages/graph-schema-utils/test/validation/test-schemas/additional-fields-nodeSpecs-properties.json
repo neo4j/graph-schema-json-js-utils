@@ -21,14 +21,12 @@
       "nodeObjectTypes": [
         {
           "$id": "n1",
-          "labels": [
-            {
-              "$ref": "#l1"
-            }
-          ]
+          "labels": [{ "$ref": "#l1" }]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

@@ -50,7 +50,8 @@
           "name": "uniqueness_constraint",
           "properties": []
         }
-      ]
+      ],
+      "indexes": []
     }
   }
 }

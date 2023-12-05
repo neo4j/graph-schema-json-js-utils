@@ -209,7 +209,8 @@
           }
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

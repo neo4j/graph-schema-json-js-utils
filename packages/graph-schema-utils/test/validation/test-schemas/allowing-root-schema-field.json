@@ -150,7 +150,8 @@
           "to": { "$ref": "#n:Movie" }
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

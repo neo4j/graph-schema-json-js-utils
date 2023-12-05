@@ -166,7 +166,8 @@
           "name": "uniqueness_constraint",
           "properties": [{ "$ref": "#p:1" }]
         }
-      ]
+      ],
+      "indexes": []
     }
   }
 }

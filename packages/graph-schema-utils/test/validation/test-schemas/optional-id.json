@@ -11,7 +11,8 @@
         }
       ],
       "relationshipObjectTypes": [],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

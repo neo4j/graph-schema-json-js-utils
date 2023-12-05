@@ -75,7 +75,8 @@
         }
       ],
       "relationshipObjectTypes": [],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

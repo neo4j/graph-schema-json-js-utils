@@ -6,7 +6,8 @@
       "relationshipTypes": [],
       "nodeObjectTypes": [],
       "relationshipObjectTypes": [],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

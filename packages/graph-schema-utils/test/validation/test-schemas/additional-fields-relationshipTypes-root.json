@@ -5,66 +5,42 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
+          "token": "Person",
+          "properties": []
         }
       ],
       "relationshipTypes": [
         {
           "$id": "rt1",
           "token": "ACTED_IN",
-          "illegal-field": "illegal-field"
-        }
-      ],
-      "nodeSpecs": [],
-      "relationshipSpecs": [
-        {
-          "$id": "r1",
-          "type": {
-            "type": {
-              "$ref": "#rt1"
-            }
-          },
-          "from": {
-            "$ref": "#n1"
-          },
-          "to": {
-            "$ref": "#n3"
-          },
+          "illegal-field": "illegal-field",
           "properties": [
             {
+              "$id": "p1",
               "token": "role",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
+              "type": { "type": "array", "items": { "type": "string" } },
               "nullable": false
             }
           ]
+        }
+      ],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": [
+        {
+          "$id": "r1",
+          "type": { "$ref": "#rt1" },
+          "from": { "$ref": "#n1" },
+          "to": { "$ref": "#n3" }
         },
         {
           "$id": "r2",
-          "type": {
-            "type": {
-              "$ref": "#rt2"
-            }
-          },
-          "from": {
-            "$ref": "#n2"
-          },
-          "to": {
-            "$ref": "#n3"
-          },
-          "properties": [
-            {
-              "token": "role",
-              "type": { "type": "string" },
-              "nullable": false
-            }
-          ]
+          "type": { "$ref": "#rt2" },
+          "from": { "$ref": "#n2" },
+          "to": { "$ref": "#n3" }
         }
-      ]
+      ],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

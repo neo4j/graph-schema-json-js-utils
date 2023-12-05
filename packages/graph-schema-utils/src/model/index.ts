@@ -42,15 +42,18 @@ export class GraphSchema {
   nodeObjectTypes: NodeObjectType[];
   relationshipObjectTypes: RelationshipObjectType[];
   constraints: Constraint[];
+  indexes: Index[];
 
   constructor(
     nodeObjectTypes: NodeObjectType[],
     relationshipObjectTypes: RelationshipObjectType[],
-    constraints: Constraint[] = []
+    constraints: Constraint[] = [],
+    indexes: Index[] = []
   ) {
     this.nodeObjectTypes = nodeObjectTypes;
     this.relationshipObjectTypes = relationshipObjectTypes;
     this.constraints = constraints;
+    this.indexes = indexes;
     this.extractNodeLabels();
     this.extractRelationshipTypes();
   }
@@ -83,6 +86,9 @@ export class GraphSchema {
       constraints: this.constraints
         .sort((a, b) => (a.$id > b.$id ? 1 : -1))
         .map((constraint) => constraint.toJsonStruct()),
+      indexes: this.indexes
+        .sort((a, b) => (a.$id > b.$id ? 1 : -1))
+        .map((index) => index.toJsonStruct()),
     };
   }
 
@@ -214,7 +220,7 @@ export class GraphSchema {
             "Not all properties references in node constraints are defined"
           );
         }
-        return new NodeConstraint(
+        return new NodeLabelConstraint(
           constraint.$id,
           constraint.name,
           constraint.constraintType,
@@ -249,7 +255,7 @@ export class GraphSchema {
             "Not all properties references in relationship constraints are defined"
           );
         }
-        return new RelationshipConstraint(
+        return new RelationshipTypeConstraint(
           constraint.$id,
           constraint.name,
           constraint.constraintType,
@@ -258,10 +264,83 @@ export class GraphSchema {
         );
       }
     });
+    const indexes = json.indexes.map((index) => {
+      if (index.indexType === "lookup") {
+        return new LookupIndex(index.$id, index.name, index.entityType);
+      } else if (index.entityType === "node") {
+        if (index.nodeLabel === undefined) {
+          throw new Error("Not all node labels in node indexes are defined");
+        }
+        const nodeLabel = nodeLabels.find(
+          (nodeLabel) => nodeLabel.$id === index.nodeLabel.$ref.slice(1)
+        );
+        if (!nodeLabel) {
+          throw new Error(
+            "Not all node labels references in node indexes are defined"
+          );
+        }
+        const properties = index.properties
+          .map((property) => {
+            const propertiesForLabel = nodeLabel.properties;
+            return propertiesForLabel.find(
+              (p) => p.$id === property.$ref.slice(1)
+            );
+          })
+          .filter((p) => p);
+        if (properties.length !== index.properties.length) {
+          throw new Error(
+            "Not all properties references in node indexes are defined"
+          );
+        }
+        return new NodeLabelIndex(
+          index.$id,
+          index.name,
+          index.indexType,
+          nodeLabel,
+          properties
+        );
+      } else if (index.entityType === "relationship") {
+        if (index.relationshipType === undefined) {
+          throw new Error(
+            "Not all relationship types in relationship indexes are defined"
+          );
+        }
+        const relationshipType = relationshipTypes.find(
+          (relationshipType) =>
+            relationshipType.$id === index.relationshipType.$ref.slice(1)
+        );
+        if (!relationshipType) {
+          throw new Error(
+            "Not all relationship types in relationship indexes are defined"
+          );
+        }
+        const properties = index.properties
+          .map((property) => {
+            const propertiesForType = relationshipType.properties;
+            return propertiesForType.find(
+              (p) => p.$id === property.$ref.slice(1)
+            );
+          })
+          .filter((p) => p);
+        if (properties.length !== index.properties.length) {
+          throw new Error(
+            "Not all properties references in relationship indexes are defined"
+          );
+        }
+        return new RelationshipTypeIndex(
+          index.$id,
+          index.name,
+          index.indexType,
+          relationshipType,
+          properties
+        );
+      }
+    });
     return new GraphSchema(
       nodeObjectTypes,
       relationshipObjectTypes,
-      constraints
+      constraints,
+      indexes
     );
   }
 }
@@ -405,21 +484,37 @@ export class RelationshipObjectType {
   }
 }
 
-export type Constraint = NodeConstraint | RelationshipConstraint;
+export type Constraint = NodeLabelConstraint | RelationshipTypeConstraint;
 
-export const isNodeConstraint = (
+export type Index = NodeLabelIndex | RelationshipTypeIndex | LookupIndex;
+
+export const isNodeLabelConstraint = (
   constraint: Constraint
-): constraint is NodeConstraint => {
+): constraint is NodeLabelConstraint => {
   return constraint.entityType === "node";
 };
 
-export const isRelationshipConstraint = (
+export const isRelationshipTypeConstraint = (
   constraint: Constraint
-): constraint is RelationshipConstraint => {
+): constraint is RelationshipTypeConstraint => {
   return constraint.entityType === "relationship";
 };
 
-export class NodeConstraint {
+export const isNodeLabelIndex = (index: Index): index is NodeLabelIndex => {
+  return index.entityType === "node";
+};
+
+export const isRelationshiptypeIndex = (
+  index: Index
+): index is RelationshipTypeIndex => {
+  return index.entityType === "relationship";
+};
+
+export const isLookupIndex = (index: Index): index is LookupIndex => {
+  return index.indexType === "lookup";
+};
+
+export class NodeLabelConstraint {
   $id: string;
   name: string;
   constraintType: ConstraintType;
@@ -442,8 +537,7 @@ export class NodeConstraint {
     this.entityType = "node";
   }
 
-  toJsonStruct() {
-    const enityType: EntityType = "node";
+  toJsonStruct(): ConstraintJsonStruct {
     return {
       $id: this.$id,
       name: this.name,
@@ -455,7 +549,7 @@ export class NodeConstraint {
   }
 }
 
-export class RelationshipConstraint {
+export class RelationshipTypeConstraint {
   $id: string;
   name: string;
   constraintType: ConstraintType;
@@ -478,7 +572,7 @@ export class RelationshipConstraint {
     this.entityType = "relationship";
   }
 
-  toJsonStruct() {
+  toJsonStruct(): ConstraintJsonStruct {
     return {
       $id: this.$id,
       name: this.name,
@@ -490,11 +584,112 @@ export class RelationshipConstraint {
   }
 }
 
+export class NodeLabelIndex {
+  $id: string;
+  name: string;
+  indexType: Exclude<IndexType, "lookup">;
+  entityType: EntityType;
+  nodeLabel: NodeLabel;
+  properties: Property[];
+
+  constructor(
+    $id: string,
+    name: string,
+    indexType: Exclude<IndexType, "lookup">,
+    nodeLabel: NodeLabel,
+    properties: Property[]
+  ) {
+    this.$id = $id;
+    this.name = name;
+    this.nodeLabel = nodeLabel;
+    this.indexType = indexType;
+    this.properties = properties;
+    this.entityType = "node";
+  }
+
+  toJsonStruct(): IndexJsonStruct {
+    return {
+      $id: this.$id,
+      name: this.name,
+      indexType: this.indexType,
+      entityType: this.entityType,
+      nodeLabel: this.nodeLabel.toRef(),
+      properties: this.properties.map((property) => property.toRef()),
+    };
+  }
+}
+
+export class RelationshipTypeIndex {
+  $id: string;
+  name: string;
+  indexType: Exclude<IndexType, "lookup">;
+  entityType: EntityType;
+  relationshipType: RelationshipType;
+  properties: Property[];
+
+  constructor(
+    $id: string,
+    name: string,
+    indexType: Exclude<IndexType, "lookup">,
+    relationshipType: RelationshipType,
+    properties: Property[]
+  ) {
+    this.$id = $id;
+    this.name = name;
+    this.indexType = indexType;
+    this.entityType = "relationship";
+    this.relationshipType = relationshipType;
+    this.properties = properties;
+  }
+
+  toJsonStruct(): IndexJsonStruct {
+    return {
+      $id: this.$id,
+      name: this.name,
+      indexType: this.indexType,
+      entityType: this.entityType,
+      relationshipType: this.relationshipType.toRef(),
+      properties: this.properties.map((property) => property.toRef()),
+    };
+  }
+}
+
+export class LookupIndex {
+  $id: string;
+  name: string;
+  entityType: EntityType;
+  indexType: IndexType;
+
+  constructor($id: string, name: string, entityType: EntityType) {
+    this.$id = $id;
+    this.name = name;
+    this.indexType = "lookup";
+    this.entityType = entityType;
+  }
+
+  toJsonStruct() {
+    return {
+      $id: this.$id,
+      name: this.name,
+      constraintType: this.indexType,
+      entityType: this.entityType,
+    };
+  }
+}
+
 export type ConstraintType =
   | "uniqueness"
   | "propertyExistence"
   | "propertyType"
   | "key";
+
+export type IndexType =
+  | "range"
+  | "lookup"
+  | "text"
+  | "full-text"
+  | "point"
+  | "default";
 
 export type EntityType = "node" | "relationship";
 
@@ -598,6 +793,7 @@ export type GraphSchemaJsonStruct = {
   nodeObjectTypes: NodeObjectTypeJsonStruct[];
   relationshipObjectTypes: RelationshipObjectTypeJsonStruct[];
   constraints: ConstraintJsonStruct[];
+  indexes: IndexJsonStruct[];
 };
 
 export type NodeLabelJsonStruct = {
@@ -628,6 +824,16 @@ export type ConstraintJsonStruct = {
   $id: string;
   name: string;
   constraintType: ConstraintType;
+  entityType: EntityType;
+  nodeLabel?: { $ref: string };
+  relationshipType?: { $ref: string };
+  properties: { $ref: string }[];
+};
+
+export type IndexJsonStruct = {
+  $id: string;
+  name: string;
+  indexType: IndexType;
   entityType: EntityType;
   nodeLabel?: { $ref: string };
   relationshipType?: { $ref: string };

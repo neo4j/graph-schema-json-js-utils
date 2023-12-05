@@ -166,7 +166,8 @@
           }
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "indexes": []
     }
   }
 }

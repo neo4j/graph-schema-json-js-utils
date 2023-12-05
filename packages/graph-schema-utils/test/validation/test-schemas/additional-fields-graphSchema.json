@@ -35,6 +35,7 @@
       ],
       "relationshipObjectTypes": [],
       "constraints": [],
+      "indexes": [],
       "illegal-field": []
     }
   }
