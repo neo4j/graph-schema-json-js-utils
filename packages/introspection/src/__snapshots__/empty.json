@@ -1,6 +1,6 @@
 {
   "graphSchemaRepresentation": {
-    "version": "repo-test",
+    "version": "0.0.1",
     "graphSchema": {
       "nodeLabels": [],
       "relationshipTypes": [],

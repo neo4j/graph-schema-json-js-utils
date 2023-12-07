@@ -6,6 +6,8 @@
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true
   }
 }

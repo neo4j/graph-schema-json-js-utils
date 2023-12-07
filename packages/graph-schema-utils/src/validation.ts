@@ -33,7 +33,9 @@ export function validateSchema(
   const validate = ajv.compile(jsonSchemaObj);
   const result = validate(graphSchemaObj);
   if (result !== true) {
-    throw new SchemaValidationError(validate.errors);
+    if (validate.errors) {
+      throw new SchemaValidationError(validate.errors);
+    }
   }
   return true;
 }

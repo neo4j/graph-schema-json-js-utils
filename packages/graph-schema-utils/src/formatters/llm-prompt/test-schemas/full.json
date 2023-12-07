@@ -1,6 +1,6 @@
 {
   "graphSchemaRepresentation": {
-    "version": "0.0.1",
+    "version": "1.0.0",
     "graphSchema": {
       "nodeLabels": [
         {
@@ -48,13 +48,6 @@
           ],
           "properties": [
             {
-              "token": "released",
-              "type": {
-                "type": "integer"
-              },
-              "nullable": false
-            },
-            {
               "token": "tagline",
               "type": {
                 "type": "string"
@@ -65,6 +58,13 @@
               "token": "title",
               "type": {
                 "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "token": "released",
+              "type": {
+                "type": "integer"
               },
               "nullable": false
             }
@@ -79,18 +79,18 @@
           ],
           "properties": [
             {
-              "token": "born",
-              "type": {
-                "type": "integer"
-              },
-              "nullable": true
-            },
-            {
               "token": "name",
               "type": {
                 "type": "string"
               },
               "nullable": false
+            },
+            {
+              "token": "born",
+              "type": {
+                "type": "integer"
+              },
+              "nullable": true
             }
           ]
         }
@@ -172,16 +172,16 @@
           },
           "properties": [
             {
-              "token": "rating",
+              "token": "summary",
               "type": {
-                "type": "integer"
+                "type": "string"
               },
               "nullable": false
             },
             {
-              "token": "summary",
+              "token": "rating",
               "type": {
-                "type": "string"
+                "type": "integer"
               },
               "nullable": false
             }

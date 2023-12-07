@@ -58,164 +58,49 @@ describe("Programatic model tests", () => {
       relationshipObjectTypes
     );
 
-    const gRep = new model.GraphSchemaRepresentation("1.0.1", graphSchema);
-
-    assert.strictEqual(gRep.graphSchema.nodeLabels.length, 3);
-    assert.strictEqual(gRep.graphSchema.relationshipTypes.length, 3);
-    assert.strictEqual(gRep.graphSchema.nodeObjectTypes.length, 3);
-    assert.strictEqual(gRep.graphSchema.relationshipObjectTypes.length, 3);
-    assert.strictEqual(gRep.graphSchema.nodeObjectTypes[0].labels[0].$id, "l1");
+    assert.strictEqual(graphSchema.nodeLabels.length, 3);
+    assert.strictEqual(graphSchema.relationshipTypes.length, 3);
+    assert.strictEqual(graphSchema.nodeObjectTypes.length, 3);
+    assert.strictEqual(graphSchema.relationshipObjectTypes.length, 3);
+    assert.strictEqual(graphSchema.nodeObjectTypes[0].labels[0].$id, "l1");
     assert.strictEqual(
-      gRep.graphSchema.nodeObjectTypes[0].labels[0],
-      gRep.graphSchema.nodeLabels[0]
+      graphSchema.nodeObjectTypes[0].labels[0],
+      graphSchema.nodeLabels[0]
     );
+    assert.strictEqual(graphSchema.nodeObjectTypes[0].properties.length, 1);
     assert.strictEqual(
-      gRep.graphSchema.nodeObjectTypes[0].properties.length,
-      1
-    );
-    assert.strictEqual(
-      gRep.graphSchema.nodeObjectTypes[0].properties[0].token,
+      graphSchema.nodeObjectTypes[0].properties[0].token,
       "name"
     );
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].type.$id, "rt1");
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].from.$id, "n1");
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].type.$id,
-      "rt1"
-    );
-    assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].from.$id,
-      "n1"
-    );
-    assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].from,
+      graphSchema.relationshipObjectTypes[0].from,
       nodeObjectTypes[0]
     );
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.$id, "n2");
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].to.$id,
-      "n2"
-    );
-    assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].to,
+      graphSchema.relationshipObjectTypes[0].to,
       nodeObjectTypes[1]
     );
-    assert.deepEqual(gRep.graphSchema.relationshipObjectTypes[0].toRef(), {
-      $ref: "#r1",
-    });
+
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties.length,
+      graphSchema.relationshipObjectTypes[0].properties.length,
       1
     );
     assert.strictEqual(
-      gRep.graphSchema.relationshipObjectTypes[0].properties[0].token,
+      graphSchema.relationshipObjectTypes[0].properties[0].token,
       "roles"
     );
     assert.strictEqual(
       (
-        gRep.graphSchema.relationshipObjectTypes[0].properties[0]
+        graphSchema.relationshipObjectTypes[0].properties[0]
           .type as PropertyTypes
       ).type,
       "array"
     );
   });
-  test("Handles optional id:s on properties", () => {
-    const properties = [
-      new model.Property("name", new model.PropertyBaseType("string"), false),
-      new model.Property(
-        "age",
-        new model.PropertyBaseType("integer"),
-        true,
-        "test-id"
-      ),
-    ];
-    const serialized = properties.map((p) => p.toJsonStruct());
-    expect(serialized).toMatchInlineSnapshot(`
-      [
-        {
-          "nullable": false,
-          "token": "name",
-          "type": {
-            "type": "string",
-          },
-        },
-        {
-          "$id": "test-id",
-          "nullable": true,
-          "token": "age",
-          "type": {
-            "type": "integer",
-          },
-        },
-      ]
-    `);
-    expect(properties[0]?.toRef()).toEqual(null);
-    expect(properties[1]?.toRef()).toEqual({ $ref: "#test-id" });
-  });
-  test("Allows creation of properties with complicated types", () => {
-    const properties = [
-      new model.Property(
-        "name",
-        new model.PropertyArrayType(new model.PropertyBaseType("string")),
-        false
-      ),
-      new model.Property(
-        "id",
-        [
-          new model.PropertyBaseType("integer"),
-          new model.PropertyBaseType("string"),
-        ],
-        false
-      ),
-      new model.Property(
-        "another",
-        [
-          new model.PropertyBaseType("float"),
-          new model.PropertyArrayType(new model.PropertyBaseType("datetime")),
-        ],
-        false
-      ),
-    ];
-    const serialized = properties.map((p) => p.toJsonStruct());
-    expect(serialized).toMatchInlineSnapshot(`
-      [
-        {
-          "nullable": false,
-          "token": "name",
-          "type": {
-            "items": {
-              "type": "string",
-            },
-            "type": "array",
-          },
-        },
-        {
-          "nullable": false,
-          "token": "id",
-          "type": [
-            {
-              "type": "integer",
-            },
-            {
-              "type": "string",
-            },
-          ],
-        },
-        {
-          "nullable": false,
-          "token": "another",
-          "type": [
-            {
-              "items": {
-                "type": "datetime",
-              },
-              "type": "array",
-            },
-            {
-              "type": "float",
-            },
-          ],
-        },
-      ]
-    `);
-  });
+
   test("getAllLabelTokes returns all label tokens", () => {
     // call getAllLabelTokens on a graph schema with 3 labels
     const labels = [

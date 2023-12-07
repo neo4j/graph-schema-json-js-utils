@@ -32,9 +32,9 @@ validateSchema(jsonSchema, graphSchema);
 Since the references in the JSON document are references by id:s, there's a parser utility that hydrates the references and makes it easy to work with the schema.
 
 ```js
-import { model } from "@neo4j/graph-schema-utils";
+import { formatters } from "@neo4j/graph-schema-utils";
 
-const parsed = model.GraphSchemaRepresentation.parseJson(graphSchemaJsonString);
+const parsed = formatters.json.fromJson(graphSchemaJsonString);
 ```
 
 ### Model
@@ -43,45 +43,45 @@ You can also create a schema model programatically.
 Example:
 
 ```js
-import { model } from "@neo4j/graph-schema-utils"
+import { model } from "@neo4j/graph-schema-utils";
 
 const labels = [
-    new model.NodeLabel("l1", "Person"),
-    new model.NodeLabel("l1", "Movie"),
-  ];
-  
-  const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
-  
-  const properties = [
-    new model.Property("name", new model.PropertyBaseType("string"), true),
-    new model.Property("title", new model.PropertyBaseType("string"), true),
-    new model.Property("roles", new model.PropertyArrayType(new model.PropertyBaseType("string")), false),
-  ];
-  
-  const nodeObjectTypes = [
-    new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
-    new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
-  ];
-  
-  const relationshipObjectTypes = [
-    // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
-    new model.RelationshipObjectType(
-      "r1",
-      relationshipTypes[0],
-      nodeObjectTypes[0],
-      nodeObjectTypes[1],
-      [properties[2]]
-    ),
-  ];
-  
-  const graphSchema = new model.GraphSchema(
-    labels,
-    relationshipTypes,
-    nodeObjectTypes,
-    relationshipObjectTypes
-  );
+  new model.NodeLabel("l1", "Person"),
+  new model.NodeLabel("l1", "Movie"),
+];
 
-const myModel = new model.GraphSchemaRepresentation("1.0.0", graphSchema);
+const relationshipTypes = [new model.RelationshipType("rt1", "ACTED_IN")];
+
+const properties = [
+  new model.Property("name", new model.PropertyBaseType("string"), true),
+  new model.Property("title", new model.PropertyBaseType("string"), true),
+  new model.Property(
+    "roles",
+    new model.PropertyArrayType(new model.PropertyBaseType("string")),
+    false
+  ),
+];
+
+const nodeObjectTypes = [
+  new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
+  new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
+];
+
+const relationshipObjectTypes = [
+  // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
+  new model.RelationshipObjectType(
+    "r1",
+    relationshipTypes[0],
+    nodeObjectTypes[0],
+    nodeObjectTypes[1],
+    [properties[2]]
+  ),
+];
+
+const graphSchema = new model.GraphSchema(
+  nodeObjectTypes,
+  relationshipObjectTypes
+);
 ```
 
 ### Serialize
@@ -89,7 +89,9 @@ const myModel = new model.GraphSchemaRepresentation("1.0.0", graphSchema);
 If you need to transport or persist the schema, you can serialize the model into the JSON represenation.
 
 ```js
-const serialized = myModel.toJson();
+import { formatters } from "@neo4j/graph-schema-utils";
+
+const serialized = formatters.json.toJson(graphSchema);
 ```
 
 ## Contribute

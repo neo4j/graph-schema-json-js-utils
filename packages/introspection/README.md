@@ -44,7 +44,7 @@ docker run \
     --name testneo4j \
     --rm \
     -p7474:7474 -p7687:7687 \
-    --env NEO4J_ACCEPT_LICENSE_AGREEMENT=yes \
+    --env NEO4J_ACCEPT_LICENSE_AGREEMENT=eval \
     --env NEO4J_AUTH=neo4j/password \
     neo4j:enterprise
 ```

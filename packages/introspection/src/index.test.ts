@@ -8,7 +8,7 @@ import {
   expect,
   test,
 } from "vitest";
-import { model, validateSchema } from "@neo4j/graph-schema-utils";
+import { formatters, validateSchema } from "@neo4j/graph-schema-utils";
 import jsonSchema from "@neo4j/graph-json-schema/json-schema.json";
 import { introspect, sessionFactory } from "./index.js";
 
@@ -20,10 +20,10 @@ describe("Introspection tests", () => {
 
   beforeAll(async () => {
     driver = neo4j.driver(
-      import.meta.env.VITE_TESTING_BOLT_URL,
+      import.meta.env.VITE_TESTING_BOLT_URL || "neo4j://localhost:7687",
       neo4j.auth.basic(
-        import.meta.env.VITE_TESTING_BOLT_USER,
-        import.meta.env.VITE_TESTING_BOLT_PASSWORD
+        import.meta.env.VITE_TESTING_BOLT_USER || "neo4j",
+        import.meta.env.VITE_TESTING_BOLT_PASSWORD || "password"
       )
     );
     try {
@@ -80,11 +80,10 @@ describe("Introspection tests", () => {
 
   test("can introspect empty db", async () => {
     const res = await introspect(writeSessionFactory);
-    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
-    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/empty.json"
     );
-    const schema = schemaRep.toJson();
+    const schema = formatters.json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -93,11 +92,10 @@ describe("Introspection tests", () => {
     await session.run(standaloneNodesGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
-    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/standalone-nodes.json"
     );
-    const schema = schemaRep.toJson();
+    const schema = formatters.json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -106,11 +104,10 @@ describe("Introspection tests", () => {
     await session.run(specialCharactersGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
-    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/special-chars-nodes.json"
     );
-    const schema = schemaRep.toJson();
+    const schema = formatters.json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -119,11 +116,10 @@ describe("Introspection tests", () => {
     await session.run(multiTypesPropertiesGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
-    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/multi-types-props.json"
     );
-    const schema = schemaRep.toJson();
+    const schema = formatters.json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -132,11 +128,10 @@ describe("Introspection tests", () => {
     await session.run(matrixQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    const schemaRep = new model.GraphSchemaRepresentation("repo-test", res);
-    await expect(schemaRep.toJson(2)).toMatchFileSnapshot(
+    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/matrix.json"
     );
-    const schema = schemaRep.toJson();
+    const schema = formatters.json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 });
