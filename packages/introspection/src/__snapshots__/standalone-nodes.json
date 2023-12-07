@@ -19,23 +19,6 @@
       "relationshipTypes": [],
       "nodeObjectTypes": [
         {
-          "$id": "n:Genre",
-          "labels": [
-            {
-              "$ref": "#Genre"
-            }
-          ],
-          "properties": [
-            {
-              "token": "name",
-              "type": {
-                "type": "string"
-              },
-              "nullable": false
-            }
-          ]
-        },
-        {
           "$id": "n:Movie",
           "labels": [
             {
@@ -45,6 +28,23 @@
           "properties": [
             {
               "token": "title",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "n:Genre",
+          "labels": [
+            {
+              "$ref": "#Genre"
+            }
+          ],
+          "properties": [
+            {
+              "token": "name",
               "type": {
                 "type": "string"
               },

@@ -19,6 +19,23 @@
       "relationshipTypes": [],
       "nodeObjectTypes": [
         {
+          "$id": "n:Spec`ial",
+          "labels": [
+            {
+              "$ref": "#Spec`ial"
+            }
+          ],
+          "properties": [
+            {
+              "token": "na`me",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
           "$id": "n:Label-1:Label-2",
           "labels": [
             {
@@ -36,23 +53,6 @@
                 "items": {
                   "type": "integer"
                 }
-              },
-              "nullable": false
-            }
-          ]
-        },
-        {
-          "$id": "n:Spec`ial",
-          "labels": [
-            {
-              "$ref": "#Spec`ial"
-            }
-          ],
-          "properties": [
-            {
-              "token": "na`me",
-              "type": {
-                "type": "string"
               },
               "nullable": false
             }
