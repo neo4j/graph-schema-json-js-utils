@@ -43,16 +43,6 @@
           ],
           "properties": [
             {
-              "token": "born",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "nullable": false
-            },
-            {
               "token": "id",
               "type": [
                 {
@@ -68,6 +58,16 @@
                   "type": "string"
                 }
               ],
+              "nullable": false
+            },
+            {
+              "token": "born",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "nullable": false
             },
             {

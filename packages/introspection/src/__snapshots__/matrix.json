@@ -48,9 +48,9 @@
           ],
           "properties": [
             {
-              "token": "released",
+              "token": "title",
               "type": {
-                "type": "integer"
+                "type": "string"
               },
               "nullable": false
             },
@@ -62,9 +62,9 @@
               "nullable": true
             },
             {
-              "token": "title",
+              "token": "released",
               "type": {
-                "type": "string"
+                "type": "integer"
               },
               "nullable": false
             }
@@ -79,18 +79,18 @@
           ],
           "properties": [
             {
-              "token": "born",
-              "type": {
-                "type": "integer"
-              },
-              "nullable": true
-            },
-            {
               "token": "name",
               "type": {
                 "type": "string"
               },
               "nullable": false
+            },
+            {
+              "token": "born",
+              "type": {
+                "type": "integer"
+              },
+              "nullable": true
             }
           ]
         }
@@ -172,16 +172,16 @@
           },
           "properties": [
             {
-              "token": "rating",
+              "token": "summary",
               "type": {
-                "type": "integer"
+                "type": "string"
               },
               "nullable": false
             },
             {
-              "token": "summary",
+              "token": "rating",
               "type": {
-                "type": "string"
+                "type": "integer"
               },
               "nullable": false
             }
