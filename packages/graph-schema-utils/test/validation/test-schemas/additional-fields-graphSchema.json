@@ -5,13 +5,22 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
+          "token": "Person",
+          "properties": [
+            {
+              "$id": "p1",
+              "token": "title",
+              "type": { "type": "string" },
+              "nullable": false
+            }
+          ]
         }
       ],
       "relationshipTypes": [
         {
           "$id": "rt1",
-          "token": "ACTED_IN"
+          "token": "ACTED_IN",
+          "properties": []
         }
       ],
       "nodeObjectTypes": [
@@ -21,17 +30,12 @@
             {
               "$ref": "#l4"
             }
-          ],
-          "properties": [
-            {
-              "token": "title",
-              "type": { "type": "string" },
-              "nullable": false
-            }
           ]
         }
       ],
       "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": [],
       "illegal-field": []
     }
   }

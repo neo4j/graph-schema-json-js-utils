@@ -1,10 +1,24 @@
 import { describe, expect, test } from "vitest";
+import { strict as assert } from "node:assert";
 import { toOskars, toTomaz } from "./index.js";
 import { fromJson } from "../json/extensions.js";
 import fullSchemaObj from "./test-schemas/full.json";
+import path from "path";
+import { readFile } from "../../../test/fs.utils.js";
+import { validateSchema } from "../../validation.js";
+
+const JSON_SCHEMA = JSON.stringify(
+  require("@neo4j/graph-json-schema/json-schema.json")
+);
 
 describe("Prompt tests", () => {
   const schema = fromJson(JSON.stringify(fullSchemaObj));
+  test("Make sure the full.json is valid", () => {
+    const fullSchema = readFile(
+      path.resolve(__dirname, "./test-schemas/full.json")
+    );
+    assert.doesNotThrow(() => validateSchema(JSON_SCHEMA, fullSchema));
+  });
   test("Can generate a prompt format of a graph schema, in Oskars format", () => {
     const prompt = toOskars(schema);
     expect(prompt).toMatchInlineSnapshot(`

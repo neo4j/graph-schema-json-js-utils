@@ -1,13 +1,20 @@
 {
   "graphSchemaRepresentation": {
-    "version": "0.0.1",
+    "version": "1.0.1",
     "graphSchema": {
       "nodeLabels": [],
       "relationshipTypes": [],
       "nodeObjectTypes": [],
       "relationshipObjectTypes": [],
       "constraints": [],
-      "indexes": []
+      "indexes": [
+        {
+          "$id": "i:default",
+          "name": "ACTED_IN_index",
+          "indexType": "default",
+          "entityType": "relationship"
+        }
+      ]
     }
   }
 }

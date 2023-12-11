@@ -1,6 +1,10 @@
 import {
+  Constraint,
   GraphSchema,
+  LookupIndex,
   NodeLabel,
+  NodeLabelConstraint,
+  NodeLabelIndex,
   NodeObjectType,
   Property,
   PropertyArrayType,
@@ -8,8 +12,20 @@ import {
   PropertyTypeRecursive,
   RelationshipObjectType,
   RelationshipType,
+  RelationshipTypeConstraint,
+  RelationshipTypeIndex,
+  isLookupIndex,
+  isNodeLabelConstraint,
+  isNodeLabelIndex,
+  isRelationshipTypeConstraint,
+  isRelationshipTypeIndex,
 } from "../../model/index.js";
 import {
+  ConstraintJsonStruct,
+  IndexJsonStruct,
+  LookupIndexJsonStruct,
+  NodeLabelConstraintJsonStruct,
+  NodeLabelIndexJsonStruct,
   NodeLabelJsonStruct,
   NodeObjectTypeJsonStruct,
   PrimitivePropertyTypesArrayType,
@@ -17,8 +33,15 @@ import {
   PropertyJsonStruct,
   PropertyTypeJsonStructRecrsive,
   RelationshipObjectTypeJsonStruct,
+  RelationshipTypeConstraintJsonStruct,
+  RelationshipTypeIndexJsonStruct,
   RelationshipTypeJsonStruct,
   RootSchemaJsonStruct,
+  isLookupIndexJsonStruct,
+  isNodeLabelConstraintJsonStruct,
+  isNodeLabelIndexJsonStruct,
+  isRelationshipTypeConstraintJsonStruct,
+  isRelationshipTypeIndexJsonStruct,
 } from "./types.js";
 
 export const VERSION = "0.0.1";
@@ -37,6 +60,24 @@ export function toJson(
   const relationshipObjectTypes = schema.relationshipObjectTypes.map(
     relationshipObjectType.extract
   );
+  const constraints = schema.constraints.map((constraint) => {
+    if (isNodeLabelConstraint(constraint)) {
+      return nodeLabelConstraint.extract(constraint);
+    } else if (isRelationshipTypeConstraint(constraint)) {
+      return relationshipConstraint.extract(constraint);
+    }
+    throw new Error(`Unknown constraint type ${constraint}`);
+  });
+  const indexes = schema.indexes.map((index) => {
+    if (isNodeLabelIndex(index)) {
+      return nodeLabelIndex.extract(index);
+    } else if (isRelationshipTypeIndex(index)) {
+      return relationshipTypeIndex.extract(index);
+    } else if (isLookupIndex(index)) {
+      return lookupIndex.extract(index);
+    }
+    throw new Error(`Unknown index type ${index}`);
+  });
   const out: RootSchemaJsonStruct = {
     graphSchemaRepresentation: {
       version: VERSION,
@@ -45,6 +86,8 @@ export function toJson(
         relationshipTypes,
         nodeObjectTypes,
         relationshipObjectTypes,
+        constraints,
+        indexes,
       },
     },
   };
@@ -58,6 +101,11 @@ export function fromJson(schema: string): GraphSchema {
   const relationshipTypes = graphSchema.relationshipTypes.map(
     relationshipType.create
   );
+  const labelProperties = labels.flatMap((label) => label.properties);
+  const relationshipTypeProperties = relationshipTypes.flatMap(
+    (relType) => relType.properties
+  );
+  const properties = [...labelProperties, ...relationshipTypeProperties];
   const nodeObjectTypes = graphSchema.nodeObjectTypes.map(
     (nodeObjectTypeJson) =>
       nodeObjectType.create(nodeObjectTypeJson, (ref) => {
@@ -94,15 +142,113 @@ export function fromJson(schema: string): GraphSchema {
         }
       )
   );
-  return new GraphSchema(nodeObjectTypes, relationshipObjectTypes);
+  const constraints = graphSchema.constraints.map((constraintJson) => {
+    if (isNodeLabelConstraintJsonStruct(constraintJson)) {
+      return nodeLabelConstraint.create(
+        constraintJson,
+        (ref) => {
+          const found = labels.find((label) => label.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(`Not all label references are defined`);
+          }
+          return found;
+        },
+        (ref) => {
+          const found = properties.find((p) => p.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(
+              `Not all constraint property references are defined`
+            );
+          }
+          return found;
+        }
+      );
+    } else if (isRelationshipTypeConstraintJsonStruct(constraintJson)) {
+      return relationshipConstraint.create(
+        constraintJson,
+        (ref) => {
+          const found = relationshipTypes.find(
+            (relType) => relType.$id === ref.slice(1)
+          );
+          if (!found) {
+            throw new Error(`Not all relationship type references are defined`);
+          }
+          return found;
+        },
+        (ref) => {
+          const found = properties.find((p) => p.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(
+              `Not all constraint property references are defined`
+            );
+          }
+          return found;
+        }
+      );
+    }
+    throw new Error(`Unknown constraint type ${constraintJson}`);
+  });
+  const indexes = graphSchema.indexes.map((indexJson) => {
+    if (isNodeLabelIndexJsonStruct(indexJson)) {
+      return nodeLabelIndex.create(
+        indexJson,
+        (ref) => {
+          const found = labels.find((label) => label.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(`Not all label references are defined`);
+          }
+          return found;
+        },
+        (ref) => {
+          const found = properties.find((p) => p.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(`Not all index property references are defined`);
+          }
+          return found;
+        }
+      );
+    } else if (isRelationshipTypeIndexJsonStruct(indexJson)) {
+      return relationshipTypeIndex.create(
+        indexJson,
+        (ref) => {
+          const found = relationshipTypes.find(
+            (relType) => relType.$id === ref.slice(1)
+          );
+          if (!found) {
+            throw new Error(`Not all relationship type references are defined`);
+          }
+          return found;
+        },
+        (ref) => {
+          const found = properties.find((p) => p.$id === ref.slice(1));
+          if (!found) {
+            throw new Error(`Not all index property references are defined`);
+          }
+          return found;
+        }
+      );
+    } else if (isLookupIndexJsonStruct(indexJson)) {
+      return lookupIndex.create(indexJson);
+    } else {
+      throw new Error(`Unknown index type ${indexJson}`);
+    }
+  });
+  return new GraphSchema(
+    nodeObjectTypes,
+    relationshipObjectTypes,
+    constraints,
+    indexes
+  );
 }
 
 const nodeLabel = {
   extract: (node: NodeLabel): NodeLabelJsonStruct => ({
     $id: node.$id,
     token: node.token,
+    properties: node.properties.map(property.extract),
   }),
-  create: (node: NodeLabelJsonStruct) => new NodeLabel(node.$id, node.token),
+  create: (node: NodeLabelJsonStruct) =>
+    new NodeLabel(node.$id, node.token, node.properties.map(property.create)),
   toRef: (node: NodeLabel) => {
     if (!node || !node.$id) {
       throw new Error(`Not all labels are defined`);
@@ -115,9 +261,14 @@ const relationshipType = {
   extract: (relType: RelationshipType): RelationshipTypeJsonStruct => ({
     $id: relType.$id,
     token: relType.token,
+    properties: relType.properties.map(property.extract),
   }),
   create: (relType: RelationshipTypeJsonStruct) =>
-    new RelationshipType(relType.$id, relType.token),
+    new RelationshipType(
+      relType.$id,
+      relType.token,
+      relType.properties.map(property.create)
+    ),
   toRef: (relType: RelationshipType) => {
     if (!relType || !relType.$id) {
       throw new Error(`RelationshipObjectType.type is not defined`);
@@ -126,19 +277,166 @@ const relationshipType = {
   },
 };
 
+const nodeLabelConstraint = {
+  extract: (constraint: NodeLabelConstraint): ConstraintJsonStruct => ({
+    $id: constraint.$id,
+    name: constraint.name,
+    constraintType: constraint.constraintType,
+    entityType: constraint.entityType,
+    nodeLabel: nodeLabel.toRef(constraint.nodeLabel),
+    properties: constraint.properties.map(property.toRef),
+  }),
+  create: (
+    constraint: NodeLabelConstraintJsonStruct,
+    nodeLabelLookup: (ref: string) => NodeLabel,
+    propertyLookup: (ref: string) => Property
+  ) => {
+    return new NodeLabelConstraint(
+      constraint.$id,
+      constraint.name,
+      constraint.constraintType,
+      nodeLabelLookup(constraint.nodeLabel.$ref),
+      constraint.properties.map((p) => propertyLookup(p.$ref))
+    );
+  },
+  toRef: (constraint: NodeLabelConstraint) => {
+    if (!constraint || !constraint.$id) {
+      throw new Error(`Constraint is not defined`);
+    }
+    return { $ref: `#${constraint.$id}` };
+  },
+};
+
+const relationshipConstraint = {
+  extract: (constraint: RelationshipTypeConstraint): ConstraintJsonStruct => ({
+    $id: constraint.$id,
+    name: constraint.name,
+    constraintType: constraint.constraintType,
+    entityType: constraint.entityType,
+    relationshipType: relationshipType.toRef(constraint.relationshipType),
+    properties: constraint.properties.map(property.toRef),
+  }),
+  create: (
+    constraint: RelationshipTypeConstraintJsonStruct,
+    relationshipTypeLookup: (ref: string) => RelationshipType,
+    propertyLookup: (ref: string) => Property
+  ) => {
+    return new RelationshipTypeConstraint(
+      constraint.$id,
+      constraint.name,
+      constraint.constraintType,
+      relationshipTypeLookup(constraint.relationshipType.$ref),
+      constraint.properties.map((p) => propertyLookup(p.$ref))
+    );
+  },
+  toRef: (constraint: RelationshipTypeConstraint) => {
+    if (!constraint || !constraint.$id) {
+      throw new Error(`Constraint is not defined`);
+    }
+    return { $ref: `#${constraint.$id}` };
+  },
+};
+
+const lookupIndex = {
+  extract: (index: LookupIndex): IndexJsonStruct => ({
+    $id: index.$id,
+    name: index.name,
+    indexType: index.indexType,
+    entityType: index.entityType,
+  }),
+  create: (index: LookupIndexJsonStruct) => {
+    return new LookupIndex(index.$id, index.name, index.entityType);
+  },
+  toRef: (index: LookupIndex) => {
+    if (!index || !index.$id) {
+      throw new Error(`Index is not defined`);
+    }
+    return { $ref: `#${index.$id}` };
+  },
+};
+
+const nodeLabelIndex = {
+  extract: (index: NodeLabelIndex): IndexJsonStruct => ({
+    $id: index.$id,
+    name: index.name,
+    indexType: index.indexType,
+    entityType: index.entityType,
+    nodeLabel: nodeLabel.toRef(index.nodeLabel),
+    properties: index.properties.map(property.toRef),
+  }),
+  create: (
+    index: NodeLabelIndexJsonStruct,
+    nodeLabelLookup: (ref: string) => NodeLabel,
+    propertyLookup: (ref: string) => Property
+  ) => {
+    return new NodeLabelIndex(
+      index.$id,
+      index.name,
+      index.indexType,
+      nodeLabelLookup(index.nodeLabel.$ref),
+      index.properties.map((p) => propertyLookup(p.$ref))
+    );
+  },
+  toRef: (index: NodeLabelIndex) => {
+    if (!index || !index.$id) {
+      throw new Error(`Index is not defined`);
+    }
+    return { $ref: `#${index.$id}` };
+  },
+};
+
+const relationshipTypeIndex = {
+  extract: (index: RelationshipTypeIndex): IndexJsonStruct => ({
+    $id: index.$id,
+    name: index.name,
+    indexType: index.indexType,
+    entityType: index.entityType,
+    relationshipType: relationshipType.toRef(index.relationshipType),
+    properties: index.properties.map(property.toRef),
+  }),
+  create: (
+    index: RelationshipTypeIndexJsonStruct,
+    relationshipTypeLookup: (ref: string) => RelationshipType,
+    propertyLookup: (ref: string) => Property
+  ) => {
+    return new RelationshipTypeIndex(
+      index.$id,
+      index.name,
+      index.indexType,
+      relationshipTypeLookup(index.relationshipType.$ref),
+      index.properties.map((p) => propertyLookup(p.$ref))
+    );
+  },
+  toRef: (index: RelationshipTypeIndex) => {
+    if (!index || !index.$id) {
+      throw new Error(`Index is not defined`);
+    }
+    return { $ref: `#${index.$id}` };
+  },
+};
+
 const property = {
   extract: (property: Property): PropertyJsonStruct => ({
+    $id: property.$id,
     token: property.token,
     type: propertyType.extract(property.type),
     nullable: property.nullable,
   }),
   create: (property: PropertyJsonStruct) =>
     new Property(
+      property.$id,
       property.token,
       propertyType.create(property.type),
-      property.nullable,
-      property.$id
+      property.nullable
     ),
+  toRef: (property: Property) => {
+    if (!property || !property.$id) {
+      throw new Error(`Property is not defined`);
+    }
+    return {
+      $ref: `#${property.$id}`,
+    };
+  },
 };
 
 const propertyType = {
@@ -191,7 +489,6 @@ const nodeObjectType = {
   extract: (nodeObjectType: NodeObjectType): NodeObjectTypeJsonStruct => ({
     $id: nodeObjectType.$id,
     labels: nodeObjectType.labels.map(nodeLabel.toRef),
-    properties: nodeObjectType.properties.map(property.extract),
   }),
   create: (
     nodeObjectType: NodeObjectTypeJsonStruct,
@@ -199,8 +496,7 @@ const nodeObjectType = {
   ) => {
     return new NodeObjectType(
       nodeObjectType.$id,
-      nodeObjectType.labels.map(({ $ref }) => labelLookup($ref)),
-      nodeObjectType.properties.map(property.create)
+      nodeObjectType.labels.map(({ $ref }) => labelLookup($ref))
     );
   },
   toRef: (nodeObjectType: NodeObjectType) => {
@@ -221,7 +517,6 @@ const relationshipObjectType = {
     type: relationshipType.toRef(relationshipObjectType.type),
     from: nodeObjectType.toRef(relationshipObjectType.from),
     to: nodeObjectType.toRef(relationshipObjectType.to),
-    properties: relationshipObjectType.properties.map(property.extract),
   }),
   create: (
     relationshipObjectType: RelationshipObjectTypeJsonStruct,
@@ -232,8 +527,7 @@ const relationshipObjectType = {
       relationshipObjectType.$id,
       relTypeLookup(relationshipObjectType.type.$ref),
       nodeObjectTypeLookup(relationshipObjectType.from.$ref, "from"),
-      nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to"),
-      relationshipObjectType.properties.map(property.create)
+      nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to")
     );
   },
   toRef: (relationshipObjectType: RelationshipObjectType) => ({

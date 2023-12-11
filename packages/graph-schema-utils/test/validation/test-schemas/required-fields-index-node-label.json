@@ -1,0 +1,21 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.1",
+    "graphSchema": {
+      "nodeLabels": [],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [],
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": [
+        {
+          "$id": "i:range",
+          "name": "Actor_name_index",
+          "indexType": "range",
+          "entityType": "node",
+          "properties": [{ "$ref": "#p:Actor.name" }]
+        }
+      ]
+    }
+  }
+}

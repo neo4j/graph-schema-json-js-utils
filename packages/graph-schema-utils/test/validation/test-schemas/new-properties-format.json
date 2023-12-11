@@ -2,24 +2,25 @@
   "graphSchemaRepresentation": {
     "version": "1.0.1",
     "graphSchema": {
-      "nodeLabels": [{ "$id": "nl:Person", "token": "Person" }],
-      "relationshipTypes": [],
-      "nodeObjectTypes": [
+      "nodeLabels": [
         {
-          "$id": "xxxxx",
-          "labels": [{ "$ref": "#nl:Person" }],
+          "$id": "nl:Person",
+          "token": "Person",
           "properties": [
             {
+              "$id": "p:1",
               "token": "primitive",
               "type": { "type": "string" },
               "nullable": false
             },
             {
+              "$id": "p:2",
               "token": "many-primitive",
               "type": [{ "type": "string" }, { "type": "integer" }],
               "nullable": false
             },
             {
+              "$id": "p:3",
               "token": "primitive array",
               "type": {
                 "type": "array",
@@ -28,6 +29,7 @@
               "nullable": false
             },
             {
+              "$id": "p:4",
               "token": "primitive array + primitive",
               "type": [
                 { "type": "string" },
@@ -41,7 +43,16 @@
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "xxxxx",
+          "labels": [{ "$ref": "#nl:Person" }]
+        }
+      ],
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

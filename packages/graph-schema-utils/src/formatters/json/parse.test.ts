@@ -5,10 +5,21 @@ import { describe, test } from "vitest";
 import { fromJson } from "./index.js";
 import { PropertyTypes } from "../../model/index.js";
 
+import { validateSchema } from "../../validation.js";
+
+const JSON_SCHEMA = JSON.stringify(
+  require("@neo4j/graph-json-schema/json-schema.json")
+);
+
 describe("Parser tests", () => {
   const fullSchema = readFile(
     path.resolve(__dirname, "./test-schemas/full.json")
   );
+
+  test("Make sure full.json is valid", () => {
+    assert.doesNotThrow(() => validateSchema(JSON_SCHEMA, fullSchema));
+  });
+
   test("Can parse a graph schema and bind references", () => {
     const parsed = fromJson(fullSchema);
 
@@ -19,22 +30,10 @@ describe("Parser tests", () => {
     assert.strictEqual(parsed.relationshipObjectTypes.length, 2);
 
     // node object types, connected to node labels
-    assert.strictEqual(parsed.nodeObjectTypes[1].properties.length, 3);
-    assert.strictEqual(parsed.nodeObjectTypes[1].properties[0].nullable, false);
     assert.strictEqual(parsed.nodeObjectTypes[0].labels[1].$id, "nl:Person");
     assert.strictEqual(parsed.nodeObjectTypes[1].labels[1].token, "Person");
 
     // relationship object types, connected to relationship types and from/to nodes -> label
-    assert.strictEqual(parsed.relationshipObjectTypes[0].properties.length, 1);
-    assert.strictEqual(
-      parsed.relationshipObjectTypes[0].properties[0].token,
-      "roles"
-    );
-    assert.strictEqual(
-      (parsed.relationshipObjectTypes[0].properties[0].type as PropertyTypes)
-        .type,
-      "array"
-    );
     assert.strictEqual(
       parsed.relationshipObjectTypes[0].type.$id,
       "rt:ACTED_IN"
@@ -54,6 +53,21 @@ describe("Parser tests", () => {
     assert.strictEqual(
       parsed.relationshipObjectTypes[0].to.labels[0],
       parsed.nodeLabels[3]
+    );
+
+    // Node labels connected to properties
+    assert.strictEqual(parsed.nodeLabels[1].properties.length, 3);
+    assert.strictEqual(parsed.nodeLabels[1].properties[0].nullable, false);
+
+    // Relationship types connected to properties
+    assert.strictEqual(parsed.relationshipTypes[0].properties.length, 1);
+    assert.strictEqual(
+      parsed.relationshipTypes[0].properties[0].token,
+      "roles"
+    );
+    assert.strictEqual(
+      (parsed.relationshipTypes[0].properties[0].type as PropertyTypes).type,
+      "array"
     );
   });
 

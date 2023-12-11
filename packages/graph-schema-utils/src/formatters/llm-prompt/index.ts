@@ -19,7 +19,7 @@ export function toTomaz(schema: GraphSchema): string {
 
   function nodeObjectTypes(nodeObjectType: NodeObjectType): string {
     const out = [];
-    const properties = nodeObjectType.properties.map((property) => {
+    const properties = nodeObjectType.getProperties().map((property) => {
       const base: ElementPropertyObject = {
         property: property.token,
         type: formatPropertyType(property.type),
@@ -43,16 +43,18 @@ export function toTomaz(schema: GraphSchema): string {
     relationshipObjectType: RelationshipObjectType
   ): string {
     const out = [];
-    const properties = relationshipObjectType.properties.map((property) => {
-      const base: ElementPropertyObject = {
-        property: property.token,
-        type: formatPropertyType(property.type),
-      };
-      if (property.nullable) {
-        base.nullable = true;
-      }
-      return base;
-    });
+    const properties = relationshipObjectType
+      .getProperties()
+      .map((property) => {
+        const base: ElementPropertyObject = {
+          property: property.token,
+          type: formatPropertyType(property.type),
+        };
+        if (property.nullable) {
+          base.nullable = true;
+        }
+        return base;
+      });
     if (!properties.length) {
       return "";
     }
@@ -87,8 +89,8 @@ export function toOskars(schema: GraphSchema): string {
   );
 
   function nodeObjectTypes(nodeObjectType: NodeObjectType): string {
-    const out = [];
-    const properties = nodeObjectType.properties.map((property) => {
+    const out: string[] = [];
+    const properties = nodeObjectType.getProperties().map((property) => {
       return `${property.token}: ${formatPropertyType(property.type)}${
         property.nullable ? " (nullable)" : ""
       }`;
@@ -103,12 +105,14 @@ export function toOskars(schema: GraphSchema): string {
   function relationshipObjectTypes(
     relationshipObjectType: RelationshipObjectType
   ): string {
-    const out = [];
-    const properties = relationshipObjectType.properties.map((property) => {
-      return `${property.token}: ${formatPropertyType(property.type)}${
-        property.nullable ? " (nullable)" : ""
-      }`;
-    });
+    const out: string[] = [];
+    const properties = relationshipObjectType
+      .getProperties()
+      .map((property) => {
+        return `${property.token}: ${formatPropertyType(property.type)}${
+          property.nullable ? " (nullable)" : ""
+        }`;
+      });
     if (!properties.length) {
       return "";
     }
@@ -121,7 +125,7 @@ export function toOskars(schema: GraphSchema): string {
     return out.join("\n");
   }
   function paths(relationshipObjectType: RelationshipObjectType): string {
-    const out = [];
+    const out: string[] = [];
     out.push(
       `  (:${relationshipObjectType.from.labels
         .map((label) => label.token)
