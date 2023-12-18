@@ -1,5 +1,4 @@
 import {
-  Constraint,
   GraphSchema,
   LookupIndex,
   NodeLabel,
@@ -101,11 +100,6 @@ export function fromJson(schema: string): GraphSchema {
   const relationshipTypes = graphSchema.relationshipTypes.map(
     relationshipType.create
   );
-  const labelProperties = labels.flatMap((label) => label.properties);
-  const relationshipTypeProperties = relationshipTypes.flatMap(
-    (relType) => relType.properties
-  );
-  const properties = [...labelProperties, ...relationshipTypeProperties];
   const nodeObjectTypes = graphSchema.nodeObjectTypes.map(
     (nodeObjectTypeJson) =>
       nodeObjectType.create(nodeObjectTypeJson, (ref) => {
@@ -153,8 +147,12 @@ export function fromJson(schema: string): GraphSchema {
           }
           return found;
         },
-        (ref) => {
-          const found = properties.find((p) => p.$id === ref.slice(1));
+        (propertyRef, labelRef) => {
+          const label = labels.find((label) => label.$id === labelRef.slice(1));
+          const labelProperties = label ? label.properties : [];
+          const found = labelProperties.find(
+            (p) => p.$id === propertyRef.slice(1)
+          );
           if (!found) {
             throw new Error(
               `Not all constraint property references are defined`
@@ -175,8 +173,14 @@ export function fromJson(schema: string): GraphSchema {
           }
           return found;
         },
-        (ref) => {
-          const found = properties.find((p) => p.$id === ref.slice(1));
+        (propertyRef, relationshipTypeRef) => {
+          const relType = relationshipTypes.find(
+            (relType) => relType.$id === relationshipTypeRef.slice(1)
+          );
+          const relTypeProperties = relType ? relType.properties : [];
+          const found = relTypeProperties.find(
+            (p) => p.$id === propertyRef.slice(1)
+          );
           if (!found) {
             throw new Error(
               `Not all constraint property references are defined`
@@ -199,8 +203,12 @@ export function fromJson(schema: string): GraphSchema {
           }
           return found;
         },
-        (ref) => {
-          const found = properties.find((p) => p.$id === ref.slice(1));
+        (propertyRef, labelRef) => {
+          const label = labels.find((label) => label.$id === labelRef.slice(1));
+          const labelProperties = label ? label.properties : [];
+          const found = labelProperties.find(
+            (p) => p.$id === propertyRef.slice(1)
+          );
           if (!found) {
             throw new Error(`Not all index property references are defined`);
           }
@@ -219,8 +227,14 @@ export function fromJson(schema: string): GraphSchema {
           }
           return found;
         },
-        (ref) => {
-          const found = properties.find((p) => p.$id === ref.slice(1));
+        (propertyRef, relTypeRef) => {
+          const relType = relationshipTypes.find(
+            (relType) => relType.$id === relTypeRef.slice(1)
+          );
+          const relTypeProperties = relType ? relType.properties : [];
+          const found = relTypeProperties.find(
+            (p) => p.$id === propertyRef.slice(1)
+          );
           if (!found) {
             throw new Error(`Not all index property references are defined`);
           }
@@ -289,14 +303,16 @@ const nodeLabelConstraint = {
   create: (
     constraint: NodeLabelConstraintJsonStruct,
     nodeLabelLookup: (ref: string) => NodeLabel,
-    propertyLookup: (ref: string) => Property
+    propertyLookup: (propertyRef: string, nodeLabelRef: string) => Property
   ) => {
     return new NodeLabelConstraint(
       constraint.$id,
       constraint.name,
       constraint.constraintType,
       nodeLabelLookup(constraint.nodeLabel.$ref),
-      constraint.properties.map((p) => propertyLookup(p.$ref))
+      constraint.properties.map((p) =>
+        propertyLookup(p.$ref, constraint.nodeLabel.$ref)
+      )
     );
   },
   toRef: (constraint: NodeLabelConstraint) => {
@@ -319,14 +335,19 @@ const relationshipConstraint = {
   create: (
     constraint: RelationshipTypeConstraintJsonStruct,
     relationshipTypeLookup: (ref: string) => RelationshipType,
-    propertyLookup: (ref: string) => Property
+    propertyLookup: (
+      propertyRef: string,
+      relationshipTypeRef: string
+    ) => Property
   ) => {
     return new RelationshipTypeConstraint(
       constraint.$id,
       constraint.name,
       constraint.constraintType,
       relationshipTypeLookup(constraint.relationshipType.$ref),
-      constraint.properties.map((p) => propertyLookup(p.$ref))
+      constraint.properties.map((p) =>
+        propertyLookup(p.$ref, constraint.relationshipType.$ref)
+      )
     );
   },
   toRef: (constraint: RelationshipTypeConstraint) => {
@@ -367,14 +388,14 @@ const nodeLabelIndex = {
   create: (
     index: NodeLabelIndexJsonStruct,
     nodeLabelLookup: (ref: string) => NodeLabel,
-    propertyLookup: (ref: string) => Property
+    propertyLookup: (propertyRef: string, nodeLabelRef: string) => Property
   ) => {
     return new NodeLabelIndex(
       index.$id,
       index.name,
       index.indexType,
       nodeLabelLookup(index.nodeLabel.$ref),
-      index.properties.map((p) => propertyLookup(p.$ref))
+      index.properties.map((p) => propertyLookup(p.$ref, index.nodeLabel.$ref))
     );
   },
   toRef: (index: NodeLabelIndex) => {
@@ -397,14 +418,19 @@ const relationshipTypeIndex = {
   create: (
     index: RelationshipTypeIndexJsonStruct,
     relationshipTypeLookup: (ref: string) => RelationshipType,
-    propertyLookup: (ref: string) => Property
+    propertyLookup: (
+      propertyRef: string,
+      relationshipTypeRef: string
+    ) => Property
   ) => {
     return new RelationshipTypeIndex(
       index.$id,
       index.name,
       index.indexType,
       relationshipTypeLookup(index.relationshipType.$ref),
-      index.properties.map((p) => propertyLookup(p.$ref))
+      index.properties.map((p) =>
+        propertyLookup(p.$ref, index.relationshipType.$ref)
+      )
     );
   },
   toRef: (index: RelationshipTypeIndex) => {

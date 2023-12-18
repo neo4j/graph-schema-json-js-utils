@@ -98,7 +98,8 @@ export class NodeObjectType {
     return this.labels.flatMap((l) => l.properties);
   }
   getPropertyTokens() {
-    return this.getProperties().map((property) => property.token);
+    // return all tokens without duplicates
+    return [...new Set(this.getProperties().map((property) => property.token))];
   }
 }
 
@@ -123,7 +124,8 @@ export class RelationshipObjectType {
     return this.type.properties;
   }
   getPropertyTokens() {
-    return this.getProperties().map((property) => property.token);
+    // return all tokens without duplicates
+    return [...new Set(this.getProperties().map((property) => property.token))];
   }
 }
 
@@ -134,23 +136,33 @@ export type Index = NodeLabelIndex | RelationshipTypeIndex | LookupIndex;
 export const isNodeLabelConstraint = (
   constraint: Constraint
 ): constraint is NodeLabelConstraint => {
-  return constraint.entityType === "node";
+  return constraint.entityType === "node" && "nodeLabel" in constraint;
 };
 
 export const isRelationshipTypeConstraint = (
   constraint: Constraint
 ): constraint is RelationshipTypeConstraint => {
-  return constraint.entityType === "relationship";
+  return (
+    constraint.entityType === "relationship" && "relationshipType" in constraint
+  );
 };
 
 export const isNodeLabelIndex = (index: Index): index is NodeLabelIndex => {
-  return index.entityType === "node" && index.indexType !== "lookup";
+  return (
+    index.entityType === "node" &&
+    index.indexType !== "lookup" &&
+    "nodeLabel" in index
+  );
 };
 
 export const isRelationshipTypeIndex = (
   index: Index
 ): index is RelationshipTypeIndex => {
-  return index.entityType === "relationship" && index.indexType !== "lookup";
+  return (
+    index.entityType === "relationship" &&
+    index.indexType !== "lookup" &&
+    "relationshipType" in index
+  );
 };
 
 export const isLookupIndex = (index: Index): index is LookupIndex => {

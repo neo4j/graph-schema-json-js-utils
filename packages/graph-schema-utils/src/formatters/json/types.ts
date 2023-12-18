@@ -59,23 +59,30 @@ export type ConstraintJsonStruct = {
 };
 
 export type NodeLabelConstraintJsonStruct = ConstraintJsonStruct & {
+  entityType: "node";
   nodeLabel: { $ref: string };
+  relationshipType: undefined;
 };
 
 export const isNodeLabelConstraintJsonStruct = (
   constraint: ConstraintJsonStruct
 ): constraint is NodeLabelConstraintJsonStruct => {
-  return constraint.nodeLabel !== undefined;
+  return constraint.entityType === "node" && constraint.nodeLabel !== undefined;
 };
 
 export type RelationshipTypeConstraintJsonStruct = ConstraintJsonStruct & {
+  entityType: "relationship";
+  nodeLabel: undefined;
   relationshipType: { $ref: string };
 };
 
 export const isRelationshipTypeConstraintJsonStruct = (
   constraint: ConstraintJsonStruct
 ): constraint is RelationshipTypeConstraintJsonStruct => {
-  return constraint.relationshipType !== undefined;
+  return (
+    constraint.entityType === "relationship" &&
+    constraint.relationshipType !== undefined
+  );
 };
 
 export type IndexJsonStruct = {
@@ -89,22 +96,26 @@ export type IndexJsonStruct = {
 };
 
 export type NodeLabelIndexJsonStruct = IndexJsonStruct & {
-  nodeLabel: { $ref: string };
   indexType: Exclude<IndexType, "lookup">;
+  entityType: "node";
+  nodeLabel: { $ref: string };
+  relationshipType: undefined;
   properties: { $ref: string }[];
 };
 
 export type RelationshipTypeIndexJsonStruct = IndexJsonStruct & {
-  relationshipType: { $ref: string };
   indexType: Exclude<IndexType, "lookup">;
+  entityType: "relationship";
+  nodeLabel: undefined;
+  relationshipType: { $ref: string };
   properties: { $ref: string }[];
 };
 
 export type LookupIndexJsonStruct = IndexJsonStruct & {
   indexType: "lookup";
-  properties: undefined;
   nodeLabel: undefined;
   relationshipType: undefined;
+  properties: undefined;
 };
 
 export const isNodeLabelIndexJsonStruct = (
