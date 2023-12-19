@@ -1,6 +1,6 @@
 {
   "name": "@neo4j/graph-introspection",
-  "version": "1.0.0-next.0",
+  "version": "1.0.0-next.1",
   "description": "Library for introspecting Neo4j graph schemas",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,7 +34,7 @@
     "graph schema"
   ],
   "devDependencies": {
-    "@neo4j/graph-json-schema": "*",
+    "@neo4j/graph-json-schema": "1.0.0-next.4",
     "neo4j-driver": "^5.12.0"
   }
 }

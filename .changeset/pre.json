@@ -3,7 +3,8 @@
   "tag": "next",
   "initialVersions": {
     "@neo4j/graph-schema-utils": "0.0.1",
-    "@neo4j/graph-json-schema": "0.0.1"
+    "@neo4j/graph-json-schema": "0.0.1",
+    "@neo4j/graph-introspection": "1.0.0-next.0"
   },
   "changesets": [
     "big-birds-arrive",
@@ -14,12 +15,17 @@
     "friendly-masks-punch",
     "gentle-mice-battle",
     "great-falcons-move",
+    "green-doors-teach",
     "perfect-moons-leave",
     "polite-ears-help",
     "rich-cameras-drive",
     "rude-camels-speak",
+    "rude-pillows-sniff",
     "short-radios-cheer",
     "slow-wombats-try",
-    "yellow-avocados-flash"
+    "swift-actors-flow",
+    "tasty-actors-repeat",
+    "yellow-avocados-flash",
+    "yellow-lizards-arrive"
   ]
 }

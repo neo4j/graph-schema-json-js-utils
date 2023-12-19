@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.4
+
+### Patch Changes
+
+- bf6d3c8: Added indexes and constraints support in schema
+
 ## 1.0.0-next.3
 
 ### Patch Changes

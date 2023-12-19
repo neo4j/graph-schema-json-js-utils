@@ -1,5 +1,15 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.10
+
+### Patch Changes
+
+- 1bdd0bc: Export PrimitivePropertyTypes
+- bf6d3c8: Added indexes and constraints support in schema
+- 2951446: Add introspection package to introspect the schema from an existing Neo4j DBMS.
+- a1f50cc: keep order except for node labels and rel types
+- c3f36ac: Extract JSON serializer and parser to standalone tools. Add LLM prompt serializers.
+
 ## 1.0.0-next.9
 
 ### Patch Changes
