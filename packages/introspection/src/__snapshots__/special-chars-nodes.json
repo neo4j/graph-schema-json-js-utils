@@ -5,15 +5,51 @@
       "nodeLabels": [
         {
           "$id": "Label-1",
-          "token": "Label-1"
+          "token": "Label-1",
+          "properties": [
+            {
+              "$id": "Label-1_prop",
+              "token": "prop",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Label-2",
-          "token": "Label-2"
+          "token": "Label-2",
+          "properties": [
+            {
+              "$id": "Label-2_prop",
+              "token": "prop",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "nullable": false
+            }
+          ]
         },
         {
           "$id": "Spec`ial",
-          "token": "Spec`ial"
+          "token": "Spec`ial",
+          "properties": [
+            {
+              "$id": "Spec`ial_na`me",
+              "token": "na`me",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
         }
       ],
       "relationshipTypes": [],
@@ -23,15 +59,6 @@
           "labels": [
             {
               "$ref": "#Spec`ial"
-            }
-          ],
-          "properties": [
-            {
-              "token": "na`me",
-              "type": {
-                "type": "string"
-              },
-              "nullable": false
             }
           ]
         },
@@ -44,22 +71,12 @@
             {
               "$ref": "#Label-2"
             }
-          ],
-          "properties": [
-            {
-              "token": "prop",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "integer"
-                }
-              },
-              "nullable": false
-            }
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

@@ -5,49 +5,10 @@
       "nodeLabels": [
         {
           "$id": "Movie",
-          "token": "Movie"
-        },
-        {
-          "$id": "Person",
-          "token": "Person"
-        }
-      ],
-      "relationshipTypes": [
-        {
-          "$id": "ACTED_IN",
-          "token": "ACTED_IN"
-        },
-        {
-          "$id": "DIRECTED",
-          "token": "DIRECTED"
-        },
-        {
-          "$id": "FOLLOWS",
-          "token": "FOLLOWS"
-        },
-        {
-          "$id": "PRODUCED",
-          "token": "PRODUCED"
-        },
-        {
-          "$id": "REVIEWED",
-          "token": "REVIEWED"
-        },
-        {
-          "$id": "WROTE",
-          "token": "WROTE"
-        }
-      ],
-      "nodeObjectTypes": [
-        {
-          "$id": "n:Movie",
-          "labels": [
-            {
-              "$ref": "#Movie"
-            }
-          ],
+          "token": "Movie",
           "properties": [
             {
+              "$id": "Movie_title",
               "token": "title",
               "type": {
                 "type": "string"
@@ -55,6 +16,7 @@
               "nullable": false
             },
             {
+              "$id": "Movie_tagline",
               "token": "tagline",
               "type": {
                 "type": "string"
@@ -62,6 +24,7 @@
               "nullable": true
             },
             {
+              "$id": "Movie_released",
               "token": "released",
               "type": {
                 "type": "integer"
@@ -71,14 +34,11 @@
           ]
         },
         {
-          "$id": "n:Person",
-          "labels": [
-            {
-              "$ref": "#Person"
-            }
-          ],
+          "$id": "Person",
+          "token": "Person",
           "properties": [
             {
+              "$id": "Person_name",
               "token": "name",
               "type": {
                 "type": "string"
@@ -86,11 +46,91 @@
               "nullable": false
             },
             {
+              "$id": "Person_born",
               "token": "born",
               "type": {
                 "type": "integer"
               },
               "nullable": true
+            }
+          ]
+        }
+      ],
+      "relationshipTypes": [
+        {
+          "$id": "ACTED_IN",
+          "token": "ACTED_IN",
+          "properties": [
+            {
+              "$id": "ACTED_IN_roles",
+              "token": "roles",
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "DIRECTED",
+          "token": "DIRECTED",
+          "properties": []
+        },
+        {
+          "$id": "FOLLOWS",
+          "token": "FOLLOWS",
+          "properties": []
+        },
+        {
+          "$id": "PRODUCED",
+          "token": "PRODUCED",
+          "properties": []
+        },
+        {
+          "$id": "REVIEWED",
+          "token": "REVIEWED",
+          "properties": [
+            {
+              "$id": "REVIEWED_summary",
+              "token": "summary",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "REVIEWED_rating",
+              "token": "rating",
+              "type": {
+                "type": "integer"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "WROTE",
+          "token": "WROTE",
+          "properties": []
+        }
+      ],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:Movie",
+          "labels": [
+            {
+              "$ref": "#Movie"
+            }
+          ]
+        },
+        {
+          "$id": "n:Person",
+          "labels": [
+            {
+              "$ref": "#Person"
             }
           ]
         }
@@ -106,19 +146,7 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          },
-          "properties": [
-            {
-              "token": "roles",
-              "type": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "nullable": false
-            }
-          ]
+          }
         },
         {
           "$id": "Person-DIRECTED-Movie",
@@ -130,8 +158,7 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          },
-          "properties": []
+          }
         },
         {
           "$id": "Person-FOLLOWS-Person",
@@ -143,8 +170,7 @@
           },
           "to": {
             "$ref": "#n:Person"
-          },
-          "properties": []
+          }
         },
         {
           "$id": "Person-PRODUCED-Movie",
@@ -156,8 +182,7 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          },
-          "properties": []
+          }
         },
         {
           "$id": "Person-REVIEWED-Movie",
@@ -169,23 +194,7 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          },
-          "properties": [
-            {
-              "token": "summary",
-              "type": {
-                "type": "string"
-              },
-              "nullable": false
-            },
-            {
-              "token": "rating",
-              "type": {
-                "type": "integer"
-              },
-              "nullable": false
-            }
-          ]
+          }
         },
         {
           "$id": "Person-WROTE-Movie",
@@ -197,10 +206,11 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          },
-          "properties": []
+          }
         }
-      ]
+      ],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

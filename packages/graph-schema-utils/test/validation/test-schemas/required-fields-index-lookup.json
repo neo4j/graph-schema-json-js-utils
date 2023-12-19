@@ -4,10 +4,14 @@
     "graphSchema": {
       "nodeLabels": [],
       "relationshipTypes": [],
-      "nodeObjectTypes": [{}],
+      "nodeObjectTypes": [],
       "relationshipObjectTypes": [],
       "constraints": [],
-      "indexes": []
+      "indexes": [
+        {
+          "indexType": "lookup"
+        }
+      ]
     }
   }
 }

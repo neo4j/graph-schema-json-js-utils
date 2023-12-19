@@ -5,7 +5,8 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
+          "token": "Person",
+          "properties": []
         }
       ],
       "relationshipTypes": [],
@@ -16,11 +17,12 @@
             {
               "$ref": "#l1"
             }
-          ],
-          "properties": []
+          ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

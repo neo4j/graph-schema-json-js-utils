@@ -5,20 +5,10 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
-        }
-      ],
-      "relationshipTypes": [],
-      "nodeObjectTypes": [
-        {
-          "$id": "n1",
-          "labels": [
-            {
-              "$ref": "#l1"
-            }
-          ],
+          "token": "Person",
           "properties": [
             {
+              "$id": "p:10",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
@@ -26,22 +16,13 @@
           ]
         }
       ],
-      "relationshipObjectTypes": [
-        {
-          "$id": "r1",
-          "type": {
-            "type": {
-              "$ref": "#rt1"
-            }
-          },
-          "from": {
-            "$ref": "#n1"
-          },
-          "to": {
-            "$ref": "#n3"
-          },
+      "relationshipTypes": [
+            {
+          "$id": "rt:ACTED_IN",
+          "token": "ACTED_IN",
           "properties": [
             {
+              "$id": "p:12",
               "token": "role",
               "type": {
                 "type": "array",
@@ -53,7 +34,23 @@
             }
           ]
         }
-      ]
+      ],
+      "nodeObjectTypes": [
+        {
+          "$id": "n1",
+          "labels": [{ "$ref": "#l1" }]
+        }
+      ],
+      "relationshipObjectTypes": [
+        {
+          "$id": "r1",
+          "type": { "$ref": "#rt1" },
+          "from": { "$ref": "#n1" },
+          "to": { "$ref": "#n3" }
+        }
+      ],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

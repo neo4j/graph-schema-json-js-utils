@@ -11,7 +11,7 @@ const JSON_SCHEMA = JSON.stringify(
   require("@neo4j/graph-json-schema/json-schema.json")
 );
 
-describe("Validate if JSON-documen is a string", () => {
+describe("Validate if JSON-document is a string", () => {
   const NON_STRING = 11;
   const NON_JSON = "}";
 
@@ -31,12 +31,5 @@ describe("Validate if JSON-documen is a string", () => {
       InputTypeError
     );
     assert.throws(() => validateSchema(JSON_SCHEMA, NON_JSON), InputTypeError);
-  });
-  test("Handles optional id:s on properties", () => {
-    const schema = readFile(
-      path.resolve(__dirname, "./test-schemas/optional-id.json")
-    );
-    validateSchema(JSON_SCHEMA, schema);
-    assert.doesNotThrow(() => validateSchema(JSON_SCHEMA, schema));
   });
 });

@@ -5,7 +5,9 @@
       "nodeLabels": [],
       "relationshipTypes": [],
       "nodeObjectTypes": [],
-      "relationshipObjectTypes": [{}]
+      "relationshipObjectTypes": [{}],
+      "constraints": [],
+      "indexes": []
     }
   }
 }

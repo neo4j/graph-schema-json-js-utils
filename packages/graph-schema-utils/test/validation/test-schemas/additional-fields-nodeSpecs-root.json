@@ -5,26 +5,10 @@
       "nodeLabels": [
         {
           "$id": "l1",
-          "token": "Person"
-        }
-      ],
-      "relationshipTypes": [
-        {
-          "$id": "rt1",
-          "token": "ACTED_IN"
-        }
-      ],
-      "nodeObjectTypes": [
-        {
-          "$id": "n1",
-          "illegal-field": "illegal-field",
-          "labels": [
-            {
-              "$ref": "#l1"
-            }
-          ],
+          "token": "Person",
           "properties": [
             {
+              "$id": "p1",
               "token": "name",
               "type": { "type": "string" },
               "nullable": false
@@ -32,7 +16,23 @@
           ]
         }
       ],
-      "relationshipObjectTypes": []
+      "relationshipTypes": [
+        {
+          "$id": "rt1",
+          "token": "ACTED_IN",
+          "properties": []
+        }
+      ],
+      "nodeObjectTypes": [
+        {
+          "$id": "n1",
+          "illegal-field": "illegal-field",
+          "labels": [{ "$ref": "#l1" }]
+        }
+      ],
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
     }
   }
 }
