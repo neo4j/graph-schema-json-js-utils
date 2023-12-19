@@ -49,6 +49,11 @@ export function toJson(
   schema: GraphSchema,
   space: string | number | undefined = undefined
 ) {
+  const out = toJsonStruct(schema);
+  return JSON.stringify(out, null, space);
+}
+
+export function toJsonStruct(schema: GraphSchema): RootSchemaJsonStruct {
   const labels = schema.nodeLabels
     .sort((a, b) => (a.$id < b.$id ? -1 : 1))
     .map(nodeLabel.extract);
@@ -90,11 +95,15 @@ export function toJson(
       },
     },
   };
-  return JSON.stringify(out, null, space);
+  return out;
 }
 
 export function fromJson(schema: string): GraphSchema {
   const schemaJson = JSON.parse(schema) as RootSchemaJsonStruct;
+  return fromJsonStruct(schemaJson);
+}
+
+export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const { graphSchema } = schemaJson.graphSchemaRepresentation;
   const labels = graphSchema.nodeLabels.map(nodeLabel.create);
   const relationshipTypes = graphSchema.relationshipTypes.map(
