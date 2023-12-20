@@ -1,2 +1,8 @@
 export * from "./types.js";
-export { toJson, fromJson, VERSION } from "./extensions.js";
+export {
+  toJson,
+  fromJson,
+  fromJsonStruct,
+  toJsonStruct,
+  VERSION,
+} from "./extensions.js";
