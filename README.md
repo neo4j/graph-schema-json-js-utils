@@ -32,9 +32,9 @@ validateSchema(jsonSchema, graphSchema);
 Since the references in the JSON document are references by id:s, there's a parser utility that hydrates the references and makes it easy to work with the schema.
 
 ```js
-import { formatters } from "@neo4j/graph-schema-utils";
+import { json } from "@neo4j/graph-schema-utils";
 
-const parsed = formatters.json.fromJson(graphSchemaJsonString);
+const parsed = json.fromJson(graphSchemaJsonString);
 ```
 
 ### Model
@@ -89,9 +89,9 @@ const graphSchema = new model.GraphSchema(
 If you need to transport or persist the schema, you can serialize the model into the JSON represenation.
 
 ```js
-import { formatters } from "@neo4j/graph-schema-utils";
+import { json } from "@neo4j/graph-schema-utils";
 
-const serialized = formatters.json.toJson(graphSchema);
+const serialized = json.toJson(graphSchema);
 ```
 
 ## Contribute

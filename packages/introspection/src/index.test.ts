@@ -8,7 +8,7 @@ import {
   expect,
   test,
 } from "vitest";
-import { formatters, validateSchema } from "@neo4j/graph-schema-utils";
+import { json, validateSchema } from "@neo4j/graph-schema-utils";
 import jsonSchema from "@neo4j/graph-json-schema/json-schema.json";
 import { introspect, sessionFactory } from "./index.js";
 
@@ -80,10 +80,10 @@ describe("Introspection tests", () => {
 
   test("can introspect empty db", async () => {
     const res = await introspect(writeSessionFactory);
-    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
+    await expect(json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/empty.json"
     );
-    const schema = formatters.json.toJson(res);
+    const schema = json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -92,10 +92,10 @@ describe("Introspection tests", () => {
     await session.run(standaloneNodesGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
+    await expect(json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/standalone-nodes.json"
     );
-    const schema = formatters.json.toJson(res);
+    const schema = json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -104,10 +104,10 @@ describe("Introspection tests", () => {
     await session.run(specialCharactersGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
+    await expect(json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/special-chars-nodes.json"
     );
-    const schema = formatters.json.toJson(res);
+    const schema = json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -116,10 +116,10 @@ describe("Introspection tests", () => {
     await session.run(multiTypesPropertiesGraphQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
+    await expect(json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/multi-types-props.json"
     );
-    const schema = formatters.json.toJson(res);
+    const schema = json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 
@@ -128,10 +128,10 @@ describe("Introspection tests", () => {
     await session.run(matrixQuery);
     await session.close();
     const res = await introspect(writeSessionFactory);
-    await expect(formatters.json.toJson(res, 2)).toMatchFileSnapshot(
+    await expect(json.toJson(res, 2)).toMatchFileSnapshot(
       "./__snapshots__/matrix.json"
     );
-    const schema = formatters.json.toJson(res);
+    const schema = json.toJson(res);
     validateSchema(JSON_SCHEMA, schema);
   });
 });
