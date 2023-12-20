@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.12
+
+### Patch Changes
+
+- 9ff77b6: fix: export json struct functions
+
 ## 1.0.0-next.11
 
 ### Patch Changes
