@@ -1,5 +1,12 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.13
+
+### Patch Changes
+
+- a4c00d6: Fix types export
+- 66b813c: Move some functions to their right places
+
 ## 1.0.0-next.12
 
 ### Patch Changes
