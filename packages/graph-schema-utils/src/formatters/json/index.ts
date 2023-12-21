@@ -1,4 +1,4 @@
-export * from "./types.js";
+import * as types from "./types.js";
 export {
   toJson,
   fromJson,
@@ -6,3 +6,5 @@ export {
   toJsonStruct,
   VERSION,
 } from "./extensions.js";
+
+export { types };

@@ -6,6 +6,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "declaration": true,
+    "declarationDir": "dist/types",
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true
