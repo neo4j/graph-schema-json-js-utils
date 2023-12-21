@@ -36,11 +36,6 @@ import {
   RelationshipTypeIndexJsonStruct,
   RelationshipTypeJsonStruct,
   RootSchemaJsonStruct,
-  isLookupIndexJsonStruct,
-  isNodeLabelConstraintJsonStruct,
-  isNodeLabelIndexJsonStruct,
-  isRelationshipTypeConstraintJsonStruct,
-  isRelationshipTypeIndexJsonStruct,
 } from "./types.js";
 
 export const VERSION = "0.0.1";
@@ -568,4 +563,37 @@ const relationshipObjectType = {
   toRef: (relationshipObjectType: RelationshipObjectType) => ({
     $ref: `#${relationshipObjectType.$id}`,
   }),
+};
+
+export const isNodeLabelConstraintJsonStruct = (
+  constraint: ConstraintJsonStruct
+): constraint is NodeLabelConstraintJsonStruct => {
+  return constraint.entityType === "node" && constraint.nodeLabel !== undefined;
+};
+
+export const isRelationshipTypeConstraintJsonStruct = (
+  constraint: ConstraintJsonStruct
+): constraint is RelationshipTypeConstraintJsonStruct => {
+  return (
+    constraint.entityType === "relationship" &&
+    constraint.relationshipType !== undefined
+  );
+};
+
+export const isNodeLabelIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is NodeLabelIndexJsonStruct => {
+  return index.nodeLabel !== undefined && index.indexType !== "lookup";
+};
+
+export const isRelationshipTypeIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is RelationshipTypeIndexJsonStruct => {
+  return index.relationshipType !== undefined && index.indexType !== "lookup";
+};
+
+export const isLookupIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is LookupIndexJsonStruct => {
+  return index.indexType === "lookup";
 };

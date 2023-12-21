@@ -3,7 +3,6 @@ import {
   EntityType,
   IndexType,
   PrimitivePropertyTypes,
-  PropertyTypes,
 } from "../../model/index.js";
 
 export type RootSchemaJsonStruct = {
@@ -64,25 +63,10 @@ export type NodeLabelConstraintJsonStruct = ConstraintJsonStruct & {
   relationshipType: undefined;
 };
 
-export const isNodeLabelConstraintJsonStruct = (
-  constraint: ConstraintJsonStruct
-): constraint is NodeLabelConstraintJsonStruct => {
-  return constraint.entityType === "node" && constraint.nodeLabel !== undefined;
-};
-
 export type RelationshipTypeConstraintJsonStruct = ConstraintJsonStruct & {
   entityType: "relationship";
   nodeLabel: undefined;
   relationshipType: { $ref: string };
-};
-
-export const isRelationshipTypeConstraintJsonStruct = (
-  constraint: ConstraintJsonStruct
-): constraint is RelationshipTypeConstraintJsonStruct => {
-  return (
-    constraint.entityType === "relationship" &&
-    constraint.relationshipType !== undefined
-  );
 };
 
 export type IndexJsonStruct = {
@@ -116,24 +100,6 @@ export type LookupIndexJsonStruct = IndexJsonStruct & {
   nodeLabel: undefined;
   relationshipType: undefined;
   properties: undefined;
-};
-
-export const isNodeLabelIndexJsonStruct = (
-  index: IndexJsonStruct
-): index is NodeLabelIndexJsonStruct => {
-  return index.nodeLabel !== undefined && index.indexType !== "lookup";
-};
-
-export const isRelationshipTypeIndexJsonStruct = (
-  index: IndexJsonStruct
-): index is RelationshipTypeIndexJsonStruct => {
-  return index.relationshipType !== undefined && index.indexType !== "lookup";
-};
-
-export const isLookupIndexJsonStruct = (
-  index: IndexJsonStruct
-): index is LookupIndexJsonStruct => {
-  return index.indexType === "lookup";
 };
 
 export type PropertyJsonStruct = {
