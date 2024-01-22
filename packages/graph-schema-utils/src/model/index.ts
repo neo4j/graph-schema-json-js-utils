@@ -295,20 +295,35 @@ export type IndexType =
 
 export type EntityType = "node" | "relationship";
 
-export type PropertyTypes = PropertyBaseType | PropertyArrayType;
-export type PropertyTypeRecursive =
-  | PropertyTypes
-  | Array<PropertyTypes | PropertyTypeRecursive[]>;
+export type PropertyType =
+  | PropertyBaseType
+  | PropertyArrayType
+  | PropertyTypeList;
+
+export type PropertyTypeList = (PropertyBaseType | PropertyArrayType)[];
+
+export const isPropertyBaseType = (p: PropertyType): p is PropertyBaseType => {
+  return p instanceof PropertyBaseType;
+}
+
+export const isPropertyArrayType = (p: PropertyType): p is PropertyArrayType => {
+  return p instanceof PropertyArrayType;
+}
+
+export const isPropertyTypeList = (p: PropertyType): p is PropertyTypeList => {
+  return Array.isArray(p);
+}
+
 export class Property {
   $id: string;
   token: string;
-  type: PropertyTypeRecursive;
+  type: PropertyType;
   nullable: boolean;
 
   constructor(
     $id: string,
     token: string,
-    type: PropertyTypeRecursive,
+    type: PropertyType,
     nullable: boolean
   ) {
     this.$id = $id;

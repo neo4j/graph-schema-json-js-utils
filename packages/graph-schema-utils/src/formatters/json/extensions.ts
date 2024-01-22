@@ -8,7 +8,7 @@ import {
   Property,
   PropertyArrayType,
   PropertyBaseType,
-  PropertyTypeRecursive,
+  PropertyType,
   RelationshipObjectType,
   RelationshipType,
   RelationshipTypeConstraint,
@@ -18,10 +18,16 @@ import {
   isNodeLabelIndex,
   isRelationshipTypeConstraint,
   isRelationshipTypeIndex,
+  isPropertyTypeList,
+  isPropertyBaseType,
+  isPropertyArrayType,
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
   IndexJsonStruct,
+  isPrimitivePropertyTypesArrayTypeJsonStruct,
+  isPrimitivePropertyTypesTypeJsonStruct,
+  isPropertyTypeListJsonStruct,
   LookupIndexJsonStruct,
   NodeLabelConstraintJsonStruct,
   NodeLabelIndexJsonStruct,
@@ -30,7 +36,7 @@ import {
   PrimitivePropertyTypesArrayType,
   PrimitivePropertyTypesType,
   PropertyJsonStruct,
-  PropertyTypeJsonStructRecrsive,
+  PropertyTypeJsonStruct,
   RelationshipObjectTypeJsonStruct,
   RelationshipTypeConstraintJsonStruct,
   RelationshipTypeIndexJsonStruct,
@@ -470,24 +476,36 @@ const property = {
 };
 
 const propertyType = {
-  extract: (pt: PropertyTypeRecursive): PropertyTypeJsonStructRecrsive => {
-    if (Array.isArray(pt)) {
-      return pt.map(propertyType.extract);
+  extract: (pt: PropertyType): PropertyTypeJsonStruct => {
+    if (isPropertyTypeList(pt)) {
+      return pt.map((p) => {
+        if (isPropertyBaseType(p)) {
+          return propertyBaseType.extract(p);
+        } else if (isPropertyArrayType(p)) {
+          return propertyArrayType.extract(p);
+        }
+        throw Error(`Unknown property type in list ${p}`);
+      });
     }
-    if (pt instanceof PropertyBaseType) {
+    if (isPropertyBaseType(pt)) {
       return propertyBaseType.extract(pt);
-    } else if (pt instanceof PropertyArrayType) {
+    } else if (isPropertyArrayType(pt)) {
       return propertyArrayType.extract(pt);
     }
     throw new Error(`Unknown property type ${pt}`);
   },
-  create: (
-    propertyTypeJson: PropertyTypeJsonStructRecrsive
-  ): PropertyTypeRecursive => {
-    if (Array.isArray(propertyTypeJson)) {
-      return propertyTypeJson.map((pt) => propertyType.create(pt));
+  create: (propertyTypeJson: PropertyTypeJsonStruct): PropertyType => {
+    if (isPropertyTypeListJsonStruct(propertyTypeJson)) {
+      return propertyTypeJson.map((pt) => {
+        if (isPrimitivePropertyTypesTypeJsonStruct(pt)) {
+          return propertyBaseType.create(pt);
+        } else if (isPrimitivePropertyTypesArrayTypeJsonStruct(pt)) {
+          return propertyArrayType.create(pt.items.type);
+        }
+        throw new Error(`Unknown property type in list ${pt}`);
+      });
     }
-    if (propertyTypeJson.type === "array") {
+    if (isPrimitivePropertyTypesArrayTypeJsonStruct(propertyTypeJson)) {
       return propertyArrayType.create(propertyTypeJson.items.type);
     }
     return propertyBaseType.create(propertyTypeJson);

@@ -61,12 +61,16 @@ async function introspectNodes(
               Neo4jPropertyType | Neo4jPropertyArrayType
             >;
 
-            const types = neo4jTypes.map(createPropertyInstance);
+            const types: (model.PropertyBaseType | model.PropertyArrayType)[] =
+              neo4jTypes.map(createPropertyInstance);
+
+            const propertyType: model.PropertyType =
+              types.length === 1 ? types.pop() : types;
 
             return new model.Property(
               `${nl}_${p.propertyName}`,
               p.propertyName,
-              types.length > 1 ? types : types.pop(),
+              propertyType,
               !p.mandatory
             );
           });
@@ -125,11 +129,13 @@ async function introspectRelationships(
           >;
 
           const types = neo4jTypes.map(createPropertyInstance);
+          const propertyType: model.PropertyType =
+            types.length === 1 ? types.pop() : types;
 
           return new model.Property(
             `${relType}_${p.propertyName}`,
             p.propertyName,
-            types.length > 1 ? types : types.pop(),
+            propertyType,
             !p.mandatory
           );
         });

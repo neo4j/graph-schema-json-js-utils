@@ -2,7 +2,9 @@ import { strict as assert } from "node:assert";
 import { describe, expect, test } from "vitest";
 import { model } from "../../src/index.js";
 import {
-  PropertyTypes,
+  PropertyArrayType,
+  PropertyBaseType,
+  PropertyType,
   isLookupIndex,
   isNodeLabelConstraint,
   isNodeLabelIndex,
@@ -147,8 +149,9 @@ describe("Programatic model tests", () => {
     );
     assert.strictEqual(
       (
-        graphSchema.relationshipObjectTypes[0].type.properties[0]
-          .type as PropertyTypes
+        graphSchema.relationshipObjectTypes[0].type.properties[0].type as
+          | PropertyBaseType
+          | PropertyArrayType
       ).type,
       "array"
     );
@@ -165,7 +168,11 @@ describe("Programatic model tests", () => {
       assert.strictEqual(graphSchema.constraints[0].nodeLabel, labels[0]);
     }
     assert.strictEqual(
-      (graphSchema.constraints[0].properties[0].type as PropertyTypes).type,
+      (
+        graphSchema.constraints[0].properties[0].type as
+          | PropertyBaseType
+          | PropertyArrayType
+      ).type,
       "string"
     );
     assert.strictEqual(graphSchema.constraints[1].name, "existence");
@@ -187,7 +194,11 @@ describe("Programatic model tests", () => {
       assert.strictEqual(graphSchema.indexes[0].nodeLabel, labels[0]);
       assert.strictEqual(graphSchema.indexes[0].properties.length, 1);
       assert.strictEqual(
-        (graphSchema.indexes[0].properties[0].type as PropertyTypes).type,
+        (
+          graphSchema.indexes[0].properties[0].type as
+            | PropertyBaseType
+            | PropertyArrayType
+        ).type,
         "string"
       );
     }
@@ -204,7 +215,11 @@ describe("Programatic model tests", () => {
       );
       assert.strictEqual(graphSchema.indexes[1].properties.length, 1);
       assert.strictEqual(
-        (graphSchema.indexes[1].properties[0].type as PropertyTypes).type,
+        (
+          graphSchema.indexes[1].properties[0].type as
+            | PropertyBaseType
+            | PropertyArrayType
+        ).type,
         "array"
       );
     }

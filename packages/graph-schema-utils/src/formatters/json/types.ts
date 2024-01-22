@@ -105,7 +105,7 @@ export type LookupIndexJsonStruct = IndexJsonStruct & {
 export type PropertyJsonStruct = {
   $id: string;
   token: string;
-  type: PropertyTypeJsonStructRecrsive;
+  type: PropertyTypeJsonStruct;
   nullable: boolean;
 };
 
@@ -115,11 +115,27 @@ export type PrimitivePropertyTypesArrayType = {
   items: { type: PrimitivePropertyTypes };
 };
 
+export type PropertyTypeListJsonStruct = (PrimitivePropertyTypesType | PrimitivePropertyTypesArrayType)[]
+
 export type PropertyTypeJsonStruct =
   | PrimitivePropertyTypesArrayType
   | PrimitivePropertyTypesType
-  | (PrimitivePropertyTypesType | PrimitivePropertyTypesArrayType)[];
+  | PropertyTypeListJsonStruct;
 
-export type PropertyTypeJsonStructRecrsive =
-  | PropertyTypeJsonStruct
-  | Array<PropertyTypeJsonStruct | PropertyTypeJsonStructRecrsive[]>;
+export const isPropertyTypeListJsonStruct = (
+  propertyType: PropertyTypeJsonStruct
+): propertyType is PropertyTypeListJsonStruct => {
+  return Array.isArray(propertyType);
+}
+
+export const isPrimitivePropertyTypesTypeJsonStruct = (
+  propertyType: PropertyTypeJsonStruct
+): propertyType is PrimitivePropertyTypesType => {
+  return typeof propertyType === "object" && "type" in propertyType && propertyType.type !== "array";
+}
+
+export const isPrimitivePropertyTypesArrayTypeJsonStruct = (
+  propertyType: PropertyTypeJsonStruct
+): propertyType is PrimitivePropertyTypesArrayType => {
+  return typeof propertyType === "object" && "type" in propertyType && propertyType.type === "array" && propertyType.items !== undefined;
+}
