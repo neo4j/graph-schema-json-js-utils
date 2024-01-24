@@ -1,6 +1,6 @@
 {
   "name": "@neo4j/graph-introspection",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0-next.2",
   "description": "Library for introspecting Neo4j graph schemas",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

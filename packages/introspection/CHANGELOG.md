@@ -1,5 +1,11 @@
 # @neo4j/graph-introspection
 
+## 1.0.0-next.2
+
+### Patch Changes
+
+- 8702c18: removed recursive property type
+
 ## 1.0.0-next.1
 
 ### Patch Changes

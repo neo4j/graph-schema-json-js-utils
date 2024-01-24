@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.14
+
+### Patch Changes
+
+- 8702c18: removed recursive property type
+
 ## 1.0.0-next.13
 
 ### Patch Changes
