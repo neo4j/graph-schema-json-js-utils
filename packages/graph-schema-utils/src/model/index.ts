@@ -295,35 +295,38 @@ export type IndexType =
 
 export type EntityType = "node" | "relationship";
 
-export type PropertyType =
-  | PropertyBaseType
-  | PropertyArrayType
-  | PropertyTypeList;
+export type PropertyType = PrimitivePropertyType | PrimitiveArrayPropertyType;
 
-export type PropertyTypeList = (PropertyBaseType | PropertyArrayType)[];
+export const isPrimitiveArrayPropertyType = (
+  property: PropertyType
+): property is PrimitiveArrayPropertyType => {
+  return (
+    property instanceof Object &&
+    property.type === "array" &&
+    property.items !== undefined
+  );
+};
 
-export const isPropertyBaseType = (p: PropertyType): p is PropertyBaseType => {
-  return p instanceof PropertyBaseType;
-}
-
-export const isPropertyArrayType = (p: PropertyType): p is PropertyArrayType => {
-  return p instanceof PropertyArrayType;
-}
-
-export const isPropertyTypeList = (p: PropertyType): p is PropertyTypeList => {
-  return Array.isArray(p);
-}
+export const isPrimitivePropertyType = (
+  property: PropertyType
+): property is PrimitivePropertyType => {
+  return (
+    property instanceof Object &&
+    "type" in property &&
+    PRIMITIVE_TYPE_OPTIONS.some((p) => property.type === p)
+  );
+};
 
 export class Property {
   $id: string;
   token: string;
-  type: PropertyType;
+  type: PropertyType | PropertyType[];
   nullable: boolean;
 
   constructor(
     $id: string,
     token: string,
-    type: PropertyType,
+    type: PropertyType | PropertyType[],
     nullable: boolean
   ) {
     this.$id = $id;
@@ -333,32 +336,35 @@ export class Property {
   }
 }
 
-export class PropertyBaseType {
+export class PrimitivePropertyType {
   type: PrimitivePropertyTypes;
   constructor(type: PrimitivePropertyTypes) {
     this.type = type;
   }
 }
 
-export class PropertyArrayType {
-  items: PropertyBaseType;
+export class PrimitiveArrayPropertyType {
+  items: PrimitivePropertyType;
   type: "array";
 
-  constructor(items: PropertyBaseType) {
+  constructor(items: PrimitivePropertyType) {
     this.type = "array";
     this.items = items;
   }
 }
 
-export type PrimitivePropertyTypes =
-  | "integer"
-  | "string"
-  | "float"
-  | "boolean"
-  | "point"
-  | "date"
-  | "datetime"
-  | "time"
-  | "localtime"
-  | "localdatetime"
-  | "duration";
+export const PRIMITIVE_TYPE_OPTIONS = [
+  "integer",
+  "string",
+  "float",
+  "boolean",
+  "point",
+  "date",
+  "datetime",
+  "time",
+  "localtime",
+  "localdatetime",
+  "duration",
+] as const;
+
+export type PrimitivePropertyTypes = (typeof PRIMITIVE_TYPE_OPTIONS)[number];

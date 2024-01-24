@@ -6,8 +6,8 @@ import {
   NodeLabelIndex,
   NodeObjectType,
   Property,
-  PropertyArrayType,
-  PropertyBaseType,
+  PrimitiveArrayPropertyType,
+  PrimitivePropertyType,
   PropertyType,
   RelationshipObjectType,
   RelationshipType,
@@ -18,23 +18,21 @@ import {
   isNodeLabelIndex,
   isRelationshipTypeConstraint,
   isRelationshipTypeIndex,
-  isPropertyTypeList,
-  isPropertyBaseType,
-  isPropertyArrayType,
+  isPrimitivePropertyType,
+  isPrimitiveArrayPropertyType,
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
   IndexJsonStruct,
-  isPrimitivePropertyTypesArrayTypeJsonStruct,
-  isPrimitivePropertyTypesTypeJsonStruct,
-  isPropertyTypeListJsonStruct,
+  isPrimitiveArrayPropertyTypeJsonStruct,
+  isPrimitivePropertyTypeJsonStruct,
   LookupIndexJsonStruct,
   NodeLabelConstraintJsonStruct,
   NodeLabelIndexJsonStruct,
   NodeLabelJsonStruct,
   NodeObjectTypeJsonStruct,
-  PrimitivePropertyTypesArrayType,
-  PrimitivePropertyTypesType,
+  PrimitiveArrayPropertyTypeJsonStruct,
+  PrimitivePropertyTypeJsonStruct,
   PropertyJsonStruct,
   PropertyTypeJsonStruct,
   RelationshipObjectTypeJsonStruct,
@@ -476,36 +474,40 @@ const property = {
 };
 
 const propertyType = {
-  extract: (pt: PropertyType): PropertyTypeJsonStruct => {
-    if (isPropertyTypeList(pt)) {
+  extract: (
+    pt: PropertyType | PropertyType[]
+  ): PropertyTypeJsonStruct | PropertyTypeJsonStruct[] => {
+    if (Array.isArray(pt)) {
       return pt.map((p) => {
-        if (isPropertyBaseType(p)) {
+        if (isPrimitivePropertyType(p)) {
           return propertyBaseType.extract(p);
-        } else if (isPropertyArrayType(p)) {
+        } else if (isPrimitiveArrayPropertyType(p)) {
           return propertyArrayType.extract(p);
         }
         throw Error(`Unknown property type in list ${p}`);
       });
     }
-    if (isPropertyBaseType(pt)) {
+    if (isPrimitivePropertyType(pt)) {
       return propertyBaseType.extract(pt);
-    } else if (isPropertyArrayType(pt)) {
+    } else if (isPrimitiveArrayPropertyType(pt)) {
       return propertyArrayType.extract(pt);
     }
     throw new Error(`Unknown property type ${pt}`);
   },
-  create: (propertyTypeJson: PropertyTypeJsonStruct): PropertyType => {
-    if (isPropertyTypeListJsonStruct(propertyTypeJson)) {
+  create: (
+    propertyTypeJson: PropertyTypeJsonStruct | PropertyTypeJsonStruct[]
+  ): PropertyType | PropertyType[] => {
+    if (Array.isArray(propertyTypeJson)) {
       return propertyTypeJson.map((pt) => {
-        if (isPrimitivePropertyTypesTypeJsonStruct(pt)) {
+        if (isPrimitivePropertyTypeJsonStruct(pt)) {
           return propertyBaseType.create(pt);
-        } else if (isPrimitivePropertyTypesArrayTypeJsonStruct(pt)) {
+        } else if (isPrimitiveArrayPropertyTypeJsonStruct(pt)) {
           return propertyArrayType.create(pt.items.type);
         }
         throw new Error(`Unknown property type in list ${pt}`);
       });
     }
-    if (isPrimitivePropertyTypesArrayTypeJsonStruct(propertyTypeJson)) {
+    if (isPrimitiveArrayPropertyTypeJsonStruct(propertyTypeJson)) {
       return propertyArrayType.create(propertyTypeJson.items.type);
     }
     return propertyBaseType.create(propertyTypeJson);
@@ -514,23 +516,23 @@ const propertyType = {
 
 const propertyBaseType = {
   extract: (
-    propertyBaseType: PropertyBaseType
-  ): PrimitivePropertyTypesType => ({
+    propertyBaseType: PrimitivePropertyType
+  ): PrimitivePropertyTypeJsonStruct => ({
     type: propertyBaseType.type,
   }),
-  create: (btype: PrimitivePropertyTypesType) =>
-    new PropertyBaseType(btype.type),
+  create: (btype: PrimitivePropertyTypeJsonStruct) =>
+    new PrimitivePropertyType(btype.type),
 };
 
 const propertyArrayType = {
   extract: (
-    propertyArrayType: PropertyArrayType
-  ): PrimitivePropertyTypesArrayType => ({
+    propertyArrayType: PrimitiveArrayPropertyType
+  ): PrimitiveArrayPropertyTypeJsonStruct => ({
     type: "array",
     items: propertyBaseType.extract(propertyArrayType.items),
   }),
-  create: (type: PrimitivePropertyTypesArrayType["items"]["type"]) =>
-    new PropertyArrayType(propertyBaseType.create({ type })),
+  create: (type: PrimitiveArrayPropertyTypeJsonStruct["items"]["type"]) =>
+    new PrimitiveArrayPropertyType(propertyBaseType.create({ type })),
 };
 
 const nodeObjectType = {

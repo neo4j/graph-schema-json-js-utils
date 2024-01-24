@@ -22,7 +22,7 @@ export interface RelationshipTypePropertiesRecord extends PropertyRecord {
 }
 
 export type Neo4jPropertyType = UCFirst<
-  model.PropertyBaseType["type"] | "Long" | "Double"
+  model.PrimitivePropertyType["type"] | "Long" | "Double"
 >;
 
 export type Neo4jPropertyArrayType = `${Neo4jPropertyType}Array`;

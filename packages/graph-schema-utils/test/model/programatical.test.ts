@@ -2,9 +2,8 @@ import { strict as assert } from "node:assert";
 import { describe, expect, test } from "vitest";
 import { model } from "../../src/index.js";
 import {
-  PropertyArrayType,
-  PropertyBaseType,
-  PropertyType,
+  PrimitiveArrayPropertyType,
+  PrimitivePropertyType,
   isLookupIndex,
   isNodeLabelConstraint,
   isNodeLabelIndex,
@@ -17,7 +16,7 @@ describe("Programatic model tests", () => {
       new model.Property(
         "p:Person.name",
         "name",
-        new model.PropertyBaseType("string"),
+        new model.PrimitivePropertyType("string"),
         false
       ),
     ];
@@ -30,7 +29,9 @@ describe("Programatic model tests", () => {
       new model.Property(
         "p:ACTED_IN.roles",
         "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        new model.PrimitiveArrayPropertyType(
+          new model.PrimitivePropertyType("string")
+        ),
         false
       ),
     ];
@@ -150,8 +151,8 @@ describe("Programatic model tests", () => {
     assert.strictEqual(
       (
         graphSchema.relationshipObjectTypes[0].type.properties[0].type as
-          | PropertyBaseType
-          | PropertyArrayType
+          | PrimitivePropertyType
+          | PrimitiveArrayPropertyType
       ).type,
       "array"
     );
@@ -170,8 +171,8 @@ describe("Programatic model tests", () => {
     assert.strictEqual(
       (
         graphSchema.constraints[0].properties[0].type as
-          | PropertyBaseType
-          | PropertyArrayType
+          | PrimitivePropertyType
+          | PrimitiveArrayPropertyType
       ).type,
       "string"
     );
@@ -196,8 +197,8 @@ describe("Programatic model tests", () => {
       assert.strictEqual(
         (
           graphSchema.indexes[0].properties[0].type as
-            | PropertyBaseType
-            | PropertyArrayType
+            | PrimitivePropertyType
+            | PrimitiveArrayPropertyType
         ).type,
         "string"
       );
@@ -217,8 +218,8 @@ describe("Programatic model tests", () => {
       assert.strictEqual(
         (
           graphSchema.indexes[1].properties[0].type as
-            | PropertyBaseType
-            | PropertyArrayType
+            | PrimitivePropertyType
+            | PrimitiveArrayPropertyType
         ).type,
         "array"
       );
@@ -301,19 +302,21 @@ describe("Programatic model tests", () => {
       new model.Property(
         "p:Person.name",
         "name",
-        new model.PropertyBaseType("string"),
+        new model.PrimitivePropertyType("string"),
         false
       ),
       new model.Property(
         "p:Dog.name",
         "name",
-        new model.PropertyBaseType("string"),
+        new model.PrimitivePropertyType("string"),
         false
       ),
       new model.Property(
         "p:ACTED_IN.roles",
         "roles",
-        new model.PropertyArrayType(new model.PropertyBaseType("string")),
+        new model.PrimitiveArrayPropertyType(
+          new model.PrimitivePropertyType("string")
+        ),
         false
       ),
     ];
