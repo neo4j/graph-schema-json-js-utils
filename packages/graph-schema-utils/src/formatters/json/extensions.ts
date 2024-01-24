@@ -6,9 +6,9 @@ import {
   NodeLabelIndex,
   NodeObjectType,
   Property,
-  PropertyArrayType,
-  PropertyBaseType,
-  PropertyTypeRecursive,
+  PrimitiveArrayPropertyType,
+  PrimitivePropertyType,
+  PropertyType,
   RelationshipObjectType,
   RelationshipType,
   RelationshipTypeConstraint,
@@ -18,19 +18,23 @@ import {
   isNodeLabelIndex,
   isRelationshipTypeConstraint,
   isRelationshipTypeIndex,
+  isPrimitivePropertyType,
+  isPrimitiveArrayPropertyType,
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
   IndexJsonStruct,
+  isPrimitiveArrayPropertyTypeJsonStruct,
+  isPrimitivePropertyTypeJsonStruct,
   LookupIndexJsonStruct,
   NodeLabelConstraintJsonStruct,
   NodeLabelIndexJsonStruct,
   NodeLabelJsonStruct,
   NodeObjectTypeJsonStruct,
-  PrimitivePropertyTypesArrayType,
-  PrimitivePropertyTypesType,
+  PrimitiveArrayPropertyTypeJsonStruct,
+  PrimitivePropertyTypeJsonStruct,
   PropertyJsonStruct,
-  PropertyTypeJsonStructRecrsive,
+  PropertyTypeJsonStruct,
   RelationshipObjectTypeJsonStruct,
   RelationshipTypeConstraintJsonStruct,
   RelationshipTypeIndexJsonStruct,
@@ -470,24 +474,40 @@ const property = {
 };
 
 const propertyType = {
-  extract: (pt: PropertyTypeRecursive): PropertyTypeJsonStructRecrsive => {
+  extract: (
+    pt: PropertyType | PropertyType[]
+  ): PropertyTypeJsonStruct | PropertyTypeJsonStruct[] => {
     if (Array.isArray(pt)) {
-      return pt.map(propertyType.extract);
+      return pt.map((p) => {
+        if (isPrimitivePropertyType(p)) {
+          return propertyBaseType.extract(p);
+        } else if (isPrimitiveArrayPropertyType(p)) {
+          return propertyArrayType.extract(p);
+        }
+        throw Error(`Unknown property type in list ${p}`);
+      });
     }
-    if (pt instanceof PropertyBaseType) {
+    if (isPrimitivePropertyType(pt)) {
       return propertyBaseType.extract(pt);
-    } else if (pt instanceof PropertyArrayType) {
+    } else if (isPrimitiveArrayPropertyType(pt)) {
       return propertyArrayType.extract(pt);
     }
     throw new Error(`Unknown property type ${pt}`);
   },
   create: (
-    propertyTypeJson: PropertyTypeJsonStructRecrsive
-  ): PropertyTypeRecursive => {
+    propertyTypeJson: PropertyTypeJsonStruct | PropertyTypeJsonStruct[]
+  ): PropertyType | PropertyType[] => {
     if (Array.isArray(propertyTypeJson)) {
-      return propertyTypeJson.map((pt) => propertyType.create(pt));
+      return propertyTypeJson.map((pt) => {
+        if (isPrimitivePropertyTypeJsonStruct(pt)) {
+          return propertyBaseType.create(pt);
+        } else if (isPrimitiveArrayPropertyTypeJsonStruct(pt)) {
+          return propertyArrayType.create(pt.items.type);
+        }
+        throw new Error(`Unknown property type in list ${pt}`);
+      });
     }
-    if (propertyTypeJson.type === "array") {
+    if (isPrimitiveArrayPropertyTypeJsonStruct(propertyTypeJson)) {
       return propertyArrayType.create(propertyTypeJson.items.type);
     }
     return propertyBaseType.create(propertyTypeJson);
@@ -496,23 +516,23 @@ const propertyType = {
 
 const propertyBaseType = {
   extract: (
-    propertyBaseType: PropertyBaseType
-  ): PrimitivePropertyTypesType => ({
+    propertyBaseType: PrimitivePropertyType
+  ): PrimitivePropertyTypeJsonStruct => ({
     type: propertyBaseType.type,
   }),
-  create: (btype: PrimitivePropertyTypesType) =>
-    new PropertyBaseType(btype.type),
+  create: (btype: PrimitivePropertyTypeJsonStruct) =>
+    new PrimitivePropertyType(btype.type),
 };
 
 const propertyArrayType = {
   extract: (
-    propertyArrayType: PropertyArrayType
-  ): PrimitivePropertyTypesArrayType => ({
+    propertyArrayType: PrimitiveArrayPropertyType
+  ): PrimitiveArrayPropertyTypeJsonStruct => ({
     type: "array",
     items: propertyBaseType.extract(propertyArrayType.items),
   }),
-  create: (type: PrimitivePropertyTypesArrayType["items"]["type"]) =>
-    new PropertyArrayType(propertyBaseType.create({ type })),
+  create: (type: PrimitiveArrayPropertyTypeJsonStruct["items"]["type"]) =>
+    new PrimitiveArrayPropertyType(propertyBaseType.create({ type })),
 };
 
 const nodeObjectType = {

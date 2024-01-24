@@ -61,12 +61,17 @@ async function introspectNodes(
               Neo4jPropertyType | Neo4jPropertyArrayType
             >;
 
-            const types = neo4jTypes.map(createPropertyInstance);
+            const types: model.PropertyType[] = neo4jTypes.map(
+              createPropertyInstance
+            );
+
+            const propertyType: model.PropertyType | model.PropertyType[] =
+              types.length === 1 ? types.pop() : types;
 
             return new model.Property(
               `${nl}_${p.propertyName}`,
               p.propertyName,
-              types.length > 1 ? types : types.pop(),
+              propertyType,
               !p.mandatory
             );
           });
@@ -125,11 +130,13 @@ async function introspectRelationships(
           >;
 
           const types = neo4jTypes.map(createPropertyInstance);
+          const propertyType: model.PropertyType | model.PropertyType[] =
+            types.length === 1 ? types.pop() : types;
 
           return new model.Property(
             `${relType}_${p.propertyName}`,
             p.propertyName,
-            types.length > 1 ? types : types.pop(),
+            propertyType,
             !p.mandatory
           );
         });
@@ -151,7 +158,9 @@ function createPropertyInstance(t: Neo4jPropertyType | Neo4jPropertyArrayType) {
   if (t.endsWith("Array")) {
     const itemType = t.slice(0, -5) as Neo4jPropertyType;
     const type = toJSONType(itemType);
-    return new model.PropertyArrayType(new model.PropertyBaseType(type));
+    return new model.PrimitiveArrayPropertyType(
+      new model.PrimitivePropertyType(type)
+    );
   }
-  return new model.PropertyBaseType(toJSONType(t as Neo4jPropertyType));
+  return new model.PrimitivePropertyType(toJSONType(t as Neo4jPropertyType));
 }

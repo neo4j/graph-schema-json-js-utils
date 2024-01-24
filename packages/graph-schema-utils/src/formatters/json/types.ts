@@ -2,6 +2,7 @@ import {
   ConstraintType,
   EntityType,
   IndexType,
+  PRIMITIVE_TYPE_OPTIONS,
   PrimitivePropertyTypes,
 } from "../../model/index.js";
 
@@ -105,21 +106,37 @@ export type LookupIndexJsonStruct = IndexJsonStruct & {
 export type PropertyJsonStruct = {
   $id: string;
   token: string;
-  type: PropertyTypeJsonStructRecrsive;
+  type: PropertyTypeJsonStruct | PropertyTypeJsonStruct[];
   nullable: boolean;
 };
 
-export type PrimitivePropertyTypesType = { type: PrimitivePropertyTypes };
-export type PrimitivePropertyTypesArrayType = {
+export type PrimitivePropertyTypeJsonStruct = { type: PrimitivePropertyTypes };
+export type PrimitiveArrayPropertyTypeJsonStruct = {
   type: "array";
   items: { type: PrimitivePropertyTypes };
 };
 
 export type PropertyTypeJsonStruct =
-  | PrimitivePropertyTypesArrayType
-  | PrimitivePropertyTypesType
-  | (PrimitivePropertyTypesType | PrimitivePropertyTypesArrayType)[];
+  | PrimitiveArrayPropertyTypeJsonStruct
+  | PrimitivePropertyTypeJsonStruct;
 
-export type PropertyTypeJsonStructRecrsive =
-  | PropertyTypeJsonStruct
-  | Array<PropertyTypeJsonStruct | PropertyTypeJsonStructRecrsive[]>;
+export const isPrimitivePropertyTypeJsonStruct = (
+  propertyType: PropertyTypeJsonStruct
+): propertyType is PrimitivePropertyTypeJsonStruct => {
+  return (
+    typeof propertyType === "object" &&
+    "type" in propertyType &&
+    PRIMITIVE_TYPE_OPTIONS.some((p) => propertyType.type === p)
+  );
+};
+
+export const isPrimitiveArrayPropertyTypeJsonStruct = (
+  propertyType: PropertyTypeJsonStruct
+): propertyType is PrimitiveArrayPropertyTypeJsonStruct => {
+  return (
+    typeof propertyType === "object" &&
+    "type" in propertyType &&
+    propertyType.type === "array" &&
+    propertyType.items !== undefined
+  );
+};

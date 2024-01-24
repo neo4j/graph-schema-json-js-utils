@@ -1,9 +1,8 @@
 import {
   GraphSchema,
   NodeObjectType,
-  PropertyBaseType,
-  PropertyTypeRecursive,
-  PropertyTypes,
+  PrimitivePropertyType,
+  PropertyType,
   RelationshipObjectType,
 } from "../../model/index.js";
 import { ElementPropertyObject } from "./types.js";
@@ -141,11 +140,11 @@ export function toOskars(schema: GraphSchema): string {
   return out.join("\n");
 }
 
-function formatPropertyType(type: PropertyTypeRecursive): string {
+function formatPropertyType(type: PropertyType | PropertyType[]): string {
   if (Array.isArray(type)) {
     return type.map(formatPropertyType).join("|");
   }
-  if (type instanceof PropertyBaseType) {
+  if (type instanceof PrimitivePropertyType) {
     return type.type;
   }
   return `${type.items.type}[]`;

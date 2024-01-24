@@ -3,7 +3,10 @@ import path from "path";
 import { readFile } from "../../../test/fs.utils.js";
 import { describe, test } from "vitest";
 import { fromJson } from "./index.js";
-import { PropertyTypes } from "../../model/index.js";
+import {
+  PrimitiveArrayPropertyType,
+  PrimitivePropertyType,
+} from "../../model/index.js";
 
 import { validateSchema } from "../../validation.js";
 
@@ -66,7 +69,11 @@ describe("Parser tests", () => {
       "roles"
     );
     assert.strictEqual(
-      (parsed.relationshipTypes[0].properties[0].type as PropertyTypes).type,
+      (
+        parsed.relationshipTypes[0].properties[0].type as
+          | PrimitivePropertyType
+          | PrimitiveArrayPropertyType
+      ).type,
       "array"
     );
   });
