@@ -140,3 +140,36 @@ export const isPrimitiveArrayPropertyTypeJsonStruct = (
     propertyType.items !== undefined
   );
 };
+
+export const isNodeLabelConstraintJsonStruct = (
+  constraint: ConstraintJsonStruct
+): constraint is NodeLabelConstraintJsonStruct => {
+  return constraint.entityType === "node" && constraint.nodeLabel !== undefined;
+};
+
+export const isRelationshipTypeConstraintJsonStruct = (
+  constraint: ConstraintJsonStruct
+): constraint is RelationshipTypeConstraintJsonStruct => {
+  return (
+    constraint.entityType === "relationship" &&
+    constraint.relationshipType !== undefined
+  );
+};
+
+export const isNodeLabelIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is NodeLabelIndexJsonStruct => {
+  return index.nodeLabel !== undefined && index.indexType !== "lookup";
+};
+
+export const isRelationshipTypeIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is RelationshipTypeIndexJsonStruct => {
+  return index.relationshipType !== undefined && index.indexType !== "lookup";
+};
+
+export const isLookupIndexJsonStruct = (
+  index: IndexJsonStruct
+): index is LookupIndexJsonStruct => {
+  return index.indexType === "lookup";
+};
