@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.15
+
+### Patch Changes
+
+- 5c29b4f: make sure json type utility functions are also exported
+
 ## 1.0.0-next.14
 
 ### Patch Changes
