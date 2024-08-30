@@ -289,7 +289,7 @@ export type IndexType =
   | "range"
   | "lookup"
   | "text"
-  | "full-text"
+  | "fullText"
   | "point"
   | "default";
 
