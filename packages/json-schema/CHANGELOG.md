@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.5
+
+### Minor Changes
+
+- ef37ac3: Changed full-text type to fullText for consistency between indexes and constaints types
+
 ## 1.0.0-next.4
 
 ### Patch Changes

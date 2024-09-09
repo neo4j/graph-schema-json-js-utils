@@ -34,7 +34,7 @@
     "graph schema"
   ],
   "devDependencies": {
-    "@neo4j/graph-json-schema": "1.0.0-next.4",
+    "@neo4j/graph-json-schema": "1.0.0-next.5",
     "neo4j-driver": "^5.12.0"
   }
 }
