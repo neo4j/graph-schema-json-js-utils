@@ -12,6 +12,17 @@ const JSON_SCHEMA = JSON.stringify(
 
 // Validate type errors == schemas we expect NOT to pass
 describe("Validate type errors", () => {
+  describe("Identifies duplicated node labels", () => {
+    test("Duplicated node labels", () => {
+      const duplicatedNodeLabels = readFile(
+        path.resolve(__dirname, "./test-schemas/duplicated-node-labels.json")
+      );
+      assert.throws(
+        () => validateSchema(JSON_SCHEMA, duplicatedNodeLabels),
+        SchemaValidationError
+      );
+    });
+  });
   describe("Identifies unsupported types", () => {
     test("Node object types", () => {
       const unsupportedNodeSpecs = readFile(
