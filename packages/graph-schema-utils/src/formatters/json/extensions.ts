@@ -123,6 +123,21 @@ export function hasDuplicateNodeLabelIds(
   return false;
 }
 
+export function hasDuplicateNodeObjectTypeIds(
+  schema: GraphSchemaJsonStruct
+): boolean {
+  const ids = new Set<string>();
+
+  for (const nodeObjectType of schema.nodeObjectTypes) {
+    if (ids.has(nodeObjectType.$id)) {
+      return true;
+    }
+    ids.add(nodeObjectType.$id);
+  }
+
+  return false;
+}
+
 export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const { graphSchema } = schemaJson.graphSchemaRepresentation;
   console.log(graphSchema, hasDuplicateNodeLabelIds(graphSchema));
@@ -133,6 +148,9 @@ export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const relationshipTypes = graphSchema.relationshipTypes.map(
     relationshipType.create
   );
+  if (hasDuplicateNodeObjectTypeIds(graphSchema)) {
+    throw new Error("Duplicate node object type IDs found in schema");
+  }
   const nodeObjectTypes = graphSchema.nodeObjectTypes.map(
     (nodeObjectTypeJson) =>
       nodeObjectType.create(nodeObjectTypeJson, (ref) => {

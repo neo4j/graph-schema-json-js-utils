@@ -14,5 +14,24 @@ describe("JSON formatter", () => {
         message: "Duplicate node label IDs found in schema",
       });
     });
+
+    test("Identifies duplicated node object types and throws an error", () => {
+      const schema = readFile(
+        path.resolve(
+          __dirname,
+          "./test-schemas/duplicated-nodeObjectType-ids.json"
+        )
+      );
+      assert.throws(() => fromJson(schema), {
+        message: "Duplicate node object type IDs found in schema",
+      });
+    });
+
+    test("Does not throw an error if there are no duplicated ids in node labels or node object types", () => {
+      const schema = readFile(
+        path.resolve(__dirname, "./test-schemas/full.json")
+      );
+      assert.doesNotThrow(() => fromJson(schema));
+    });
   });
 });
