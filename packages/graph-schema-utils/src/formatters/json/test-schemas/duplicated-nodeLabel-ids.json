@@ -50,11 +50,11 @@
           ]
         },
         {
-          "$id": "nl:1",
+          "$id": "nl:0",
           "token": "DOCS_METADATA",
           "properties": [
             {
-              "$id": "p:1_0",
+              "$id": "p:0_0",
               "token": "RELATIVE_PATH",
               "type": {
                 "type": "string"
@@ -62,7 +62,7 @@
               "nullable": false
             },
             {
-              "$id": "p:1_1",
+              "$id": "p:0_1",
               "token": "MODEL_NAME",
               "type": {
                 "type": "string"
@@ -70,7 +70,7 @@
               "nullable": false
             },
             {
-              "$id": "p:1_2",
+              "$id": "p:0_2",
               "token": "SKILLS",
               "type": {
                 "type": "string"
@@ -78,7 +78,7 @@
               "nullable": false
             },
             {
-              "$id": "p:1_3",
+              "$id": "p:0_3",
               "token": "DOMAINS",
               "type": {
                 "type": "string"
@@ -86,7 +86,7 @@
               "nullable": false
             },
             {
-              "$id": "p:1_4",
+              "$id": "p:0_4",
               "token": "SUMMARY",
               "type": {
                 "type": "string"
@@ -107,10 +107,10 @@
           ]
         },
         {
-          "$id": "n:1",
+          "$id": "n:0",
           "labels": [
             {
-              "$ref": "#nl:1"
+              "$ref": "#nl:0"
             }
           ]
         }

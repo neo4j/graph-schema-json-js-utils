@@ -5,12 +5,14 @@ import { fromJson } from "./index.js";
 import { strict as assert } from "node:assert";
 
 describe("JSON formatter", () => {
-  describe("fromJsonStruct", () => {
+  describe("fromJson", () => {
     const schemaWithDuplicatedNodeLabels = readFile(
       path.resolve(__dirname, "./test-schemas/duplicated-nodeLabel-ids.json")
     );
     test("Identifies duplicated node labels adn throws an error", () => {
-      assert.throws(() => fromJson(schemaWithDuplicatedNodeLabels));
+      assert.throws(() => fromJson(schemaWithDuplicatedNodeLabels), {
+        message: "Duplicate node label IDs found in schema",
+      });
     });
   });
 });

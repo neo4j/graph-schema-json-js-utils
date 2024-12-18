@@ -23,6 +23,7 @@ import {
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
+  GraphSchemaJsonStruct,
   IndexJsonStruct,
   isLookupIndexJsonStruct,
   isNodeLabelConstraintJsonStruct,
@@ -107,8 +108,27 @@ export function fromJson(schema: string): GraphSchema {
   return fromJsonStruct(schemaJson);
 }
 
+export function hasDuplicateNodeLabelIds(
+  schema: GraphSchemaJsonStruct
+): boolean {
+  const ids = new Set<string>();
+
+  for (const nodeLabel of schema.nodeLabels) {
+    if (ids.has(nodeLabel.$id)) {
+      return true;
+    }
+    ids.add(nodeLabel.$id);
+  }
+
+  return false;
+}
+
 export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const { graphSchema } = schemaJson.graphSchemaRepresentation;
+  console.log(graphSchema, hasDuplicateNodeLabelIds(graphSchema));
+  if (hasDuplicateNodeLabelIds(graphSchema)) {
+    throw new Error("Duplicate node label IDs found in schema");
+  }
   const labels = graphSchema.nodeLabels.map(nodeLabel.create);
   const relationshipTypes = graphSchema.relationshipTypes.map(
     relationshipType.create
