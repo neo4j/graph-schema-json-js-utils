@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.17
+
+### Patch Changes
+
+- cc45630: fix: detect malformed graph schema with duplicated node label ids and object type ids
+
 ## 1.0.0-next.16
 
 ### Minor Changes
