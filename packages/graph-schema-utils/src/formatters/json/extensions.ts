@@ -23,6 +23,7 @@ import {
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
+  GraphSchemaJsonStruct,
   IndexJsonStruct,
   isLookupIndexJsonStruct,
   isNodeLabelConstraintJsonStruct,
@@ -107,12 +108,48 @@ export function fromJson(schema: string): GraphSchema {
   return fromJsonStruct(schemaJson);
 }
 
+export function hasDuplicateNodeLabelIds(
+  schema: GraphSchemaJsonStruct
+): boolean {
+  const ids = new Set<string>();
+
+  for (const nodeLabel of schema.nodeLabels) {
+    if (ids.has(nodeLabel.$id)) {
+      return true;
+    }
+    ids.add(nodeLabel.$id);
+  }
+
+  return false;
+}
+
+export function hasDuplicateNodeObjectTypeIds(
+  schema: GraphSchemaJsonStruct
+): boolean {
+  const ids = new Set<string>();
+
+  for (const nodeObjectType of schema.nodeObjectTypes) {
+    if (ids.has(nodeObjectType.$id)) {
+      return true;
+    }
+    ids.add(nodeObjectType.$id);
+  }
+
+  return false;
+}
+
 export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const { graphSchema } = schemaJson.graphSchemaRepresentation;
+  if (hasDuplicateNodeLabelIds(graphSchema)) {
+    throw new Error("Duplicate node label IDs found in schema");
+  }
   const labels = graphSchema.nodeLabels.map(nodeLabel.create);
   const relationshipTypes = graphSchema.relationshipTypes.map(
     relationshipType.create
   );
+  if (hasDuplicateNodeObjectTypeIds(graphSchema)) {
+    throw new Error("Duplicate node object type IDs found in schema");
+  }
   const nodeObjectTypes = graphSchema.nodeObjectTypes.map(
     (nodeObjectTypeJson) =>
       nodeObjectType.create(nodeObjectTypeJson, (ref) => {

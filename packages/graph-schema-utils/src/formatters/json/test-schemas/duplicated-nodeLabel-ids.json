@@ -1,0 +1,123 @@
+{
+  "graphSchemaRepresentation": {
+    "version": "1.0.0",
+    "graphSchema": {
+      "nodeLabels": [
+        {
+          "$id": "nl:0",
+          "token": "DOCS_CHUNKS_TABLE",
+          "properties": [
+            {
+              "$id": "p:0_0",
+              "token": "RELATIVE_PATH",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_1",
+              "token": "SIZE",
+              "type": {
+                "type": "integer"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_2",
+              "token": "FILE_URL",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_3",
+              "token": "SCOPED_FILE_URL",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_4",
+              "token": "CHUNK",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        },
+        {
+          "$id": "nl:0",
+          "token": "DOCS_METADATA",
+          "properties": [
+            {
+              "$id": "p:0_0",
+              "token": "RELATIVE_PATH",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_1",
+              "token": "MODEL_NAME",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_2",
+              "token": "SKILLS",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_3",
+              "token": "DOMAINS",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            },
+            {
+              "$id": "p:0_4",
+              "token": "SUMMARY",
+              "type": {
+                "type": "string"
+              },
+              "nullable": false
+            }
+          ]
+        }
+      ],
+      "relationshipTypes": [],
+      "nodeObjectTypes": [
+        {
+          "$id": "n:0",
+          "labels": [
+            {
+              "$ref": "#nl:0"
+            }
+          ]
+        },
+        {
+          "$id": "n:0",
+          "labels": [
+            {
+              "$ref": "#nl:0"
+            }
+          ]
+        }
+      ],
+      "relationshipObjectTypes": [],
+      "constraints": [],
+      "indexes": []
+    }
+  }
+}
