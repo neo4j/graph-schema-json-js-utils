@@ -140,7 +140,6 @@ export function hasDuplicateNodeObjectTypeIds(
 
 export function fromJsonStruct(schemaJson: RootSchemaJsonStruct): GraphSchema {
   const { graphSchema } = schemaJson.graphSchemaRepresentation;
-  console.log(graphSchema, hasDuplicateNodeLabelIds(graphSchema));
   if (hasDuplicateNodeLabelIds(graphSchema)) {
     throw new Error("Duplicate node label IDs found in schema");
   }
