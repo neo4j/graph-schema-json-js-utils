@@ -113,4 +113,60 @@ describe("Parser tests", () => {
       fromJson(JSON.stringify(schema));
     }, new Error("Not all node object type references in to are defined"));
   });
+
+  test("parses vector structure", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "TestLabel",
+              $id: "nl:TestLabel",
+              properties: [
+                {
+                  token: "vecna",
+                  $id: "p:TestLabel.vec",
+                  type: {
+                    type: "vector",
+                    items: { type: "float" },
+                    dimension: 3,
+                  },
+                  nullable: false
+                },
+              ],
+            },
+            {
+              token: "OtherLabel",
+              $id: "nl:OtherLabel",
+              properties: [],
+            },
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:TestLabel",
+              labels: [{ $ref: "#nl:TestLabel" }]
+            },
+            {
+              $id: "n:OtherLabel",
+              labels: [{ $ref: "#nl:OtherLabel" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: [],
+        },
+      },
+    });
+    const parsed = fromJson(schema);
+    assert.ok(parsed.nodeLabels[0]);
+    assert.ok(Array.isArray(parsed.nodeLabels[0].properties));
+    assert.ok(parsed.nodeLabels[0].properties.length > 0);
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    assert.strictEqual(vecProp.token, "vecna");
+    const vecType = vecProp.type as any;
+    assert.ok(vecType.type === "vector");
+    assert.strictEqual(vecType.dimension, 3);
+    assert.strictEqual(vecType.items.type, "float");
+  });
 });

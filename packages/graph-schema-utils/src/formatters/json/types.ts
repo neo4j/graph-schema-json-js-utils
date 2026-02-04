@@ -3,7 +3,7 @@ import {
   EntityType,
   IndexType,
   PRIMITIVE_TYPE_OPTIONS,
-  PrimitivePropertyTypes,
+  PrimitivePropertyTypes, VECTOR_TYPE_OPTIONS, VectorElementTypes,
 } from "../../model/index.js";
 
 export type RootSchemaJsonStruct = {
@@ -111,12 +111,19 @@ export type PropertyJsonStruct = {
 };
 
 export type PrimitivePropertyTypeJsonStruct = { type: PrimitivePropertyTypes };
+export type VectorElementTypeJsonStruct = { type: VectorElementTypes }
 export type PrimitiveArrayPropertyTypeJsonStruct = {
   type: "array";
   items: { type: PrimitivePropertyTypes };
 };
+export type VectorPropertyTypeJsonStruct = {
+  type: "vector";
+  items: { type: VectorElementTypes };
+  dimension: number;
+};
 
 export type PropertyTypeJsonStruct =
+  | VectorPropertyTypeJsonStruct
   | PrimitiveArrayPropertyTypeJsonStruct
   | PrimitivePropertyTypeJsonStruct;
 
@@ -138,6 +145,19 @@ export const isPrimitiveArrayPropertyTypeJsonStruct = (
     "type" in propertyType &&
     propertyType.type === "array" &&
     propertyType.items !== undefined
+  );
+};
+
+export const isVectorPropertyTypeJsonStruct = (
+  propertyType: PropertyTypeJsonStruct,
+): propertyType is VectorPropertyTypeJsonStruct => {
+  return (
+    typeof propertyType === "object" &&
+    propertyType.type === "vector" &&
+    typeof propertyType.dimension === "number" &&
+    propertyType.items !== undefined &&
+    typeof propertyType.items.type === "string" &&
+    VECTOR_TYPE_OPTIONS.some((p) => propertyType.items.type === p)
   );
 };
 

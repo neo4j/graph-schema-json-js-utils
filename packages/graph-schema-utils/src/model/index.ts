@@ -295,7 +295,7 @@ export type IndexType =
 
 export type EntityType = "node" | "relationship";
 
-export type PropertyType = PrimitivePropertyType | PrimitiveArrayPropertyType;
+export type PropertyType = PrimitivePropertyType | PrimitiveArrayPropertyType | VectorPropertyType;
 
 export const isPrimitiveArrayPropertyType = (
   property: PropertyType
@@ -353,6 +353,18 @@ export class PrimitiveArrayPropertyType {
   }
 }
 
+export class VectorPropertyType {
+  type: "vector";
+  items: VectorElementType;
+  dimension: number;
+
+  constructor(items: VectorElementType, dimension: number) {
+    this.type = "vector";
+    this.items = items;
+    this.dimension = dimension;
+  }
+}
+
 export const PRIMITIVE_TYPE_OPTIONS = [
   "integer",
   "string",
@@ -368,3 +380,25 @@ export const PRIMITIVE_TYPE_OPTIONS = [
 ] as const;
 
 export type PrimitivePropertyTypes = (typeof PRIMITIVE_TYPE_OPTIONS)[number];
+
+export const isVectorPropertyType = (
+  property: PropertyType
+): property is VectorPropertyType => {
+  return (
+    property.type === "vector" &&
+    property.items !== undefined &&
+    typeof property.dimension === "number"
+  );
+};
+
+export class VectorElementType {
+  type: VectorElementTypes;
+  constructor(type: VectorElementTypes) {
+    this.type = type;
+  }
+}
+export const VECTOR_TYPE_OPTIONS = [
+  "integer",
+  "float",
+] as const;
+export type VectorElementTypes = (typeof VECTOR_TYPE_OPTIONS)[number];
