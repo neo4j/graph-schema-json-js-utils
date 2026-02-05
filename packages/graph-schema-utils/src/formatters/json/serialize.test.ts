@@ -102,4 +102,47 @@ describe("Serializer tests", () => {
       nullable: false
     });
   });
+
+  test("Vector property round-trip parse/serialize", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecLabel",
+              $id: "nl:VecLabel",
+              properties: [
+                {
+                  token: "vec",
+                  $id: "p:VecLabel.vec",
+                  type: {
+                    type: "vector",
+                    items: { type: "float" },
+                    dimension: 2
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecLabel",
+              labels: [{ $ref: "#nl:VecLabel" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    const parsed = fromJson(schema);
+    const serialized = toJson(parsed);
+    const parsedObj = JSON.parse(serialized);
+    const originalObj = JSON.parse(schema);
+    expect(parsedObj.graphSchemaRepresentation.graphSchema)
+      .toEqual(originalObj.graphSchemaRepresentation.graphSchema);
+  });
 });
