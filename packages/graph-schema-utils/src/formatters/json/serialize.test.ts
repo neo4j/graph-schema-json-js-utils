@@ -5,6 +5,7 @@ import { describe, expect, test } from "vitest";
 import { validateSchema } from "../../index.js";
 import { createRequire } from "module";
 import { fromJson, toJson } from "./index.js";
+import * as model from "../../model/index.js";
 
 const require = createRequire(import.meta.url);
 const JSON_SCHEMA = JSON.stringify(
@@ -75,5 +76,30 @@ describe("Serializer tests", () => {
       () => toJson(parsed),
       new Error("NodeObjectType is not defined")
     );
+  });
+
+  test("Serializes vector property correctly", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTest", "VecTest", [
+      new model.Property(
+        "p:VecTest.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float"), 4),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTest", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "float" },
+        dimension: 4
+      },
+      nullable: false
+    });
   });
 });
