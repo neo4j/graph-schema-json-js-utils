@@ -356,12 +356,14 @@ export class PrimitiveArrayPropertyType {
 export class VectorPropertyType {
   type: "vector";
   items: VectorElementType;
-  dimension: number;
+  dimension?: number;
 
-  constructor(items: VectorElementType, dimension: number) {
+  constructor(items: VectorElementType, dimension?: number) {
     this.type = "vector";
     this.items = items;
-    this.dimension = dimension;
+    if (typeof dimension === "number") {
+      this.dimension = dimension;
+    }
   }
 }
 
@@ -387,7 +389,7 @@ export const isVectorPropertyType = (
   return (
     property.type === "vector" &&
     property.items !== undefined &&
-    typeof property.dimension === "number"
+    (property.dimension === undefined || typeof property.dimension === "number")
   );
 };
 

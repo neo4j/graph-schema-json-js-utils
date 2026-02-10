@@ -597,13 +597,22 @@ const propertyVectorElementType = {
 const propertyVectorType = {
   extract: (
     propertyVectorType: VectorPropertyType
-  ): VectorPropertyTypeJsonStruct => ({
-    type: "vector",
-    items: propertyVectorElementType.extract(propertyVectorType.items),
-    dimension: propertyVectorType.dimension,
-  }),
-  create: (type: VectorPropertyTypeJsonStruct["items"]["type"], dimension: number) =>
-    new VectorPropertyType(propertyVectorElementType.create({ type }), dimension),
+  ): VectorPropertyTypeJsonStruct => {
+    const result: VectorPropertyTypeJsonStruct = {
+      type: "vector",
+      items: propertyVectorElementType.extract(propertyVectorType.items),
+    };
+    if (typeof propertyVectorType.dimension === "number") {
+      result.dimension = propertyVectorType.dimension;
+    }
+    return result;
+  },
+  create: (
+    type: VectorPropertyTypeJsonStruct["items"]["type"],
+    dimension?: number
+  ) => {
+      return new VectorPropertyType(propertyVectorElementType.create({ type }), dimension);
+  },
 };
 
 const nodeObjectType = {

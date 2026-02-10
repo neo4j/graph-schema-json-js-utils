@@ -145,4 +145,47 @@ describe("Serializer tests", () => {
     expect(parsedObj.graphSchemaRepresentation.graphSchema)
       .toEqual(originalObj.graphSchemaRepresentation.graphSchema);
   });
+
+  test("Serializes vector property without dimension", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTestNoDim", "VecTestNoDim", [
+      new model.Property(
+        "p:VecTestNoDim.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float")),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNoDim", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "float" }
+        // dimension should not be present
+      },
+      nullable: false
+    });
+    expect(prop.type.dimension).toBeUndefined();
+  });
+
+  test("Serializes vector property with dimension null/undefined", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTestNullDim", "VecTestNullDim", [
+      new model.Property(
+        "p:VecTestNullDim.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float"), undefined),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNullDim", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop.type.dimension).toBeUndefined();
+  });
 });

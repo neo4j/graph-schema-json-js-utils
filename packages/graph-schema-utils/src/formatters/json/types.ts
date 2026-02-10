@@ -119,7 +119,7 @@ export type PrimitiveArrayPropertyTypeJsonStruct = {
 export type VectorPropertyTypeJsonStruct = {
   type: "vector";
   items: { type: VectorElementTypes };
-  dimension: number;
+  dimension?: number;
 };
 
 export type PropertyTypeJsonStruct =
@@ -154,10 +154,10 @@ export const isVectorPropertyTypeJsonStruct = (
   return (
     typeof propertyType === "object" &&
     propertyType.type === "vector" &&
-    typeof propertyType.dimension === "number" &&
     propertyType.items !== undefined &&
     typeof propertyType.items.type === "string" &&
-    VECTOR_TYPE_OPTIONS.some((p) => propertyType.items.type === p)
+    VECTOR_TYPE_OPTIONS.some((p) => propertyType.items.type === p) &&
+    (propertyType.dimension === undefined || typeof propertyType.dimension === "number")
   );
 };
 
