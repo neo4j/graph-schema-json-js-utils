@@ -19,7 +19,10 @@ import {
   isRelationshipTypeConstraint,
   isRelationshipTypeIndex,
   isPrimitivePropertyType,
-  isPrimitiveArrayPropertyType, isVectorPropertyType, VectorElementType, VectorPropertyType,
+  isPrimitiveArrayPropertyType,
+  isVectorPropertyType,
+  VectorElementType,
+  VectorPropertyType,
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
@@ -31,7 +34,8 @@ import {
   isPrimitiveArrayPropertyTypeJsonStruct,
   isPrimitivePropertyTypeJsonStruct,
   isRelationshipTypeConstraintJsonStruct,
-  isRelationshipTypeIndexJsonStruct, isVectorPropertyTypeJsonStruct,
+  isRelationshipTypeIndexJsonStruct,
+  isVectorPropertyTypeJsonStruct,
   LookupIndexJsonStruct,
   NodeLabelConstraintJsonStruct,
   NodeLabelIndexJsonStruct,
@@ -45,7 +49,9 @@ import {
   RelationshipTypeConstraintJsonStruct,
   RelationshipTypeIndexJsonStruct,
   RelationshipTypeJsonStruct,
-  RootSchemaJsonStruct, VectorElementTypeJsonStruct, VectorPropertyTypeJsonStruct,
+  RootSchemaJsonStruct,
+  VectorElementTypeJsonStruct,
+  VectorPropertyTypeJsonStruct,
 } from "./types.js";
 
 export const VERSION = "0.0.1";
