@@ -9,7 +9,7 @@ import {
   test,
 } from "vitest";
 import { formatters, validateSchema } from "@neo4j/graph-schema-utils";
-import jsonSchema from "@neo4j/graph-json-schema/json-schema.json";
+import jsonSchema from "@neo4j/graph-json-schema/json-schema.json" with { type: "json" };
 import { introspect, sessionFactory } from "./index.js";
 
 const JSON_SCHEMA = JSON.stringify(jsonSchema);

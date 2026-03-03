@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { strict as assert } from "node:assert";
 import { toOskars, toTomaz } from "./index.js";
 import { fromJson } from "../json/extensions.js";
-import fullSchemaObj from "./test-schemas/full.json";
+import fullSchemaObj from "./test-schemas/full.json" with { type: "json" };
 import path from "path";
 import { readFile } from "../../../test/fs.utils.js";
 import { validateSchema } from "../../validation.js";
