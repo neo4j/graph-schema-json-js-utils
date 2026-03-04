@@ -26,7 +26,7 @@ describe("Validate type errors", () => {
         SchemaValidationError
       );
       //--------
-      const EXPECTED_NUMBER_OF_ERRORS = 6;
+      const EXPECTED_NUMBER_OF_ERRORS = 9;
       let allErrors = [];
       try {
         validateSchema(JSON_SCHEMA, unsupportedNodeSpecs);
@@ -47,7 +47,7 @@ describe("Validate type errors", () => {
         SchemaValidationError
       );
       //--------
-      const EXPECTED_NUMBER_OF_ERRORS = 5;
+      const EXPECTED_NUMBER_OF_ERRORS = 8;
       let allErrors = [];
       try {
         validateSchema(JSON_SCHEMA, unsupportedRelationshipSpecs);
@@ -184,7 +184,7 @@ describe("Validate type errors", () => {
         () => validateSchema(JSON_SCHEMA, additionalNodeSpecsProperties),
         SchemaValidationError
       );
-      const NUM_ADDITIONAL_NODESPECS_PROPERTIRES = 5;
+      const NUM_ADDITIONAL_NODESPECS_PROPERTIRES = 9;
       let allErrorsAddittionalNodeSpecsProperties: SchemaValidationError["messages"] =
         [];
       try {
@@ -274,7 +274,7 @@ describe("Validate type errors", () => {
           validateSchema(JSON_SCHEMA, additionalRelationshipSpecsProperties),
         SchemaValidationError
       );
-      const NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES = 6;
+      const NUM_ADDITIONAL_RELATIONSHIP_SPECS_PROPERTIES = 10;
       let allErrorsAddittionalRelationshipSpecsProperties: SchemaValidationError["messages"] =
         [];
       try {
@@ -410,7 +410,7 @@ describe("Validate type errors", () => {
           ),
         SchemaValidationError
       );
-      const NUM_MISSING_RELATIONSHIP_SPECS_PROPERTIES = 8;
+      const NUM_MISSING_RELATIONSHIP_SPECS_PROPERTIES = 12;
       let allErrorRelationshipSpecsProperties: SchemaValidationError["messages"] =
         [];
       try {
@@ -437,7 +437,7 @@ describe("Validate type errors", () => {
         () => validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties),
         SchemaValidationError
       );
-      const NUM_MISSING_NODESPECS_PROPERTIES = 8;
+      const NUM_MISSING_NODESPECS_PROPERTIES = 12;
       let allErrorNodespecsProperties: SchemaValidationError["messages"] = [];
       try {
         validateSchema(JSON_SCHEMA, missingRequiredNodeSpecsProperties);
