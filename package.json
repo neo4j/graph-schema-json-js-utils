@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "Monorepo for Graph Schema JSON Utils",
-  "engines": {
-    "node": ">=18.17.0"
-  },
   "scripts": {
     "test": "npm run test --workspaces",
     "test:integration": "npm run test:integration -w packages/introspection",

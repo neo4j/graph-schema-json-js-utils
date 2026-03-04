@@ -18,14 +18,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Check Node.js version
-        run: node --version
-      - name: Check npm version
-        run: npm --version
       - name: Install deps
         run: npm ci
-      - name: Check TypeScript version
-        run: npx tsc --version
       - name: Build
         run: npm run build
       - name: Run TS checks
@@ -48,16 +42,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: Check Node.js version
-        run: node --version
-      - name: Check npm version
-        run: npm --version
       - name: Copy .env file to use for integration tests
         run: cp packages/introspection/.env.example packages/introspection/.env
       - name: Install deps
         run: npm ci
-      - name: Check TypeScript version
-        run: npx tsc --version
       - name: Build
         run: npm run build
       - name: Run tests
