@@ -25,7 +25,6 @@ describe("Validate type errors", () => {
         () => validateSchema(JSON_SCHEMA, unsupportedNodeSpecs),
         SchemaValidationError
       );
-      //--------
       const EXPECTED_NUMBER_OF_ERRORS = 9;
       let allErrors = [];
       try {
@@ -676,3 +675,40 @@ describe("Validate type errors", () => {
     assert.equal(lookupIndexErrors.length, NUM_ERRORS_LOOKUP_INDEX);
   });
 });
+
+// AJV tries all branches in oneOf and reports errors from each failed branch.
+describe("Debug: List all validation errors", () => {
+  test("unsupported-data-type-nodeSpecs.json should have expected errors", () => {
+    const expectedErrors = [
+      "[required] must have required property 'items' at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type",
+      "[pattern] must match pattern \"^array$\" at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type/type",
+      "[required] must have required property 'items' at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type",
+      "[required] must have required property 'dimension' at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type",
+      "[pattern] must match pattern \"^vector$\" at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type/type",
+      "[enum] must be equal to one of the allowed values at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type/type",
+      "[type] must be array at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type",
+      "[oneOf] must match exactly one schema in oneOf at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0/type",
+      "[oneOf] must match exactly one schema in oneOf at /graphSchemaRepresentation/graphSchema/nodeLabels/0/properties/0",
+    ];
+
+    const schema = readFile(
+      path.resolve(__dirname, "./test-schemas/unsupported-data-type-nodeSpecs.json")
+    );
+    let allErrors: SchemaValidationError["messages"] = [];
+    try {
+      validateSchema(JSON_SCHEMA, schema);
+    } catch (e) {
+      allErrors = (e as unknown as SchemaValidationError).messages;
+    }
+
+    const actualErrors = allErrors.map(
+      (err) => `[${err.keyword}] ${err.message} at ${err.instancePath}`
+    );
+
+    console.log("\n=== Actual Errors ===");
+    actualErrors.forEach((err, i) => console.log(`${i + 1}. ${err}`));
+
+    assert.deepEqual(actualErrors, expectedErrors);
+  });
+});
+
