@@ -20,6 +20,9 @@ import {
   isRelationshipTypeIndex,
   isPrimitivePropertyType,
   isPrimitiveArrayPropertyType,
+  isVectorPropertyType,
+  VectorElementType,
+  VectorPropertyType,
 } from "../../model/index.js";
 import {
   ConstraintJsonStruct,
@@ -32,6 +35,7 @@ import {
   isPrimitivePropertyTypeJsonStruct,
   isRelationshipTypeConstraintJsonStruct,
   isRelationshipTypeIndexJsonStruct,
+  isVectorPropertyTypeJsonStruct,
   LookupIndexJsonStruct,
   NodeLabelConstraintJsonStruct,
   NodeLabelIndexJsonStruct,
@@ -46,6 +50,8 @@ import {
   RelationshipTypeIndexJsonStruct,
   RelationshipTypeJsonStruct,
   RootSchemaJsonStruct,
+  VectorElementTypeJsonStruct,
+  VectorPropertyTypeJsonStruct,
 } from "./types.js";
 
 export const VERSION = "0.0.1";
@@ -525,6 +531,8 @@ const propertyType = {
           return propertyBaseType.extract(p);
         } else if (isPrimitiveArrayPropertyType(p)) {
           return propertyArrayType.extract(p);
+        } else if (isVectorPropertyType(p)) {
+          return propertyVectorType.extract(p);
         }
         throw Error(`Unknown property type in list ${p}`);
       });
@@ -533,6 +541,8 @@ const propertyType = {
       return propertyBaseType.extract(pt);
     } else if (isPrimitiveArrayPropertyType(pt)) {
       return propertyArrayType.extract(pt);
+    } else if (isVectorPropertyType(pt)) {
+      return propertyVectorType.extract(pt);
     }
     throw new Error(`Unknown property type ${pt}`);
   },
@@ -551,6 +561,9 @@ const propertyType = {
     }
     if (isPrimitiveArrayPropertyTypeJsonStruct(propertyTypeJson)) {
       return propertyArrayType.create(propertyTypeJson.items.type);
+    }
+    if (isVectorPropertyTypeJsonStruct(propertyTypeJson)) {
+      return propertyVectorType.create(propertyTypeJson.items.type, propertyTypeJson.dimension);
     }
     return propertyBaseType.create(propertyTypeJson);
   },
@@ -575,6 +588,37 @@ const propertyArrayType = {
   }),
   create: (type: PrimitiveArrayPropertyTypeJsonStruct["items"]["type"]) =>
     new PrimitiveArrayPropertyType(propertyBaseType.create({ type })),
+};
+
+const propertyVectorElementType = {
+  extract: (
+    propertyVectorElementType: VectorElementType
+  ): VectorElementType => ({
+    type: propertyVectorElementType.type,
+  }),
+  create: (btype: VectorElementTypeJsonStruct) =>
+    new VectorElementType(btype.type),
+};
+
+const propertyVectorType = {
+  extract: (
+    propertyVectorType: VectorPropertyType
+  ): VectorPropertyTypeJsonStruct => {
+    const result: VectorPropertyTypeJsonStruct = {
+      type: "vector",
+      items: propertyVectorElementType.extract(propertyVectorType.items),
+    };
+    if (typeof propertyVectorType.dimension === "number") {
+      result.dimension = propertyVectorType.dimension;
+    }
+    return result;
+  },
+  create: (
+    type: VectorPropertyTypeJsonStruct["items"]["type"],
+    dimension?: number
+  ) => {
+      return new VectorPropertyType(propertyVectorElementType.create({ type }), dimension);
+  },
 };
 
 const nodeObjectType = {

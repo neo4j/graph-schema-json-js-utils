@@ -5,6 +5,7 @@ import { describe, expect, test } from "vitest";
 import { validateSchema } from "../../index.js";
 import { createRequire } from "module";
 import { fromJson, toJson } from "./index.js";
+import * as model from "../../model/index.js";
 
 const require = createRequire(import.meta.url);
 const JSON_SCHEMA = JSON.stringify(
@@ -75,5 +76,116 @@ describe("Serializer tests", () => {
       () => toJson(parsed),
       new Error("NodeObjectType is not defined")
     );
+  });
+
+  test("Serializes vector property correctly", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTest", "VecTest", [
+      new model.Property(
+        "p:VecTest.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float"), 4),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTest", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "float" },
+        dimension: 4
+      },
+      nullable: false
+    });
+  });
+
+  test("Vector property round-trip parse/serialize", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecLabel",
+              $id: "nl:VecLabel",
+              properties: [
+                {
+                  token: "vec",
+                  $id: "p:VecLabel.vec",
+                  type: {
+                    type: "vector",
+                    items: { type: "float" },
+                    dimension: 2
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecLabel",
+              labels: [{ $ref: "#nl:VecLabel" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    const parsed = fromJson(schema);
+    const serialized = toJson(parsed);
+    const parsedObj = JSON.parse(serialized);
+    const originalObj = JSON.parse(schema);
+    expect(parsedObj.graphSchemaRepresentation.graphSchema)
+      .toEqual(originalObj.graphSchemaRepresentation.graphSchema);
+  });
+
+  test("Serializes vector property without dimension", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTestNoDim", "VecTestNoDim", [
+      new model.Property(
+        "p:VecTestNoDim.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float")),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNoDim", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "float" }
+        // dimension should not be present
+      },
+      nullable: false
+    });
+    expect(prop.type.dimension).toBeUndefined();
+  });
+
+  test("Serializes vector property with dimension null/undefined", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecTestNullDim", "VecTestNullDim", [
+      new model.Property(
+        "p:VecTestNullDim.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float"), undefined),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNullDim", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop.type.dimension).toBeUndefined();
   });
 });

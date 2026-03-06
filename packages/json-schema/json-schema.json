@@ -304,9 +304,8 @@
       "type": "array",
       "items": {
         "oneOf": [
-          {
-            "$ref": "#/$defs/PropertyTypesArrayObject"
-          },
+          { "$ref": "#/$defs/PropertyTypesArrayObject" },
+          { "$ref": "#/$defs/PropertyTypesVectorObject" },
           {
             "type": "object",
             "additionalProperties": false,
@@ -319,18 +318,8 @@
               "$id": { "type": "string" },
               "type": {
                 "oneOf": [
-                  {
-                    "$ref": "#/$defs/PropertyTypes"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        { "$ref": "#/$defs/PropertyTypes" },
-                        { "$ref": "#/$defs/PropertyTypesArray" }
-                      ]
-                    }
-                  }
+                  { "$ref": "#/$defs/PropertyTypes" },
+                  { "type": "array", "items": { "oneOf": [ { "$ref": "#/$defs/PropertyTypes" }, { "$ref": "#/$defs/PropertyTypesArray" }, { "$ref": "#/$defs/PropertyTypesVector" } ] } }
                 ]
               }
             }
@@ -351,6 +340,32 @@
         }
       }
     },
+    "PropertyTypesVector": {
+      "type": "object",
+      "required": ["items", "type", "dimension"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^vector$"
+        },
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["float", "integer"]
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        "dimension": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "PropertyTypesArrayObject": {
       "type": "object",
       "additionalProperties": false,
@@ -365,6 +380,17 @@
         "type": {
           "$ref": "#/$defs/PropertyTypesArray"
         },
+        "nullable": { "type": "boolean" }
+      }
+    },
+    "PropertyTypesVectorObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$id", "token", "type", "nullable"],
+      "properties": {
+        "$id": { "type": "string" },
+        "token": { "type": "string" },
+        "type": { "$ref": "#/$defs/PropertyTypesVector" },
         "nullable": { "type": "boolean" }
       }
     },
