@@ -8,7 +8,10 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    
+    permissions:
+      id-token: write   # Required for OIDC trusted publishing
+      contents: write   # Required for git push
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -35,8 +38,6 @@ jobs:
           git add . && git commit -am "Version bump"
 
       - name: Publish to npm
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm run changeset publish
       
       - name: Git push changes back to origin
