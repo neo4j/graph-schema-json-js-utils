@@ -30,8 +30,10 @@ async function introspectNodes(
 ): Promise<NodeMap> {
   const nodes: NodeMap = {};
   const session = sessionFactory();
+  // TODO: If we continue to use this library migrate to Cypher 25 / GQL compliant types (e.g., "STRING NOT NULL" instead of "String").
+  //       Using CYPHER 5 prefix as intermediate solution to maintain compatibility.
   const labelPropsRes = await session.executeRead((tx) =>
-    tx.run(`CALL db.schema.nodeTypeProperties()
+    tx.run(`CYPHER 5 CALL db.schema.nodeTypeProperties()
     YIELD nodeLabels, propertyName, propertyTypes, mandatory
     RETURN *`)
   );
@@ -95,7 +97,7 @@ async function introspectRelationships(
 
   // Find all relationship types and their properties (if any)
   const typePropsRes = await relSession.executeRead((tx) =>
-    tx.run(`CALL db.schema.relTypeProperties() YIELD relType, propertyName, propertyTypes, mandatory
+    tx.run(`CYPHER 5 CALL db.schema.relTypeProperties() YIELD relType, propertyName, propertyTypes, mandatory
         WITH substring(relType, 2, size(relType)-3) AS relType, propertyName, propertyTypes, mandatory
         CALL {
             WITH relType, propertyName

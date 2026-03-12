@@ -4,3 +4,4 @@ coverage
 dist
 .env
 .idea
+packages/graph-schema-utils/src/version.ts
