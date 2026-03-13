@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 19.x]
+        node-version: [20.x, 22.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -38,10 +38,10 @@ jobs:
           - 7687:7687
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 18
+      - name: Use Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
       - name: Copy .env file to use for integration tests
         run: cp packages/introspection/.env.example packages/introspection/.env
       - name: Install deps
