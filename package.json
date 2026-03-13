@@ -9,7 +9,9 @@
     "test:ci": "npm run build && npm run test && npm run test:integration",
     "check": "npm run check --workspaces",
     "build": "npm run build --workspaces",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "docker:start-neo4j": "docker run --name neo4j-test -p 7687:7687 -e NEO4J_AUTH=neo4j/password -e NEO4J_ACCEPT_LICENSE_AGREEMENT=yes neo4j:enterprise",
+    "docker:stop-neo4j": "docker stop neo4j-test && docker rm neo4j-test"
   },
   "repository": {
     "type": "git",
