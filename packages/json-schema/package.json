@@ -2,6 +2,10 @@
   "name": "@neo4j/graph-json-schema",
   "version": "1.0.0-next.5",
   "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neo4j/graph-schema-json-js-utils.git"
+  },
   "scripts": {
     "test": "exit 0",
     "check": "exit 0",
