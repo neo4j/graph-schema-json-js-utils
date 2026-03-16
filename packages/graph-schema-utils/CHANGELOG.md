@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.18
+
+### Minor Changes
+
+- 9e5d741: Adding support for vector of int and float
+
 ## 1.0.0-next.17
 
 ### Patch Changes

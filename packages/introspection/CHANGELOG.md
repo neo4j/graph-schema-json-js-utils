@@ -1,5 +1,11 @@
 # @neo4j/graph-introspection
 
+## 1.0.0-next.3
+
+### Patch Changes
+
+- dae1f68: Fix compatibility with Neo4j 2026.x by using CYPHER 5 prefix for schema introspection queries
+
 ## 1.0.0-next.2
 
 ### Patch Changes
