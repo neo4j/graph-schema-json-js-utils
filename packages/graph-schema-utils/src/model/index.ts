@@ -402,5 +402,6 @@ export class VectorElementType {
 export const VECTOR_TYPE_OPTIONS = [
   "integer",
   "float",
+  "float32",
 ] as const;
 export type VectorElementTypes = (typeof VECTOR_TYPE_OPTIONS)[number];
