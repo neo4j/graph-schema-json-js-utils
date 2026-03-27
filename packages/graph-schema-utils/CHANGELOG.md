@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.19
+
+### Minor Changes
+
+- 51f9675: Adding support for vector<float32> type
+
 ## 1.0.0-next.18
 
 ### Minor Changes

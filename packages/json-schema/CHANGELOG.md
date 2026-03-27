@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.6
+
+### Minor Changes
+
+- 51f9675: Adding support for vector<float32> type
+
 ## 1.0.0-next.5
 
 ### Minor Changes
