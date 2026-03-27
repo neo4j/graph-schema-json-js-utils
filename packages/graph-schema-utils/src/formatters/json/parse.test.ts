@@ -216,4 +216,49 @@ describe("Parser tests", () => {
     assert.strictEqual(vecType.dimension, undefined);
     assert.strictEqual(vecType.items.type, "float");
   });
+
+  test("Parses vector<float32> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecFloat32Label",
+              $id: "nl:VecFloat32Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecFloat32Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "float32" },
+                    dimension: 256
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecFloat32Label",
+              labels: [{ $ref: "#nl:VecFloat32Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    const parsed = fromJson(schema);
+    assert.ok(parsed.nodeLabels[0]);
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    assert.strictEqual(vecProp.token, "embedding");
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "float32");
+    assert.strictEqual(vecType.dimension, 256);
+  });
 });

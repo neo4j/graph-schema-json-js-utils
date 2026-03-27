@@ -188,4 +188,29 @@ describe("Serializer tests", () => {
     const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     expect(prop.type.dimension).toBeUndefined();
   });
+
+  test("Serializes vector<float32> property correctly", () => {
+    const nodeLabel = new model.NodeLabel("nl:VecFloat32Test", "VecFloat32Test", [
+      new model.Property(
+        "p:VecFloat32Test.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("float32"), 128),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecFloat32Test", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "float32" },
+        dimension: 128
+      },
+      nullable: false
+    });
+  });
 });
