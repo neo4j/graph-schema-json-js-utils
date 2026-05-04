@@ -261,4 +261,142 @@ describe("Parser tests", () => {
     assert.strictEqual(vecType.items.type, "float32");
     assert.strictEqual(vecType.dimension, 256);
   });
+
+  test("Parses vector<integer8> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecInteger8Label",
+              $id: "nl:VecInteger8Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecInteger8Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer8" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecInteger8Label",
+              labels: [{ $ref: "#nl:VecInteger8Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    // ARRANGE + ACT
+    const parsed = fromJson(schema);
+    // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "integer8");
+    assert.strictEqual(vecType.dimension, 128);
+  });
+
+  test("Parses vector<integer16> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecInteger16Label",
+              $id: "nl:VecInteger16Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecInteger16Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer16" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecInteger16Label",
+              labels: [{ $ref: "#nl:VecInteger16Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    // ARRANGE + ACT
+    const parsed = fromJson(schema);
+    // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "integer16");
+    assert.strictEqual(vecType.dimension, 128);
+  });
+
+  test("Parses vector<integer32> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecInteger32Label",
+              $id: "nl:VecInteger32Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecInteger32Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer32" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecInteger32Label",
+              labels: [{ $ref: "#nl:VecInteger32Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    // ARRANGE + ACT
+    const parsed = fromJson(schema);
+    // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "integer32");
+    assert.strictEqual(vecType.dimension, 128);
+  });
 });

@@ -353,7 +353,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": ["float", "float32", "integer"]
+              "enum": ["integer", "integer8", "integer16", "integer32", "float", "float32"]
             }
           },
           "required": ["type"],
