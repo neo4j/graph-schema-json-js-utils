@@ -7,13 +7,17 @@
     "url": "git+https://github.com/neo4j/graph-schema-json-js-utils.git"
   },
   "scripts": {
-    "test": "exit 0",
+    "test": "vitest run",
     "check": "exit 0",
     "build": "exit 0"
   },
   "files": [
     "json-schema.json"
   ],
+  "devDependencies": {
+    "ajv": "^8.11.0",
+    "vitest": "^0.34.3"
+  },
   "author": "",
   "license": "Apache-2.0"
 }
