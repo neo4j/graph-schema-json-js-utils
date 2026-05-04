@@ -269,4 +269,32 @@ describe("Serializer tests", () => {
       nullable: false
     });
   });
+
+  test("Serializes vector<integer32> property correctly", () => {
+    // ARRANGE
+    const nodeLabel = new model.NodeLabel("nl:VecInteger32Test", "VecInteger32Test", [
+      new model.Property(
+        "p:VecInteger32Test.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("integer32"), 128),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger32Test", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    // ACT
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    // ASSERT
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "integer32" },
+        dimension: 128
+      },
+      nullable: false
+    });
+  });
 });

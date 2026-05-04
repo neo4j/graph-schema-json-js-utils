@@ -403,6 +403,7 @@ export const VECTOR_TYPE_OPTIONS = [
   "integer",
   "integer8",
   "integer16",
+  "integer32",
   "float",
   "float32",
 ] as const;
