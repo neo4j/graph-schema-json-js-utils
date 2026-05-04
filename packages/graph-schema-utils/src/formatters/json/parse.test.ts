@@ -261,4 +261,50 @@ describe("Parser tests", () => {
     assert.strictEqual(vecType.items.type, "float32");
     assert.strictEqual(vecType.dimension, 256);
   });
+
+  test("Parses vector<integer8> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecInteger8Label",
+              $id: "nl:VecInteger8Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecInteger8Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer8" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecInteger8Label",
+              labels: [{ $ref: "#nl:VecInteger8Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    // ARRANGE + ACT
+    const parsed = fromJson(schema);
+    // ASSERT
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "integer8");
+    assert.strictEqual(vecType.dimension, 128);
+  });
+
 });

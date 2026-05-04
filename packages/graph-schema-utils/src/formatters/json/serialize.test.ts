@@ -213,4 +213,32 @@ describe("Serializer tests", () => {
       nullable: false
     });
   });
+
+  test("Serializes vector<integer8> property correctly", () => {
+    // ARRANGE
+    const nodeLabel = new model.NodeLabel("nl:VecInteger8Test", "VecInteger8Test", [
+      new model.Property(
+        "p:VecInteger8Test.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("integer8"), 128),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger8Test", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    // ACT
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    // ASSERT
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "integer8" },
+        dimension: 128
+      },
+      nullable: false
+    });
+  });
 });

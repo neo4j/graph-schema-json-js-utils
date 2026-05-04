@@ -255,4 +255,40 @@ describe("json-schema vector type support", () => {
     const validate = ajv.compile(schema);
     expect(validate(data)).toBe(true);
   });
+
+  it("accepts a valid vector<integer8> property", () => {
+    const data = {
+      graphSchemaRepresentation: {
+        version: "1.0.0",
+        graphSchema: {
+          nodeLabels: [
+            {
+              $id: "n1",
+              token: "Node",
+              properties: [
+                {
+                  $id: "embedding-id",
+                  token: "embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer8" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    };
+    // ARRANGE + ACT + ASSERT
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(true);
+  });
 });

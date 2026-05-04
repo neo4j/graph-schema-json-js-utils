@@ -401,6 +401,7 @@ export class VectorElementType {
 }
 export const VECTOR_TYPE_OPTIONS = [
   "integer",
+  "integer8",
   "float",
   "float32",
 ] as const;
