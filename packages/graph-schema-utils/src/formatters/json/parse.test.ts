@@ -300,6 +300,7 @@ describe("Parser tests", () => {
     // ARRANGE + ACT
     const parsed = fromJson(schema);
     // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
     const vecProp = parsed.nodeLabels[0].properties[0];
     const vecType = vecProp.type as any;
     assert.strictEqual(vecType.type, "vector");
@@ -345,6 +346,7 @@ describe("Parser tests", () => {
     // ARRANGE + ACT
     const parsed = fromJson(schema);
     // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
     const vecProp = parsed.nodeLabels[0].properties[0];
     const vecType = vecProp.type as any;
     assert.strictEqual(vecType.type, "vector");
@@ -390,6 +392,7 @@ describe("Parser tests", () => {
     // ARRANGE + ACT
     const parsed = fromJson(schema);
     // ASSERT
+    assert.ok(parsed.nodeLabels[0]);
     const vecProp = parsed.nodeLabels[0].properties[0];
     const vecType = vecProp.type as any;
     assert.strictEqual(vecType.type, "vector");
