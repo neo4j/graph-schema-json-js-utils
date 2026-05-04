@@ -307,4 +307,48 @@ describe("Parser tests", () => {
     assert.strictEqual(vecType.dimension, 128);
   });
 
+  test("Parses vector<integer16> property", () => {
+    const schema = JSON.stringify({
+      graphSchemaRepresentation: {
+        graphSchema: {
+          nodeLabels: [
+            {
+              token: "VecInteger16Label",
+              $id: "nl:VecInteger16Label",
+              properties: [
+                {
+                  token: "embedding",
+                  $id: "p:VecInteger16Label.embedding",
+                  type: {
+                    type: "vector",
+                    items: { type: "integer16" },
+                    dimension: 128
+                  },
+                  nullable: false
+                }
+              ]
+            }
+          ],
+          relationshipTypes: [],
+          nodeObjectTypes: [
+            {
+              $id: "n:VecInteger16Label",
+              labels: [{ $ref: "#nl:VecInteger16Label" }]
+            }
+          ],
+          relationshipObjectTypes: [],
+          constraints: [],
+          indexes: []
+        }
+      }
+    });
+    // ARRANGE + ACT
+    const parsed = fromJson(schema);
+    // ASSERT
+    const vecProp = parsed.nodeLabels[0].properties[0];
+    const vecType = vecProp.type as any;
+    assert.strictEqual(vecType.type, "vector");
+    assert.strictEqual(vecType.items.type, "integer16");
+    assert.strictEqual(vecType.dimension, 128);
+  });
 });

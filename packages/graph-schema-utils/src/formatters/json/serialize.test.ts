@@ -241,4 +241,32 @@ describe("Serializer tests", () => {
       nullable: false
     });
   });
+
+  test("Serializes vector<integer16> property correctly", () => {
+    // ARRANGE
+    const nodeLabel = new model.NodeLabel("nl:VecInteger16Test", "VecInteger16Test", [
+      new model.Property(
+        "p:VecInteger16Test.vecProp",
+        "vecProp",
+        new model.VectorPropertyType(new model.VectorElementType("integer16"), 128),
+        false
+      )
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger16Test", [nodeLabel]);
+    const graphSchema = new model.GraphSchema([nodeObjectType], []);
+    // ACT
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    // ASSERT
+    expect(prop).toMatchObject({
+      token: "vecProp",
+      type: {
+        type: "vector",
+        items: { type: "integer16" },
+        dimension: 128
+      },
+      nullable: false
+    });
+  });
 });
