@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.20
+
+### Minor Changes
+
+- f5e9b55: Adding support for vector<integer8>, vector<integer16> and vector<integer32> types
+
 ## 1.0.0-next.19
 
 ### Minor Changes
