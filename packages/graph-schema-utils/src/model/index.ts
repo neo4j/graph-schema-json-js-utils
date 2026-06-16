@@ -291,6 +291,7 @@ export type IndexType =
   | "text"
   | "fullText"
   | "point"
+  | "vector"
   | "default";
 
 export type EntityType = "node" | "relationship";
