@@ -8,6 +8,7 @@
   },
   "changesets": [
     "add-integer-vector-subtypes",
+    "add-vector-index-type",
     "big-birds-arrive",
     "brave-rivers-dream",
     "bright-eels-sniff",

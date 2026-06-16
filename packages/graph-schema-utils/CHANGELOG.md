@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.21
+
+### Minor Changes
+
+- e63abf8: Add "vector" to IndexType
+
 ## 1.0.0-next.20
 
 ### Minor Changes
