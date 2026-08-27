@@ -89,10 +89,14 @@ export class RelationshipType {
 export class NodeObjectType {
   $id: string;
   labels: NodeLabel[];
+  description?: string;
 
-  constructor(id: string, labels: NodeLabel[]) {
+  constructor(id: string, labels: NodeLabel[], description?: string) {
     this.$id = id;
     this.labels = labels;
+    if (description !== undefined) {
+      this.description = description;
+    }
   }
   getProperties() {
     return this.labels.flatMap((l) => l.properties);
@@ -108,17 +112,22 @@ export class RelationshipObjectType {
   type: RelationshipType;
   from: NodeObjectType;
   to: NodeObjectType;
+  description?: string;
 
   constructor(
     id: string,
     type: RelationshipType,
     from: NodeObjectType,
-    to: NodeObjectType
+    to: NodeObjectType,
+    description?: string
   ) {
     this.$id = id;
     this.type = type;
     this.from = from;
     this.to = to;
+    if (description !== undefined) {
+      this.description = description;
+    }
   }
   getProperties() {
     return this.type.properties;
@@ -323,17 +332,22 @@ export class Property {
   token: string;
   type: PropertyType | PropertyType[];
   nullable: boolean;
+  description?: string;
 
   constructor(
     $id: string,
     token: string,
     type: PropertyType | PropertyType[],
-    nullable: boolean
+    nullable: boolean,
+    description?: string
   ) {
     this.$id = $id;
     this.token = token;
     this.type = type;
     this.nullable = nullable;
+    if (description !== undefined) {
+      this.description = description;
+    }
   }
 }
 

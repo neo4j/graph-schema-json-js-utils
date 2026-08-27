@@ -32,6 +32,33 @@ describe("Parser tests", () => {
     assert.strictEqual(parsed.nodeObjectTypes.length, 3);
     assert.strictEqual(parsed.relationshipObjectTypes.length, 2);
 
+    // descriptions
+    assert.strictEqual(
+      parsed.nodeObjectTypes[0].description,
+      "A person who acted in a movie"
+    );
+    assert.strictEqual(parsed.nodeObjectTypes[1].description, undefined);
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].description,
+      "An actor acted in a movie"
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[1].description,
+      undefined
+    );
+    assert.strictEqual(
+      parsed.nodeObjectTypes[0].labels[0].properties.find(
+        (p) => p.token === "name"
+      )?.description,
+      "The actor's full name"
+    );
+    assert.strictEqual(
+      parsed.nodeObjectTypes[0].labels[1].properties.find(
+        (p) => p.token === "name"
+      )?.description,
+      undefined
+    );
+
     // node object types, connected to node labels
     assert.strictEqual(parsed.nodeObjectTypes[0].labels[1].$id, "nl:Person");
     assert.strictEqual(parsed.nodeObjectTypes[1].labels[1].token, "Person");

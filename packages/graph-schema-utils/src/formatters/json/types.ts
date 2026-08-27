@@ -39,6 +39,7 @@ export type RelationshipTypeJsonStruct = {
 export type NodeObjectTypeJsonStruct = {
   $id: string;
   labels: { $ref: string }[];
+  description?: string;
 };
 
 export type RelationshipObjectTypeJsonStruct = {
@@ -46,6 +47,7 @@ export type RelationshipObjectTypeJsonStruct = {
   type: { $ref: string };
   from: { $ref: string };
   to: { $ref: string };
+  description?: string;
 };
 
 export type ConstraintJsonStruct = {
@@ -108,6 +110,7 @@ export type PropertyJsonStruct = {
   token: string;
   type: PropertyTypeJsonStruct | PropertyTypeJsonStruct[];
   nullable: boolean;
+  description?: string;
 };
 
 export type PrimitivePropertyTypeJsonStruct = { type: PrimitivePropertyTypes };
