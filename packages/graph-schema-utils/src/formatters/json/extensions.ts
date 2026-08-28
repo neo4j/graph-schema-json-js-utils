@@ -498,18 +498,25 @@ const relationshipTypeIndex = {
 };
 
 const property = {
-  extract: (property: Property): PropertyJsonStruct => ({
-    $id: property.$id,
-    token: property.token,
-    type: propertyType.extract(property.type),
-    nullable: property.nullable,
-  }),
+  extract: (property: Property): PropertyJsonStruct => {
+    const result: PropertyJsonStruct = {
+      $id: property.$id,
+      token: property.token,
+      type: propertyType.extract(property.type),
+      nullable: property.nullable,
+    };
+    if (property.description !== undefined) {
+      result.description = property.description;
+    }
+    return result;
+  },
   create: (property: PropertyJsonStruct) =>
     new Property(
       property.$id,
       property.token,
       propertyType.create(property.type),
-      property.nullable
+      property.nullable,
+      property.description
     ),
   toRef: (property: Property) => {
     if (!property || !property.$id) {
@@ -622,17 +629,24 @@ const propertyVectorType = {
 };
 
 const nodeObjectType = {
-  extract: (nodeObjectType: NodeObjectType): NodeObjectTypeJsonStruct => ({
-    $id: nodeObjectType.$id,
-    labels: nodeObjectType.labels.map(nodeLabel.toRef),
-  }),
+  extract: (nodeObjectType: NodeObjectType): NodeObjectTypeJsonStruct => {
+    const result: NodeObjectTypeJsonStruct = {
+      $id: nodeObjectType.$id,
+      labels: nodeObjectType.labels.map(nodeLabel.toRef),
+    };
+    if (nodeObjectType.description !== undefined) {
+      result.description = nodeObjectType.description;
+    }
+    return result;
+  },
   create: (
     nodeObjectType: NodeObjectTypeJsonStruct,
     labelLookup: (ref: string) => NodeLabel
   ) => {
     return new NodeObjectType(
       nodeObjectType.$id,
-      nodeObjectType.labels.map(({ $ref }) => labelLookup($ref))
+      nodeObjectType.labels.map(({ $ref }) => labelLookup($ref)),
+      nodeObjectType.description
     );
   },
   toRef: (nodeObjectType: NodeObjectType) => {
@@ -648,12 +662,18 @@ const nodeObjectType = {
 const relationshipObjectType = {
   extract: (
     relationshipObjectType: RelationshipObjectType
-  ): RelationshipObjectTypeJsonStruct => ({
-    $id: relationshipObjectType.$id,
-    type: relationshipType.toRef(relationshipObjectType.type),
-    from: nodeObjectType.toRef(relationshipObjectType.from),
-    to: nodeObjectType.toRef(relationshipObjectType.to),
-  }),
+  ): RelationshipObjectTypeJsonStruct => {
+    const result: RelationshipObjectTypeJsonStruct = {
+      $id: relationshipObjectType.$id,
+      type: relationshipType.toRef(relationshipObjectType.type),
+      from: nodeObjectType.toRef(relationshipObjectType.from),
+      to: nodeObjectType.toRef(relationshipObjectType.to),
+    };
+    if (relationshipObjectType.description !== undefined) {
+      result.description = relationshipObjectType.description;
+    }
+    return result;
+  },
   create: (
     relationshipObjectType: RelationshipObjectTypeJsonStruct,
     relTypeLookup: (ref: string) => RelationshipType,
@@ -663,7 +683,8 @@ const relationshipObjectType = {
       relationshipObjectType.$id,
       relTypeLookup(relationshipObjectType.type.$ref),
       nodeObjectTypeLookup(relationshipObjectType.from.$ref, "from"),
-      nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to")
+      nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to"),
+      relationshipObjectType.description
     );
   },
   toRef: (relationshipObjectType: RelationshipObjectType) => ({

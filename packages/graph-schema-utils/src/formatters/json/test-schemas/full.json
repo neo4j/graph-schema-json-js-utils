@@ -43,7 +43,8 @@
               "type": {
                 "type": "string"
               },
-              "nullable": false
+              "nullable": false,
+              "description": "The actor's full name"
             }
           ]
         },
@@ -171,7 +172,8 @@
       "nodeObjectTypes": [
         {
           "$id": "n:Actor:Person",
-          "labels": [{ "$ref": "#nl:Actor" }, { "$ref": "#nl:Person" }]
+          "labels": [{ "$ref": "#nl:Actor" }, { "$ref": "#nl:Person" }],
+          "description": "A person who acted in a movie"
         },
         {
           "$id": "n:Director:Person",
@@ -187,7 +189,8 @@
           "$id": "r:ACTED_IN",
           "type": { "$ref": "#rt:ACTED_IN" },
           "from": { "$ref": "#n:Actor:Person" },
-          "to": { "$ref": "#n:Movie" }
+          "to": { "$ref": "#n:Movie" },
+          "description": "An actor acted in a movie"
         },
         {
           "$id": "r:DIRECTED",

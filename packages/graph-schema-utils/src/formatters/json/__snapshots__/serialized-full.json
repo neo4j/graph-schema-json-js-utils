@@ -43,7 +43,8 @@
               "type": {
                 "type": "string"
               },
-              "nullable": false
+              "nullable": false,
+              "description": "The actor's full name"
             }
           ]
         },
@@ -178,7 +179,8 @@
             {
               "$ref": "#nl:Person"
             }
-          ]
+          ],
+          "description": "A person who acted in a movie"
         },
         {
           "$id": "n:Director:Person",
@@ -211,7 +213,8 @@
           },
           "to": {
             "$ref": "#n:Movie"
-          }
+          },
+          "description": "An actor acted in a movie"
         },
         {
           "$id": "r:DIRECTED",

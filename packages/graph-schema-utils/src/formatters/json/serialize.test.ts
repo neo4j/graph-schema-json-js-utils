@@ -85,22 +85,113 @@ describe("Serializer tests", () => {
         "vecProp",
         new model.VectorPropertyType(new model.VectorElementType("float"), 4),
         false
-      )
+      ),
     ]);
     const nodeObjectType = new model.NodeObjectType("n:VecTest", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
         items: { type: "float" },
-        dimension: 4
+        dimension: 4,
       },
-      nullable: false
+      nullable: false,
     });
+  });
+
+  test("Serializes description on properties, node object types and relationship object types when present", () => {
+    const nodeLabel = new model.NodeLabel("nl:DescTest", "DescTest", [
+      new model.Property(
+        "p:DescTest.prop",
+        "prop",
+        new model.PrimitivePropertyType("string"),
+        false,
+        "A described property"
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType(
+      "n:DescTest",
+      [nodeLabel],
+      "A described node object type"
+    );
+    const relType = new model.RelationshipType("rt:DESC_REL", "DESC_REL", []);
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:DescTest",
+      relType,
+      nodeObjectType,
+      nodeObjectType,
+      "A described relationship object type"
+    );
+    const graphSchema = new model.GraphSchema(
+      [nodeObjectType],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
+
+    assert.strictEqual(
+      parsedGraphSchema.nodeLabels[0].properties[0].description,
+      "A described property"
+    );
+    assert.strictEqual(
+      parsedGraphSchema.nodeObjectTypes[0].description,
+      "A described node object type"
+    );
+    assert.strictEqual(
+      parsedGraphSchema.relationshipObjectTypes[0].description,
+      "A described relationship object type"
+    );
+  });
+
+  test("Omits description when not set", () => {
+    const nodeLabel = new model.NodeLabel("nl:NoDescTest", "NoDescTest", [
+      new model.Property(
+        "p:NoDescTest.prop",
+        "prop",
+        new model.PrimitivePropertyType("string"),
+        false
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:NoDescTest", [
+      nodeLabel,
+    ]);
+    const relType = new model.RelationshipType(
+      "rt:NO_DESC_REL",
+      "NO_DESC_REL",
+      []
+    );
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:NoDescTest",
+      relType,
+      nodeObjectType,
+      nodeObjectType
+    );
+    const graphSchema = new model.GraphSchema(
+      [nodeObjectType],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
+
+    assert.strictEqual(
+      "description" in parsedGraphSchema.nodeLabels[0].properties[0],
+      false
+    );
+    assert.strictEqual(
+      "description" in parsedGraphSchema.nodeObjectTypes[0],
+      false
+    );
+    assert.strictEqual(
+      "description" in parsedGraphSchema.relationshipObjectTypes[0],
+      false
+    );
   });
 
   test("Vector property round-trip parse/serialize", () => {
@@ -118,32 +209,33 @@ describe("Serializer tests", () => {
                   type: {
                     type: "vector",
                     items: { type: "float" },
-                    dimension: 2
+                    dimension: 2,
                   },
-                  nullable: false
-                }
-              ]
-            }
+                  nullable: false,
+                },
+              ],
+            },
           ],
           relationshipTypes: [],
           nodeObjectTypes: [
             {
               $id: "n:VecLabel",
-              labels: [{ $ref: "#nl:VecLabel" }]
-            }
+              labels: [{ $ref: "#nl:VecLabel" }],
+            },
           ],
           relationshipObjectTypes: [],
           constraints: [],
-          indexes: []
-        }
-      }
+          indexes: [],
+        },
+      },
     });
     const parsed = fromJson(schema);
     const serialized = toJson(parsed);
     const parsedObj = JSON.parse(serialized);
     const originalObj = JSON.parse(schema);
-    expect(parsedObj.graphSchemaRepresentation.graphSchema)
-      .toEqual(originalObj.graphSchemaRepresentation.graphSchema);
+    expect(parsedObj.graphSchemaRepresentation.graphSchema).toEqual(
+      originalObj.graphSchemaRepresentation.graphSchema
+    );
   });
 
   test("Serializes vector property without dimension", () => {
@@ -153,148 +245,201 @@ describe("Serializer tests", () => {
         "vecProp",
         new model.VectorPropertyType(new model.VectorElementType("float")),
         false
-      )
+      ),
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecTestNoDim", [nodeLabel]);
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNoDim", [
+      nodeLabel,
+    ]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
-        items: { type: "float" }
+        items: { type: "float" },
         // dimension should not be present
       },
-      nullable: false
+      nullable: false,
     });
     expect(prop.type.dimension).toBeUndefined();
   });
 
   test("Serializes vector property with dimension null/undefined", () => {
-    const nodeLabel = new model.NodeLabel("nl:VecTestNullDim", "VecTestNullDim", [
-      new model.Property(
-        "p:VecTestNullDim.vecProp",
-        "vecProp",
-        new model.VectorPropertyType(new model.VectorElementType("float"), undefined),
-        false
-      )
+    const nodeLabel = new model.NodeLabel(
+      "nl:VecTestNullDim",
+      "VecTestNullDim",
+      [
+        new model.Property(
+          "p:VecTestNullDim.vecProp",
+          "vecProp",
+          new model.VectorPropertyType(
+            new model.VectorElementType("float"),
+            undefined
+          ),
+          false
+        ),
+      ]
+    );
+    const nodeObjectType = new model.NodeObjectType("n:VecTestNullDim", [
+      nodeLabel,
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecTestNullDim", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     expect(prop.type.dimension).toBeUndefined();
   });
 
   test("Serializes vector<float32> property correctly", () => {
-    const nodeLabel = new model.NodeLabel("nl:VecFloat32Test", "VecFloat32Test", [
-      new model.Property(
-        "p:VecFloat32Test.vecProp",
-        "vecProp",
-        new model.VectorPropertyType(new model.VectorElementType("float32"), 128),
-        false
-      )
+    const nodeLabel = new model.NodeLabel(
+      "nl:VecFloat32Test",
+      "VecFloat32Test",
+      [
+        new model.Property(
+          "p:VecFloat32Test.vecProp",
+          "vecProp",
+          new model.VectorPropertyType(
+            new model.VectorElementType("float32"),
+            128
+          ),
+          false
+        ),
+      ]
+    );
+    const nodeObjectType = new model.NodeObjectType("n:VecFloat32Test", [
+      nodeLabel,
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecFloat32Test", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
         items: { type: "float32" },
-        dimension: 128
+        dimension: 128,
       },
-      nullable: false
+      nullable: false,
     });
   });
 
   test("Serializes vector<integer8> property correctly", () => {
     // ARRANGE
-    const nodeLabel = new model.NodeLabel("nl:VecInteger8Test", "VecInteger8Test", [
-      new model.Property(
-        "p:VecInteger8Test.vecProp",
-        "vecProp",
-        new model.VectorPropertyType(new model.VectorElementType("integer8"), 128),
-        false
-      )
+    const nodeLabel = new model.NodeLabel(
+      "nl:VecInteger8Test",
+      "VecInteger8Test",
+      [
+        new model.Property(
+          "p:VecInteger8Test.vecProp",
+          "vecProp",
+          new model.VectorPropertyType(
+            new model.VectorElementType("integer8"),
+            128
+          ),
+          false
+        ),
+      ]
+    );
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger8Test", [
+      nodeLabel,
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecInteger8Test", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     // ACT
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     // ASSERT
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
         items: { type: "integer8" },
-        dimension: 128
+        dimension: 128,
       },
-      nullable: false
+      nullable: false,
     });
   });
 
   test("Serializes vector<integer16> property correctly", () => {
     // ARRANGE
-    const nodeLabel = new model.NodeLabel("nl:VecInteger16Test", "VecInteger16Test", [
-      new model.Property(
-        "p:VecInteger16Test.vecProp",
-        "vecProp",
-        new model.VectorPropertyType(new model.VectorElementType("integer16"), 128),
-        false
-      )
+    const nodeLabel = new model.NodeLabel(
+      "nl:VecInteger16Test",
+      "VecInteger16Test",
+      [
+        new model.Property(
+          "p:VecInteger16Test.vecProp",
+          "vecProp",
+          new model.VectorPropertyType(
+            new model.VectorElementType("integer16"),
+            128
+          ),
+          false
+        ),
+      ]
+    );
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger16Test", [
+      nodeLabel,
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecInteger16Test", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     // ACT
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     // ASSERT
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
         items: { type: "integer16" },
-        dimension: 128
+        dimension: 128,
       },
-      nullable: false
+      nullable: false,
     });
   });
 
   test("Serializes vector<integer32> property correctly", () => {
     // ARRANGE
-    const nodeLabel = new model.NodeLabel("nl:VecInteger32Test", "VecInteger32Test", [
-      new model.Property(
-        "p:VecInteger32Test.vecProp",
-        "vecProp",
-        new model.VectorPropertyType(new model.VectorElementType("integer32"), 128),
-        false
-      )
+    const nodeLabel = new model.NodeLabel(
+      "nl:VecInteger32Test",
+      "VecInteger32Test",
+      [
+        new model.Property(
+          "p:VecInteger32Test.vecProp",
+          "vecProp",
+          new model.VectorPropertyType(
+            new model.VectorElementType("integer32"),
+            128
+          ),
+          false
+        ),
+      ]
+    );
+    const nodeObjectType = new model.NodeObjectType("n:VecInteger32Test", [
+      nodeLabel,
     ]);
-    const nodeObjectType = new model.NodeObjectType("n:VecInteger32Test", [nodeLabel]);
     const graphSchema = new model.GraphSchema([nodeObjectType], []);
     // ACT
     const serialized = toJson(graphSchema);
     const parsed = JSON.parse(serialized);
-    const prop = parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
+    const prop =
+      parsed.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties[0];
     // ASSERT
     expect(prop).toMatchObject({
       token: "vecProp",
       type: {
         type: "vector",
         items: { type: "integer32" },
-        dimension: 128
+        dimension: 128,
       },
-      nullable: false
+      nullable: false,
     });
   });
 });
