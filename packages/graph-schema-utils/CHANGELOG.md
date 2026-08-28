@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.22
+
+### Patch Changes
+
+- 381d277: Added support for optional descriptions
+
 ## 1.0.0-next.21
 
 ### Minor Changes

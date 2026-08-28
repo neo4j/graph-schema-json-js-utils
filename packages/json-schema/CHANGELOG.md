@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- 381d277: Added support for optional descriptions
+
 ## 1.0.0-next.7
 
 ### Minor Changes
