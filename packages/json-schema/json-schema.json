@@ -70,6 +70,12 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "aliases": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 },
                 "additionalProperties": false,
@@ -116,6 +122,12 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "aliases": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
                   }
                 },
                 "additionalProperties": false,

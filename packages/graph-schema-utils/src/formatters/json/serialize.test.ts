@@ -194,6 +194,89 @@ describe("Serializer tests", () => {
     );
   });
 
+  test("Serializes aliases on node object types and relationship object types when present", () => {
+    const nodeLabel = new model.NodeLabel("nl:AliasTest", "AliasTest", [
+      new model.Property(
+        "p:AliasTest.prop",
+        "prop",
+        new model.PrimitivePropertyType("string"),
+        false
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType(
+      "n:AliasTest",
+      [nodeLabel],
+      undefined,
+      ["AliasA", "AliasB"]
+    );
+    const relType = new model.RelationshipType("rt:ALIAS_REL", "ALIAS_REL", []);
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:AliasTest",
+      relType,
+      nodeObjectType,
+      nodeObjectType,
+      undefined,
+      ["REL_ALIAS_A", "REL_ALIAS_B"]
+    );
+    const graphSchema = new model.GraphSchema(
+      [nodeObjectType],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
+
+    assert.deepEqual(parsedGraphSchema.nodeObjectTypes[0].aliases, [
+      "AliasA",
+      "AliasB",
+    ]);
+    assert.deepEqual(parsedGraphSchema.relationshipObjectTypes[0].aliases, [
+      "REL_ALIAS_A",
+      "REL_ALIAS_B",
+    ]);
+  });
+
+  test("Omits aliases when not set", () => {
+    const nodeLabel = new model.NodeLabel("nl:NoAliasTest", "NoAliasTest", [
+      new model.Property(
+        "p:NoAliasTest.prop",
+        "prop",
+        new model.PrimitivePropertyType("string"),
+        false
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:NoAliasTest", [
+      nodeLabel,
+    ]);
+    const relType = new model.RelationshipType(
+      "rt:NO_ALIAS_REL",
+      "NO_ALIAS_REL",
+      []
+    );
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:NoAliasTest",
+      relType,
+      nodeObjectType,
+      nodeObjectType
+    );
+    const graphSchema = new model.GraphSchema(
+      [nodeObjectType],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
+
+    assert.strictEqual(
+      "aliases" in parsedGraphSchema.nodeObjectTypes[0],
+      false
+    );
+    assert.strictEqual(
+      "aliases" in parsedGraphSchema.relationshipObjectTypes[0],
+      false
+    );
+  });
+
   test("Vector property round-trip parse/serialize", () => {
     const schema = JSON.stringify({
       graphSchemaRepresentation: {

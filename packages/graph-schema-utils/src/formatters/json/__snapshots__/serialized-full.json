@@ -180,7 +180,11 @@
               "$ref": "#nl:Person"
             }
           ],
-          "description": "A person who acted in a movie"
+          "description": "A person who acted in a movie",
+          "aliases": [
+            "Performer",
+            "CastMember"
+          ]
         },
         {
           "$id": "n:Director:Person",
@@ -214,7 +218,11 @@
           "to": {
             "$ref": "#n:Movie"
           },
-          "description": "An actor acted in a movie"
+          "description": "An actor acted in a movie",
+          "aliases": [
+            "STARRED_IN",
+            "PERFORMED_IN"
+          ]
         },
         {
           "$id": "r:DIRECTED",

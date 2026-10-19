@@ -40,6 +40,7 @@ export type NodeObjectTypeJsonStruct = {
   $id: string;
   labels: { $ref: string }[];
   description?: string;
+  aliases?: string[];
 };
 
 export type RelationshipObjectTypeJsonStruct = {
@@ -48,6 +49,7 @@ export type RelationshipObjectTypeJsonStruct = {
   from: { $ref: string };
   to: { $ref: string };
   description?: string;
+  aliases?: string[];
 };
 
 export type ConstraintJsonStruct = {
