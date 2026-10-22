@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.23
+
+### Patch Changes
+
+- 94475ac: Added support for optional alias
+
 ## 1.0.0-next.22
 
 ### Patch Changes

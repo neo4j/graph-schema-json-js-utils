@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- 94475ac: Added support for optional alias
+
 ## 1.0.0-next.8
 
 ### Patch Changes
