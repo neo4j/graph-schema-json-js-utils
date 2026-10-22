@@ -46,6 +46,18 @@ describe("Parser tests", () => {
       parsed.relationshipObjectTypes[1].description,
       undefined
     );
+
+    // aliases
+    assert.deepEqual(parsed.nodeObjectTypes[0].aliases, [
+      "Performer",
+      "CastMember",
+    ]);
+    assert.strictEqual(parsed.nodeObjectTypes[1].aliases, undefined);
+    assert.deepEqual(parsed.relationshipObjectTypes[0].aliases, [
+      "STARRED_IN",
+      "PERFORMED_IN",
+    ]);
+    assert.strictEqual(parsed.relationshipObjectTypes[1].aliases, undefined);
     assert.strictEqual(
       parsed.nodeObjectTypes[0].labels[0].properties.find(
         (p) => p.token === "name"

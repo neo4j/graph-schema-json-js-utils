@@ -1,5 +1,5 @@
 //Build variables update by packages/graph-schema-utils/set-build-info.cjs mainly useful for development
 // PACKAGE_VERSION extracted from package.json to allow the dist to know and share its own version
-export const PACKAGE_VERSION = "1.0.0-next.21";
+export const PACKAGE_VERSION = "1.0.0-next.22";
 // LAST_BUILD_TIME set to now at build time to allow dist to know and share when it was built.
-export const LAST_BUILD_TIME = "2026-08-28T08:16:43.665Z"
+export const LAST_BUILD_TIME = "2026-10-19T09:45:30.525Z"

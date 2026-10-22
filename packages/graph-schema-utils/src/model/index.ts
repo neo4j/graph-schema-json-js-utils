@@ -90,12 +90,16 @@ export class NodeObjectType {
   $id: string;
   labels: NodeLabel[];
   description?: string;
+  aliases?: string[];
 
-  constructor(id: string, labels: NodeLabel[], description?: string) {
+  constructor(id: string, labels: NodeLabel[], description?: string, aliases?: string[]) {
     this.$id = id;
     this.labels = labels;
     if (description !== undefined) {
       this.description = description;
+    }
+    if (aliases !== undefined) {
+      this.aliases = aliases;
     }
   }
   getProperties() {
@@ -113,13 +117,15 @@ export class RelationshipObjectType {
   from: NodeObjectType;
   to: NodeObjectType;
   description?: string;
-
+  aliases?: string[];
+  
   constructor(
     id: string,
     type: RelationshipType,
     from: NodeObjectType,
     to: NodeObjectType,
-    description?: string
+    description?: string,
+    aliases?: string[]
   ) {
     this.$id = id;
     this.type = type;
@@ -127,6 +133,9 @@ export class RelationshipObjectType {
     this.to = to;
     if (description !== undefined) {
       this.description = description;
+    }
+    if (aliases !== undefined) {
+      this.aliases = aliases;
     }
   }
   getProperties() {

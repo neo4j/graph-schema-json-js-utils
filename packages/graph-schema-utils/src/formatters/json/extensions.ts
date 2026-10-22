@@ -637,6 +637,9 @@ const nodeObjectType = {
     if (nodeObjectType.description !== undefined) {
       result.description = nodeObjectType.description;
     }
+    if (nodeObjectType.aliases !== undefined) {
+      result.aliases = nodeObjectType.aliases;
+    }
     return result;
   },
   create: (
@@ -646,7 +649,8 @@ const nodeObjectType = {
     return new NodeObjectType(
       nodeObjectType.$id,
       nodeObjectType.labels.map(({ $ref }) => labelLookup($ref)),
-      nodeObjectType.description
+      nodeObjectType.description,
+      nodeObjectType.aliases
     );
   },
   toRef: (nodeObjectType: NodeObjectType) => {
@@ -672,6 +676,9 @@ const relationshipObjectType = {
     if (relationshipObjectType.description !== undefined) {
       result.description = relationshipObjectType.description;
     }
+    if (relationshipObjectType.aliases !== undefined) {
+      result.aliases = relationshipObjectType.aliases;
+    }
     return result;
   },
   create: (
@@ -684,7 +691,8 @@ const relationshipObjectType = {
       relTypeLookup(relationshipObjectType.type.$ref),
       nodeObjectTypeLookup(relationshipObjectType.from.$ref, "from"),
       nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to"),
-      relationshipObjectType.description
+      relationshipObjectType.description,
+      relationshipObjectType.aliases
     );
   },
   toRef: (relationshipObjectType: RelationshipObjectType) => ({
