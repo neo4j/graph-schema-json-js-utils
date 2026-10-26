@@ -194,13 +194,15 @@ describe("Serializer tests", () => {
     );
   });
 
-  test("Serializes aliases on node object types and relationship object types when present", () => {
+  test("Serializes aliases on properties, node object types and relationship object types when present", () => {
     const nodeLabel = new model.NodeLabel("nl:AliasTest", "AliasTest", [
       new model.Property(
         "p:AliasTest.prop",
         "prop",
         new model.PrimitivePropertyType("string"),
-        false
+        false,
+        undefined,
+        ["propAliasA", "propAliasB"]
       ),
     ]);
     const nodeObjectType = new model.NodeObjectType(
@@ -209,7 +211,16 @@ describe("Serializer tests", () => {
       undefined,
       ["AliasA", "AliasB"]
     );
-    const relType = new model.RelationshipType("rt:ALIAS_REL", "ALIAS_REL", []);
+    const relType = new model.RelationshipType("rt:ALIAS_REL", "ALIAS_REL", [
+      new model.Property(
+        "p:ALIAS_REL.since",
+        "since",
+        new model.PrimitivePropertyType("string"),
+        false,
+        undefined,
+        ["fromYear"]
+      ),
+    ]);
     const relationshipObjectType = new model.RelationshipObjectType(
       "r:AliasTest",
       relType,
@@ -226,6 +237,14 @@ describe("Serializer tests", () => {
     const parsed = JSON.parse(serialized);
     const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
 
+    assert.deepEqual(parsedGraphSchema.nodeLabels[0].properties[0].aliases, [
+      "propAliasA",
+      "propAliasB",
+    ]);
+    assert.deepEqual(
+      parsedGraphSchema.relationshipTypes[0].properties[0].aliases,
+      ["fromYear"]
+    );
     assert.deepEqual(parsedGraphSchema.nodeObjectTypes[0].aliases, [
       "AliasA",
       "AliasB",
@@ -267,6 +286,10 @@ describe("Serializer tests", () => {
     const parsed = JSON.parse(serialized);
     const { graphSchema: parsedGraphSchema } = parsed.graphSchemaRepresentation;
 
+    assert.strictEqual(
+      "aliases" in parsedGraphSchema.nodeLabels[0].properties[0],
+      false
+    );
     assert.strictEqual(
       "aliases" in parsedGraphSchema.nodeObjectTypes[0],
       false

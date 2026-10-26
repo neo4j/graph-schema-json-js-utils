@@ -508,6 +508,9 @@ const property = {
     if (property.description !== undefined) {
       result.description = property.description;
     }
+    if (property.aliases !== undefined) {
+      result.aliases = property.aliases;
+    }
     return result;
   },
   create: (property: PropertyJsonStruct) =>
@@ -516,7 +519,8 @@ const property = {
       property.token,
       propertyType.create(property.type),
       property.nullable,
-      property.description
+      property.description,
+      property.aliases
     ),
   toRef: (property: Property) => {
     if (!property || !property.$id) {
