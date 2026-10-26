@@ -41,13 +41,13 @@ describe("Prompt tests", () => {
     const prompt = toTomaz(schema);
     expect(prompt).toMatchInlineSnapshot(`
       "Node properties are the following:
-      [{\\"properties\\":[{\\"property\\":\\"tagline\\",\\"type\\":\\"string\\",\\"nullable\\":true},{\\"property\\":\\"title\\",\\"type\\":\\"string\\"},{\\"property\\":\\"released\\",\\"type\\":\\"integer\\"}],\\"labels\\":[\\"Movie\\"]}]
-      [{\\"properties\\":[{\\"property\\":\\"name\\",\\"type\\":\\"string\\"},{\\"property\\":\\"born\\",\\"type\\":\\"integer\\",\\"nullable\\":true}],\\"labels\\":[\\"Person\\"]}]
+      [{"properties":[{"property":"tagline","type":"string","nullable":true},{"property":"title","type":"string"},{"property":"released","type":"integer"}],"labels":["Movie"]}]
+      [{"properties":[{"property":"name","type":"string"},{"property":"born","type":"integer","nullable":true}],"labels":["Person"]}]
       Relationship properties are the following:
-      [{\\"labels\\":[\\"ACTED_IN\\"],\\"properties\\":[{\\"property\\":\\"roles\\",\\"type\\":\\"string[]\\"}]}]
-      [{\\"labels\\":[\\"REVIEWED\\"],\\"properties\\":[{\\"property\\":\\"summary\\",\\"type\\":\\"string\\"},{\\"property\\":\\"rating\\",\\"type\\":\\"integer\\"}]}]
+      [{"labels":["ACTED_IN"],"properties":[{"property":"roles","type":"string[]"}]}]
+      [{"labels":["REVIEWED"],"properties":[{"property":"summary","type":"string"},{"property":"rating","type":"integer"}]}]
       The relationships are the following:
-      [\\"(:Person)-[:ACTED_IN]->(:Movie)\\",\\"(:Person)-[:DIRECTED]->(:Movie)\\",\\"(:Person)-[:FOLLOWS]->(:Person)\\",\\"(:Person)-[:PRODUCED]->(:Movie)\\",\\"(:Person)-[:REVIEWED]->(:Movie)\\",\\"(:Person)-[:WROTE]->(:Movie)\\"]"
+      ["(:Person)-[:ACTED_IN]->(:Movie)","(:Person)-[:DIRECTED]->(:Movie)","(:Person)-[:FOLLOWS]->(:Person)","(:Person)-[:PRODUCED]->(:Movie)","(:Person)-[:REVIEWED]->(:Movie)","(:Person)-[:WROTE]->(:Movie)"]"
     `);
   });
 });
