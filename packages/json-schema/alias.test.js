@@ -15,6 +15,8 @@ describe("json-schema alias support", () => {
   });
 
   const baseGraphSchema = ({
+    propertyAliases,
+    relationshipPropertyAliases,
     nodeObjectTypeAliases,
     relationshipObjectTypeAliases,
   } = {}) => ({
@@ -31,6 +33,9 @@ describe("json-schema alias support", () => {
                 token: "name",
                 type: { type: "string" },
                 nullable: false,
+                ...(propertyAliases !== undefined
+                  ? { aliases: propertyAliases }
+                  : {}),
               },
             ],
           },
@@ -39,7 +44,17 @@ describe("json-schema alias support", () => {
           {
             $id: "rt:REL",
             token: "REL",
-            properties: [],
+            properties: [
+              {
+                $id: "p:REL.since",
+                token: "since",
+                type: { type: "array", items: { type: "string" } },
+                nullable: false,
+                ...(relationshipPropertyAliases !== undefined
+                  ? { aliases: relationshipPropertyAliases }
+                  : {}),
+              },
+            ],
           },
         ],
         nodeObjectTypes: [
@@ -68,6 +83,35 @@ describe("json-schema alias support", () => {
     },
   });
 
+  it("accepts a property with aliases", () => {
+    const data = baseGraphSchema({
+      propertyAliases: ["fullName", "label"],
+    });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(true);
+  });
+
+  it("accepts a relationship property with aliases", () => {
+    const data = baseGraphSchema({
+      relationshipPropertyAliases: ["fromYear", "start"],
+    });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(true);
+  });
+
+  it("accepts a vector property with aliases", () => {
+    const data = baseGraphSchema();
+    data.graphSchemaRepresentation.graphSchema.nodeLabels[0].properties.push({
+      $id: "p:Node.embedding",
+      token: "embedding",
+      type: { type: "vector", items: { type: "float" }, dimension: 3 },
+      nullable: false,
+      aliases: ["vector", "embeddingVector"],
+    });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(true);
+  });
+
   it("accepts a node object type with aliases", () => {
     const data = baseGraphSchema({
       nodeObjectTypeAliases: ["Person", "Human"],
@@ -86,6 +130,8 @@ describe("json-schema alias support", () => {
 
   it("accepts an empty aliases array", () => {
     const data = baseGraphSchema({
+      propertyAliases: [],
+      relationshipPropertyAliases: [],
       nodeObjectTypeAliases: [],
       relationshipObjectTypeAliases: [],
     });
@@ -97,6 +143,34 @@ describe("json-schema alias support", () => {
     const data = baseGraphSchema();
     const validate = ajv.compile(schema);
     expect(validate(data)).toBe(true);
+  });
+
+  it("rejects a non-array aliases on a property", () => {
+    const data = baseGraphSchema({ propertyAliases: "fullName" });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(false);
+  });
+
+  it("rejects a non-string item in aliases on a property", () => {
+    const data = baseGraphSchema({ propertyAliases: ["fullName", 123] });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(false);
+  });
+
+  it("rejects a non-array aliases on a relationship property", () => {
+    const data = baseGraphSchema({
+      relationshipPropertyAliases: "fromYear",
+    });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(false);
+  });
+
+  it("rejects a non-string item in aliases on a relationship property", () => {
+    const data = baseGraphSchema({
+      relationshipPropertyAliases: ["fromYear", true],
+    });
+    const validate = ajv.compile(schema);
+    expect(validate(data)).toBe(false);
   });
 
   it("rejects a non-array aliases on a node object type", () => {

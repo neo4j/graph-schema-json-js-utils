@@ -44,7 +44,11 @@
                 "type": "string"
               },
               "nullable": false,
-              "description": "The actor's full name"
+              "description": "The actor's full name",
+              "aliases": [
+                "fullName",
+                "actorName"
+              ]
             }
           ]
         },
@@ -159,7 +163,11 @@
                   "type": "string"
                 }
               },
-              "nullable": false
+              "nullable": false,
+              "aliases": [
+                "roleNames",
+                "characters"
+              ]
             }
           ]
         },

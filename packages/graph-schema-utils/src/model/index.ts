@@ -342,13 +342,15 @@ export class Property {
   type: PropertyType | PropertyType[];
   nullable: boolean;
   description?: string;
+  aliases?: string[];
 
   constructor(
     $id: string,
     token: string,
     type: PropertyType | PropertyType[],
     nullable: boolean,
-    description?: string
+    description?: string,
+    aliases?: string[]
   ) {
     this.$id = $id;
     this.token = token;
@@ -356,6 +358,9 @@ export class Property {
     this.nullable = nullable;
     if (description !== undefined) {
       this.description = description;
+    }
+    if (aliases !== undefined) {
+      this.aliases = aliases;
     }
   }
 }
