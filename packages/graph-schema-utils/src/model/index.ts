@@ -111,19 +111,39 @@ export class NodeObjectType {
   }
 }
 
+export class RelationshipEndType {
+  node: NodeObjectType;
+  count?: number;
+  minCount?: number;
+  maxCount?: number;
+
+  constructor(node: NodeObjectType, count?: number, minCount?: number, maxCount?: number) {
+    this.node = node;
+    if (count !== undefined) {
+      this.count = count;
+    }
+    if (minCount !== undefined) {
+      this.minCount = minCount;
+    }
+    if (maxCount !== undefined) {
+      this.maxCount = maxCount;
+    }
+  }
+}
+
 export class RelationshipObjectType {
   $id: string;
   type: RelationshipType;
-  from: NodeObjectType;
-  to: NodeObjectType;
+  from: RelationshipEndType;
+  to: RelationshipEndType;
   description?: string;
   aliases?: string[];
   
   constructor(
     id: string,
     type: RelationshipType,
-    from: NodeObjectType,
-    to: NodeObjectType,
+    from: RelationshipEndType,
+    to: RelationshipEndType,
     description?: string,
     aliases?: string[]
   ) {

@@ -97,20 +97,48 @@ describe("Parser tests", () => {
       "rt:ACTED_IN"
     );
     assert.strictEqual(
-      parsed.relationshipObjectTypes[0].from.labels[0],
+      parsed.relationshipObjectTypes[0].from.node,
+      parsed.nodeObjectTypes[0]
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].from.node.labels[0],
       parsed.nodeObjectTypes[0].labels[0]
     );
     assert.strictEqual(
-      parsed.relationshipObjectTypes[0].from.labels[0],
+      parsed.relationshipObjectTypes[0].from.node.labels[0],
       parsed.nodeLabels[0]
     );
+    assert.strictEqual(parsed.relationshipObjectTypes[0].from.count, 1);
     assert.strictEqual(
-      parsed.relationshipObjectTypes[0].to.labels[0],
+      parsed.relationshipObjectTypes[0].from.minCount,
+      undefined
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].from.maxCount,
+      undefined
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].to.node,
+      parsed.nodeObjectTypes[2]
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].to.node.labels[0],
       parsed.nodeObjectTypes[2].labels[0]
     );
     assert.strictEqual(
-      parsed.relationshipObjectTypes[0].to.labels[0],
+      parsed.relationshipObjectTypes[0].to.node.labels[0],
       parsed.nodeLabels[3]
+    );
+    assert.strictEqual(parsed.relationshipObjectTypes[0].to.count, undefined);
+    assert.strictEqual(parsed.relationshipObjectTypes[0].to.minCount, 0);
+    assert.strictEqual(parsed.relationshipObjectTypes[0].to.maxCount, 5);
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[1].from.count,
+      undefined
+    );
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[1].to.minCount,
+      undefined
     );
 
     // Node labels connected to properties

@@ -123,8 +123,8 @@ describe("Serializer tests", () => {
     const relationshipObjectType = new model.RelationshipObjectType(
       "r:DescTest",
       relType,
-      nodeObjectType,
-      nodeObjectType,
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType),
       "A described relationship object type"
     );
     const graphSchema = new model.GraphSchema(
@@ -169,8 +169,8 @@ describe("Serializer tests", () => {
     const relationshipObjectType = new model.RelationshipObjectType(
       "r:NoDescTest",
       relType,
-      nodeObjectType,
-      nodeObjectType
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType)
     );
     const graphSchema = new model.GraphSchema(
       [nodeObjectType],
@@ -224,8 +224,8 @@ describe("Serializer tests", () => {
     const relationshipObjectType = new model.RelationshipObjectType(
       "r:AliasTest",
       relType,
-      nodeObjectType,
-      nodeObjectType,
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType),
       undefined,
       ["REL_ALIAS_A", "REL_ALIAS_B"]
     );
@@ -275,8 +275,8 @@ describe("Serializer tests", () => {
     const relationshipObjectType = new model.RelationshipObjectType(
       "r:NoAliasTest",
       relType,
-      nodeObjectType,
-      nodeObjectType
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType)
     );
     const graphSchema = new model.GraphSchema(
       [nodeObjectType],
@@ -298,6 +298,44 @@ describe("Serializer tests", () => {
       "aliases" in parsedGraphSchema.relationshipObjectTypes[0],
       false
     );
+  });
+
+  test("Serializes relationship end cardinality and round-trips it", () => {
+    const nodeLabel = new model.NodeLabel("nl:CardTest", "CardTest", []);
+    const person = new model.NodeObjectType("n:Person", [nodeLabel]);
+    const movie = new model.NodeObjectType("n:Movie", [nodeLabel]);
+    const relType = new model.RelationshipType("rt:ACTED_IN", "ACTED_IN", []);
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:ActedIn",
+      relType,
+      new model.RelationshipEndType(person, 1),
+      new model.RelationshipEndType(movie, undefined, 0, 5)
+    );
+    const graphSchema = new model.GraphSchema(
+      [person, movie],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const rel =
+      parsed.graphSchemaRepresentation.graphSchema.relationshipObjectTypes[0];
+
+    assert.deepEqual(rel.from, { $ref: "#n:Person", count: 1 });
+    assert.deepEqual(rel.to, { $ref: "#n:Movie", minCount: 0, maxCount: 5 });
+    assert.strictEqual("minCount" in rel.from, false);
+    assert.strictEqual("maxCount" in rel.from, false);
+    assert.strictEqual("count" in rel.to, false);
+
+    const roundTripped = fromJson(serialized);
+    const roundTrippedRel = roundTripped.relationshipObjectTypes[0];
+    assert.strictEqual(roundTrippedRel.from.node.$id, "n:Person");
+    assert.strictEqual(roundTrippedRel.from.count, 1);
+    assert.strictEqual(roundTrippedRel.from.minCount, undefined);
+    assert.strictEqual(roundTrippedRel.from.maxCount, undefined);
+    assert.strictEqual(roundTrippedRel.to.node.$id, "n:Movie");
+    assert.strictEqual(roundTrippedRel.to.count, undefined);
+    assert.strictEqual(roundTrippedRel.to.minCount, 0);
+    assert.strictEqual(roundTrippedRel.to.maxCount, 5);
   });
 
   test("Vector property round-trip parse/serialize", () => {

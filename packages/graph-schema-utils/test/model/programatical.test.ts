@@ -51,20 +51,20 @@ describe("Programatic model tests", () => {
       new model.RelationshipObjectType(
         "r1",
         relationshipTypes[0],
-        nodeObjectTypes[0],
-        nodeObjectTypes[1]
+        new model.RelationshipEndType(nodeObjectTypes[0], 1),
+        new model.RelationshipEndType(nodeObjectTypes[1], undefined, 0, 5)
       ),
       new model.RelationshipObjectType(
         "r2",
         relationshipTypes[1],
-        nodeObjectTypes[0],
-        nodeObjectTypes[1]
+        new model.RelationshipEndType(nodeObjectTypes[0]),
+        new model.RelationshipEndType(nodeObjectTypes[1])
       ),
       new model.RelationshipObjectType(
         "r3",
         relationshipTypes[2],
-        nodeObjectTypes[1],
-        nodeObjectTypes[2]
+        new model.RelationshipEndType(nodeObjectTypes[1]),
+        new model.RelationshipEndType(nodeObjectTypes[2])
       ),
     ];
 
@@ -129,15 +129,34 @@ describe("Programatic model tests", () => {
       "name"
     );
     assert.strictEqual(graphSchema.relationshipObjectTypes[0].type.$id, "rt1");
-    assert.strictEqual(graphSchema.relationshipObjectTypes[0].from.$id, "n1");
     assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].from,
+      graphSchema.relationshipObjectTypes[0].from.node.$id,
+      "n1"
+    );
+    assert.strictEqual(
+      graphSchema.relationshipObjectTypes[0].from.node,
       nodeObjectTypes[0]
     );
-    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.$id, "n2");
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].from.count, 1);
     assert.strictEqual(
-      graphSchema.relationshipObjectTypes[0].to,
+      graphSchema.relationshipObjectTypes[0].from.minCount,
+      undefined
+    );
+    assert.strictEqual(
+      graphSchema.relationshipObjectTypes[0].from.maxCount,
+      undefined
+    );
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.node.$id, "n2");
+    assert.strictEqual(
+      graphSchema.relationshipObjectTypes[0].to.node,
       nodeObjectTypes[1]
+    );
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.count, undefined);
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.minCount, 0);
+    assert.strictEqual(graphSchema.relationshipObjectTypes[0].to.maxCount, 5);
+    assert.strictEqual(
+      graphSchema.relationshipObjectTypes[1].from.count,
+      undefined
     );
 
     assert.strictEqual(
@@ -270,20 +289,20 @@ describe("Programatic model tests", () => {
       new model.RelationshipObjectType(
         "r1",
         relationshipTypes[0],
-        nodes[0],
-        nodes[1]
+        new model.RelationshipEndType(nodes[0]),
+        new model.RelationshipEndType(nodes[1])
       ),
       new model.RelationshipObjectType(
         "r2",
         relationshipTypes[1],
-        nodes[0],
-        nodes[1]
+        new model.RelationshipEndType(nodes[0]),
+        new model.RelationshipEndType(nodes[1])
       ),
       new model.RelationshipObjectType(
         "r3",
         relationshipTypes[2],
-        nodes[0],
-        nodes[1]
+        new model.RelationshipEndType(nodes[0]),
+        new model.RelationshipEndType(nodes[1])
       ),
     ];
     const schema = new model.GraphSchema(nodes, rels);
@@ -339,14 +358,14 @@ describe("Programatic model tests", () => {
       new model.RelationshipObjectType(
         "r1",
         relationshipTypes[0],
-        nodeObjectTypes[0],
-        nodeObjectTypes[2]
+        new model.RelationshipEndType(nodeObjectTypes[0]),
+        new model.RelationshipEndType(nodeObjectTypes[2])
       ),
       new model.RelationshipObjectType(
         "r2",
         relationshipTypes[0],
-        nodeObjectTypes[1],
-        nodeObjectTypes[2]
+        new model.RelationshipEndType(nodeObjectTypes[1]),
+        new model.RelationshipEndType(nodeObjectTypes[2])
       ),
     ];
 

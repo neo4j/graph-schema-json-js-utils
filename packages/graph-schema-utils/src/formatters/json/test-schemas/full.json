@@ -191,8 +191,8 @@
         {
           "$id": "r:ACTED_IN",
           "type": { "$ref": "#rt:ACTED_IN" },
-          "from": { "$ref": "#n:Actor:Person" },
-          "to": { "$ref": "#n:Movie" },
+          "from": { "$ref": "#n:Actor:Person", "count": 1 },
+          "to": { "$ref": "#n:Movie", "minCount": 0, "maxCount": 5 },
           "description": "An actor acted in a movie",
           "aliases": ["STARRED_IN", "PERFORMED_IN"]
         },

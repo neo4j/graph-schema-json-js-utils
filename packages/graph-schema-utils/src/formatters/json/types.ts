@@ -43,11 +43,18 @@ export type NodeObjectTypeJsonStruct = {
   aliases?: string[];
 };
 
+export type RelationshipEndTypeJsonStruct = {
+  $ref: string;
+  count?: number;
+  minCount?: number;
+  maxCount?: number;
+};
+
 export type RelationshipObjectTypeJsonStruct = {
   $id: string;
   type: { $ref: string };
-  from: { $ref: string };
-  to: { $ref: string };
+  from: RelationshipEndTypeJsonStruct;
+  to: RelationshipEndTypeJsonStruct;
   description?: string;
   aliases?: string[];
 };
