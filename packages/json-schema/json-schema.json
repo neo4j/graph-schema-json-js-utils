@@ -100,26 +100,8 @@
                       }
                     }
                   },
-                  "from": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["$ref"],
-                    "properties": {
-                      "$ref": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "to": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["$ref"],
-                    "properties": {
-                      "$ref": {
-                        "type": "string"
-                      }
-                    }
-                  },
+                  "from": { "$ref": "#/$defs/RelationshipEnd" },
+                  "to": { "$ref": "#/$defs/RelationshipEnd" },
                   "description": {
                     "type": "string"
                   },
@@ -456,6 +438,28 @@
         "localdatetime",
         "duration"
       ]
+    },
+    "RelationshipEnd": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["$ref"],
+      "properties": {
+        "$ref": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   }
 }
