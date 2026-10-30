@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.10
+
+### Patch Changes
+
+- 000e34f: add aliases into properties
+
 ## 1.0.0-next.9
 
 ### Patch Changes

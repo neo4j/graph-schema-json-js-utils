@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.24
+
+### Patch Changes
+
+- 000e34f: add aliases into properties
+
 ## 1.0.0-next.23
 
 ### Patch Changes
