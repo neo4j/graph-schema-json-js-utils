@@ -24,10 +24,10 @@ describe("Serializer tests", () => {
     assert.strictEqual(validation, true);
   });
 
-  test("Serialized schema matches snapshot", () => {
+  test("Serialized schema matches snapshot", async () => {
     const parsed = fromJson(fullSchema);
     const serialized = toJson(parsed, 2);
-    expect(serialized).toMatchFileSnapshot(
+    await expect(serialized).toMatchFileSnapshot(
       "./__snapshots__/serialized-full.json"
     );
   });
