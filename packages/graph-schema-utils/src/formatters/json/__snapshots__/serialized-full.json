@@ -48,7 +48,8 @@
               "aliases": [
                 "fullName",
                 "actorName"
-              ]
+              ],
+              "pattern": "^[A-Z].*$"
             }
           ]
         },
@@ -70,7 +71,12 @@
               "type": {
                 "type": "string"
               },
-              "nullable": false
+              "nullable": false,
+              "one_of": [
+                "D1",
+                "D2",
+                "D3"
+              ]
             },
             {
               "$id": "p:Director.name",

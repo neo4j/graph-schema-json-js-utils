@@ -346,6 +346,13 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "pattern": { "type": "string" },
+              "one_of": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -412,6 +419,13 @@
           "items": {
             "type": "string"
           }
+        },
+        "pattern": { "type": "string" },
+        "one_of": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -426,6 +440,13 @@
         "nullable": { "type": "boolean" },
         "description": { "type": "string" },
         "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pattern": { "type": "string" },
+        "one_of": {
           "type": "array",
           "items": {
             "type": "string"

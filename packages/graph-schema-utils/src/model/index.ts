@@ -343,6 +343,8 @@ export class Property {
   nullable: boolean;
   description?: string;
   aliases?: string[];
+  pattern?: string;
+  oneOf?: string[];
 
   constructor(
     $id: string,
@@ -350,7 +352,9 @@ export class Property {
     type: PropertyType | PropertyType[],
     nullable: boolean,
     description?: string,
-    aliases?: string[]
+    aliases?: string[],
+    pattern?: string,
+    oneOf?: string[]
   ) {
     this.$id = $id;
     this.token = token;
@@ -361,6 +365,12 @@ export class Property {
     }
     if (aliases !== undefined) {
       this.aliases = aliases;
+    }
+    if (pattern !== undefined) {
+      this.pattern = pattern;
+    }
+    if (oneOf !== undefined) {
+      this.oneOf = oneOf;
     }
   }
 }

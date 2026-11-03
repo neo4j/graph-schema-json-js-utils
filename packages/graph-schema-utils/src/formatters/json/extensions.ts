@@ -511,6 +511,12 @@ const property = {
     if (property.aliases !== undefined) {
       result.aliases = property.aliases;
     }
+    if (property.pattern !== undefined) {
+      result.pattern = property.pattern;
+    }
+    if (property.oneOf !== undefined) {
+      result.one_of = property.oneOf;
+    }
     return result;
   },
   create: (property: PropertyJsonStruct) =>
@@ -520,7 +526,9 @@ const property = {
       propertyType.create(property.type),
       property.nullable,
       property.description,
-      property.aliases
+      property.aliases,
+      property.pattern,
+      property.one_of
     ),
   toRef: (property: Property) => {
     if (!property || !property.$id) {

@@ -87,6 +87,18 @@ describe("Parser tests", () => {
       undefined
     );
 
+    // pattern and one_of
+    const actorName = parsed.nodeObjectTypes[0].labels[0].properties.find(
+      (p) => p.token === "name"
+    );
+    const directorId = parsed.nodeObjectTypes[1].labels[0].properties.find(
+      (p) => p.token === "id"
+    );
+    assert.strictEqual(actorName?.pattern, "^[A-Z].*$");
+    assert.strictEqual(actorName?.oneOf, undefined);
+    assert.deepEqual(directorId?.oneOf, ["D1", "D2", "D3"]);
+    assert.strictEqual(directorId?.pattern, undefined);
+
     // node object types, connected to node labels
     assert.strictEqual(parsed.nodeObjectTypes[0].labels[1].$id, "nl:Person");
     assert.strictEqual(parsed.nodeObjectTypes[1].labels[1].token, "Person");

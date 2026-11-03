@@ -114,6 +114,8 @@ export type PropertyJsonStruct = {
   nullable: boolean;
   description?: string;
   aliases?: string[];
+  pattern?: string;
+  one_of?: string[];
 };
 
 export type PrimitivePropertyTypeJsonStruct = { type: PrimitivePropertyTypes };
