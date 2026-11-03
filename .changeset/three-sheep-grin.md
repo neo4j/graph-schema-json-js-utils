@@ -3,4 +3,4 @@
 "@neo4j/graph-json-schema": patch
 ---
 
-add relationship cardinality
+add relationship cardinality, add RelationshipEndType under RelationshipObjectType.to/from

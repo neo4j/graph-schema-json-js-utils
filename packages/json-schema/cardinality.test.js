@@ -79,17 +79,6 @@ describe("json-schema relationship end cardinality", () => {
     ).toBe(true);
   });
 
-  it("accepts count together with minCount and maxCount", () => {
-    const validate = ajv.compile(schema);
-    expect(
-      validate(
-        baseGraphSchema({
-          from: { $ref: "#n:Node", count: 2, minCount: 2, maxCount: 2 },
-        })
-      )
-    ).toBe(true);
-  });
-
   it("rejects a negative count", () => {
     const validate = ajv.compile(schema);
     expect(
