@@ -300,6 +300,40 @@ describe("Serializer tests", () => {
     );
   });
 
+  test("Serializes pattern and one_of on properties when present and omits them when not set", () => {
+    const nodeLabel = new model.NodeLabel("nl:PatternTest", "PatternTest", [
+      new model.Property(
+        "p:PatternTest.code",
+        "code",
+        new model.PrimitivePropertyType("string"),
+        false,
+        undefined,
+        undefined,
+        "^[A-Z]{3}$",
+        ["ABC", "DEF"]
+      ),
+      new model.Property(
+        "p:PatternTest.plain",
+        "plain",
+        new model.PrimitivePropertyType("string"),
+        false
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType("n:PatternTest", [
+      nodeLabel,
+    ]);
+    const serialized = toJson(new model.GraphSchema([nodeObjectType], []));
+    const [withConstraints, plain] =
+      JSON.parse(serialized).graphSchemaRepresentation.graphSchema.nodeLabels[0]
+        .properties;
+
+    assert.strictEqual(withConstraints.pattern, "^[A-Z]{3}$");
+    assert.deepEqual(withConstraints.one_of, ["ABC", "DEF"]);
+    assert.strictEqual("oneOf" in withConstraints, false);
+    assert.strictEqual("pattern" in plain, false);
+    assert.strictEqual("one_of" in plain, false);
+  });
+
   test("Vector property round-trip parse/serialize", () => {
     const schema = JSON.stringify({
       graphSchemaRepresentation: {
