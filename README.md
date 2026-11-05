@@ -68,6 +68,7 @@ const properties = [
 
 const relationshipObjectTypes = [
   // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
+  // from.count is 1; to allows between 0 and 5
   new model.RelationshipObjectType(
     "r1",
     relationshipTypes[0],

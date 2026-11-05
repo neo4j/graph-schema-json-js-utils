@@ -686,13 +686,10 @@ const relationshipEnd = {
       ...nodeObjectType.toRef(end.node),
     };
     if (end.count !== undefined) {
-      result.count = end.count;
+      return { ...result, count: end.count, minCount: undefined, maxCount: undefined };
     }
-    if (end.minCount !== undefined) {
-      result.minCount = end.minCount;
-    }
-    if (end.maxCount !== undefined) {
-      result.maxCount = end.maxCount;
+    if (end.minCount !== undefined || end.maxCount !== undefined) {
+      return { ...result, minCount: end.minCount, maxCount: end.maxCount };
     }
     return result;
   },
