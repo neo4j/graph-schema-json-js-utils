@@ -65,11 +65,11 @@ export function toTomaz(schema: GraphSchema): string {
     return JSON.stringify(out);
   }
   function paths(relationshipObjectType: RelationshipObjectType): string {
-    return `(:${relationshipObjectType.from.labels
+    return `(:${relationshipObjectType.from.node.labels
       .map((label) => label.token)
       .join(":")})-[:${
       relationshipObjectType.type.token
-    }]->(:${relationshipObjectType.to.labels
+    }]->(:${relationshipObjectType.to.node.labels
       .map((label) => label.token)
       .join(":")})`;
   }
@@ -126,11 +126,11 @@ export function toOskars(schema: GraphSchema): string {
   function paths(relationshipObjectType: RelationshipObjectType): string {
     const out: string[] = [];
     out.push(
-      `  (:${relationshipObjectType.from.labels
+      `  (:${relationshipObjectType.from.node.labels
         .map((label) => label.token)
         .join(":")})-[:${
         relationshipObjectType.type.token
-      }]->(:${relationshipObjectType.to.labels
+      }]->(:${relationshipObjectType.to.node.labels
         .map((label) => label.token)
         .join(":")})`
     );

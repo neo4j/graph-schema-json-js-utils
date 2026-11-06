@@ -147,8 +147,8 @@ async function introspectRelationships(
       const rel = new model.RelationshipObjectType(
         id,
         new model.RelationshipType(relType, relType, properties),
-        fromNode,
-        toNode
+        new model.RelationshipEndType(fromNode),
+        new model.RelationshipEndType(toNode)
       );
       rels[relType] = rel;
     }

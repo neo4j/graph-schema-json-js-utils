@@ -62,19 +62,18 @@ const properties = [
   ),
 ];
 
-const nodeObjectTypes = [
   new model.NodeObjectType("n1", [labels[0]], [properties[0]]), // (:Person {name}) node type
   new model.NodeObjectType("n2", [labels[1]], [properties[1]]), // (:Movie {title}) node type
 ];
 
 const relationshipObjectTypes = [
   // (:Person {name})-[:ACTED_IN {roles}]->(:Movie {title})
+  // from.count is 1; to allows between 0 and 5
   new model.RelationshipObjectType(
     "r1",
     relationshipTypes[0],
-    nodeObjectTypes[0],
-    nodeObjectTypes[1],
-    [properties[2]]
+    new model.RelationshipEndType(nodeObjectTypes[0], 1),
+    new model.RelationshipEndType(nodeObjectTypes[1], undefined, 0, 5)
   ),
 ];
 

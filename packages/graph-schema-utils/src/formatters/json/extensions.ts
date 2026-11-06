@@ -9,6 +9,7 @@ import {
   PrimitiveArrayPropertyType,
   PrimitivePropertyType,
   PropertyType,
+  RelationshipEndType,
   RelationshipObjectType,
   RelationshipType,
   RelationshipTypeConstraint,
@@ -45,6 +46,7 @@ import {
   PrimitivePropertyTypeJsonStruct,
   PropertyJsonStruct,
   PropertyTypeJsonStruct,
+  RelationshipEndTypeJsonStruct,
   RelationshipObjectTypeJsonStruct,
   RelationshipTypeConstraintJsonStruct,
   RelationshipTypeIndexJsonStruct,
@@ -675,6 +677,35 @@ const nodeObjectType = {
   },
 };
 
+const relationshipEnd = {
+  extract: (end: RelationshipEndType): RelationshipEndTypeJsonStruct => {
+    if (!end || !end.node) {
+      throw new Error(`NodeObjectType is not defined`);
+    }
+    const result: RelationshipEndTypeJsonStruct = {
+      ...nodeObjectType.toRef(end.node),
+    };
+    if (end.count !== undefined) {
+      return { ...result, count: end.count, minCount: undefined, maxCount: undefined };
+    }
+    if (end.minCount !== undefined || end.maxCount !== undefined) {
+      return { ...result, minCount: end.minCount, maxCount: end.maxCount };
+    }
+    return result;
+  },
+  create: (
+    end: RelationshipEndTypeJsonStruct,
+    nodeObjectTypeLookup: (ref: string, direction: "from" | "to") => NodeObjectType,
+    direction: "from" | "to"
+  ) =>
+    new RelationshipEndType(
+      nodeObjectTypeLookup(end.$ref, direction),
+      end.count,
+      end.minCount,
+      end.maxCount
+    ),
+};
+
 const relationshipObjectType = {
   extract: (
     relationshipObjectType: RelationshipObjectType
@@ -682,8 +713,8 @@ const relationshipObjectType = {
     const result: RelationshipObjectTypeJsonStruct = {
       $id: relationshipObjectType.$id,
       type: relationshipType.toRef(relationshipObjectType.type),
-      from: nodeObjectType.toRef(relationshipObjectType.from),
-      to: nodeObjectType.toRef(relationshipObjectType.to),
+      from: relationshipEnd.extract(relationshipObjectType.from),
+      to: relationshipEnd.extract(relationshipObjectType.to),
     };
     if (relationshipObjectType.description !== undefined) {
       result.description = relationshipObjectType.description;
@@ -701,8 +732,16 @@ const relationshipObjectType = {
     return new RelationshipObjectType(
       relationshipObjectType.$id,
       relTypeLookup(relationshipObjectType.type.$ref),
-      nodeObjectTypeLookup(relationshipObjectType.from.$ref, "from"),
-      nodeObjectTypeLookup(relationshipObjectType.to.$ref, "to"),
+      relationshipEnd.create(
+        relationshipObjectType.from,
+        nodeObjectTypeLookup,
+        "from"
+      ),
+      relationshipEnd.create(
+        relationshipObjectType.to,
+        nodeObjectTypeLookup,
+        "to"
+      ),
       relationshipObjectType.description,
       relationshipObjectType.aliases
     );

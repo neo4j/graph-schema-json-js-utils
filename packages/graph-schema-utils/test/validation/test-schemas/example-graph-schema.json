@@ -147,10 +147,13 @@
               "$ref": "#rt1"
           },
           "from": {
-            "$ref": "#n1"
+            "$ref": "#n1",
+            "count": 1
           },
           "to": {
-            "$ref": "#n3"
+            "$ref": "#n3",
+            "minCount": 0,
+            "maxCount": 5
           }
         },
         {
