@@ -1,5 +1,12 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.25
+
+### Patch Changes
+
+- e25cd5d: add pattern and one_of to properties
+- 811155c: add relationship cardinality, add RelationshipEndType under RelationshipObjectType.to/from
+
 ## 1.0.0-next.24
 
 ### Patch Changes
