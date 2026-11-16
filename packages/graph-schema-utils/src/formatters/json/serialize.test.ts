@@ -372,6 +372,44 @@ describe("Serializer tests", () => {
     assert.strictEqual(roundTrippedRel.to.maxCount, 5);
   });
 
+  test("Serializes null relationship end cardinality and round-trips it", () => {
+    const nodeLabel = new model.NodeLabel("nl:CardTest", "CardTest", []);
+    const person = new model.NodeObjectType("n:Person", [nodeLabel]);
+    const movie = new model.NodeObjectType("n:Movie", [nodeLabel]);
+    const relType = new model.RelationshipType("rt:ACTED_IN", "ACTED_IN", []);
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:ActedIn",
+      relType,
+      new model.RelationshipEndType(person, null),
+      new model.RelationshipEndType(movie, undefined, null, 5)
+    );
+    const graphSchema = new model.GraphSchema(
+      [person, movie],
+      [relationshipObjectType]
+    );
+    const serialized = toJson(graphSchema);
+    const parsed = JSON.parse(serialized);
+    const rel =
+      parsed.graphSchemaRepresentation.graphSchema.relationshipObjectTypes[0];
+
+    assert.deepEqual(rel.from, { $ref: "#n:Person", count: null });
+    assert.deepEqual(rel.to, { $ref: "#n:Movie", minCount: null, maxCount: 5 });
+    assert.strictEqual("minCount" in rel.from, false);
+    assert.strictEqual("maxCount" in rel.from, false);
+    assert.strictEqual("count" in rel.to, false);
+
+    const roundTripped = fromJson(serialized);
+    const roundTrippedRel = roundTripped.relationshipObjectTypes[0];
+    assert.strictEqual(roundTrippedRel.from.node.$id, "n:Person");
+    assert.strictEqual(roundTrippedRel.from.count, null);
+    assert.strictEqual(roundTrippedRel.from.minCount, undefined);
+    assert.strictEqual(roundTrippedRel.from.maxCount, undefined);
+    assert.strictEqual(roundTrippedRel.to.node.$id, "n:Movie");
+    assert.strictEqual(roundTrippedRel.to.count, undefined);
+    assert.strictEqual(roundTrippedRel.to.minCount, null);
+    assert.strictEqual(roundTrippedRel.to.maxCount, 5);
+  });
+
   test("Vector property round-trip parse/serialize", () => {
     const schema = JSON.stringify({
       graphSchemaRepresentation: {

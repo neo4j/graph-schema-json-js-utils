@@ -46,15 +46,15 @@ export type NodeObjectTypeJsonStruct = {
 export type RelationshipEndTypeJsonStruct = 
 | {
   $ref: string;
-  count: number;
+  count: number | null;
   minCount?: undefined;
   maxCount?: undefined;
 }
 | {
   $ref: string;
   count?: undefined;
-  minCount?: number;
-  maxCount?: number;
+  minCount?: number | null;
+  maxCount?: number | null;
 };
 
 export type RelationshipObjectTypeJsonStruct = {

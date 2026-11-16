@@ -251,6 +251,20 @@ describe("Programatic model tests", () => {
     assert.strictEqual(isLookupIndex(graphSchema.indexes[2]), true);
   });
 
+  test("Relationship end cardinality can be null", () => {
+    const person = new model.NodeObjectType("n:Person", []);
+    const movie = new model.NodeObjectType("n:Movie", []);
+    const from = new model.RelationshipEndType(person, null);
+    const to = new model.RelationshipEndType(movie, undefined, null, 5);
+
+    assert.strictEqual(from.count, null);
+    assert.strictEqual(from.minCount, undefined);
+    assert.strictEqual(from.maxCount, undefined);
+    assert.strictEqual(to.count, undefined);
+    assert.strictEqual(to.minCount, null);
+    assert.strictEqual(to.maxCount, 5);
+  });
+
   test("getAllLabelTokes returns all label tokens", () => {
     // call getAllLabelTokens on a graph schema with 3 labels
     const labels = [

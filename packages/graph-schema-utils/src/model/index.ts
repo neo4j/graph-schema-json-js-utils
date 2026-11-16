@@ -113,11 +113,16 @@ export class NodeObjectType {
 
 export class RelationshipEndType {
   node: NodeObjectType;
-  count?: number;
-  minCount?: number;
-  maxCount?: number;
+  count?: number | null;
+  minCount?: number | null;
+  maxCount?: number | null;
 
-  constructor(node: NodeObjectType, count?: number, minCount?: number, maxCount?: number) {
+  constructor(
+    node: NodeObjectType,
+    count?: number | null,
+    minCount?: number | null,
+    maxCount?: number | null
+  ) {
     this.node = node;
     if (count !== undefined) {
       this.count = count;
