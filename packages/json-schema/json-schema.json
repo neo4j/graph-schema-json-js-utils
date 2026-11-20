@@ -76,6 +76,9 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "reference": {
+                    "type": "string"
                   }
                 },
                 "additionalProperties": false,
@@ -110,6 +113,9 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "reference": {
+                    "type": "string"
                   }
                 },
                 "additionalProperties": false,
@@ -335,7 +341,8 @@
                 "items": {
                   "type": "string"
                 }
-              }
+              },
+              "reference": { "type": "string" }
             }
           }
         ]
@@ -408,7 +415,8 @@
           "items": {
             "type": "string"
           }
-        }
+        },
+        "reference": { "type": "string" }
       }
     },
     "PropertyTypesVectorObject": {
@@ -433,7 +441,8 @@
           "items": {
             "type": "string"
           }
-        }
+        },
+        "reference": { "type": "string" }
       }
     },
     "PropertyTypes": {

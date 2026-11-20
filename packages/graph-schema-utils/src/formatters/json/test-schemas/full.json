@@ -46,7 +46,8 @@
               "nullable": false,
               "description": "The actor's full name",
               "aliases": ["fullName", "actorName"],
-              "pattern": "^[A-Z].*$"
+              "pattern": "^[A-Z].*$",
+              "reference": "https://schema.org/name"
             }
           ]
         },
@@ -178,7 +179,8 @@
           "$id": "n:Actor:Person",
           "labels": [{ "$ref": "#nl:Actor" }, { "$ref": "#nl:Person" }],
           "description": "A person who acted in a movie",
-          "aliases": ["Performer", "CastMember"]
+          "aliases": ["Performer", "CastMember"],
+          "reference": "https://schema.org/Person"
         },
         {
           "$id": "n:Director:Person",
@@ -196,7 +198,8 @@
           "from": { "$ref": "#n:Actor:Person", "count": 1 },
           "to": { "$ref": "#n:Movie", "minCount": 0, "maxCount": 5 },
           "description": "An actor acted in a movie",
-          "aliases": ["STARRED_IN", "PERFORMED_IN"]
+          "aliases": ["STARRED_IN", "PERFORMED_IN"],
+          "reference": "https://schema.org/actor"
         },
         {
           "$id": "r:DIRECTED",
