@@ -519,6 +519,9 @@ const property = {
     if (property.oneOf !== undefined) {
       result.one_of = property.oneOf;
     }
+    if (property.reference !== undefined) {
+      result.reference = property.reference;
+    }
     return result;
   },
   create: (property: PropertyJsonStruct) =>
@@ -530,7 +533,8 @@ const property = {
       property.description,
       property.aliases,
       property.pattern,
-      property.one_of
+      property.one_of,
+      property.reference
     ),
   toRef: (property: Property) => {
     if (!property || !property.$id) {
@@ -654,6 +658,9 @@ const nodeObjectType = {
     if (nodeObjectType.aliases !== undefined) {
       result.aliases = nodeObjectType.aliases;
     }
+    if (nodeObjectType.reference !== undefined) {
+      result.reference = nodeObjectType.reference;
+    }
     return result;
   },
   create: (
@@ -664,7 +671,8 @@ const nodeObjectType = {
       nodeObjectType.$id,
       nodeObjectType.labels.map(({ $ref }) => labelLookup($ref)),
       nodeObjectType.description,
-      nodeObjectType.aliases
+      nodeObjectType.aliases,
+      nodeObjectType.reference
     );
   },
   toRef: (nodeObjectType: NodeObjectType) => {
@@ -722,6 +730,9 @@ const relationshipObjectType = {
     if (relationshipObjectType.aliases !== undefined) {
       result.aliases = relationshipObjectType.aliases;
     }
+    if (relationshipObjectType.reference !== undefined) {
+      result.reference = relationshipObjectType.reference;
+    }
     return result;
   },
   create: (
@@ -743,7 +754,8 @@ const relationshipObjectType = {
         "to"
       ),
       relationshipObjectType.description,
-      relationshipObjectType.aliases
+      relationshipObjectType.aliases,
+      relationshipObjectType.reference
     );
   },
   toRef: (relationshipObjectType: RelationshipObjectType) => ({

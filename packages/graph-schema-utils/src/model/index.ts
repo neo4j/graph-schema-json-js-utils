@@ -91,8 +91,15 @@ export class NodeObjectType {
   labels: NodeLabel[];
   description?: string;
   aliases?: string[];
+  reference?: string;
 
-  constructor(id: string, labels: NodeLabel[], description?: string, aliases?: string[]) {
+  constructor(
+    id: string,
+    labels: NodeLabel[],
+    description?: string,
+    aliases?: string[],
+    reference?: string
+  ) {
     this.$id = id;
     this.labels = labels;
     if (description !== undefined) {
@@ -100,6 +107,9 @@ export class NodeObjectType {
     }
     if (aliases !== undefined) {
       this.aliases = aliases;
+    }
+    if (reference !== undefined) {
+      this.reference = reference;
     }
   }
   getProperties() {
@@ -138,6 +148,7 @@ export class RelationshipObjectType {
   to: RelationshipEndType;
   description?: string;
   aliases?: string[];
+  reference?: string;
   
   constructor(
     id: string,
@@ -145,7 +156,8 @@ export class RelationshipObjectType {
     from: RelationshipEndType,
     to: RelationshipEndType,
     description?: string,
-    aliases?: string[]
+    aliases?: string[],
+    reference?: string
   ) {
     this.$id = id;
     this.type = type;
@@ -156,6 +168,9 @@ export class RelationshipObjectType {
     }
     if (aliases !== undefined) {
       this.aliases = aliases;
+    }
+    if (reference !== undefined) {
+      this.reference = reference;
     }
   }
   getProperties() {
@@ -365,6 +380,7 @@ export class Property {
   aliases?: string[];
   pattern?: string;
   oneOf?: string[];
+  reference?: string;
 
   constructor(
     $id: string,
@@ -374,7 +390,8 @@ export class Property {
     description?: string,
     aliases?: string[],
     pattern?: string,
-    oneOf?: string[]
+    oneOf?: string[],
+    reference?: string
   ) {
     this.$id = $id;
     this.token = token;
@@ -391,6 +408,9 @@ export class Property {
     }
     if (oneOf !== undefined) {
       this.oneOf = oneOf;
+    }
+    if (reference !== undefined) {
+      this.reference = reference;
     }
   }
 }

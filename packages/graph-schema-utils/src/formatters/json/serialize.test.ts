@@ -334,6 +334,78 @@ describe("Serializer tests", () => {
     assert.strictEqual("one_of" in plain, false);
   });
 
+  test("Serializes reference on properties, node object types and relationship object types when present and omits it when not set", () => {
+    const nodeLabel = new model.NodeLabel("nl:RefTest", "RefTest", [
+      new model.Property(
+        "p:RefTest.prop",
+        "prop",
+        new model.PrimitivePropertyType("string"),
+        false,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        "https://example.com/prop"
+      ),
+      new model.Property(
+        "p:RefTest.plain",
+        "plain",
+        new model.PrimitivePropertyType("string"),
+        false
+      ),
+    ]);
+    const nodeObjectType = new model.NodeObjectType(
+      "n:RefTest",
+      [nodeLabel],
+      undefined,
+      undefined,
+      "https://example.com/node"
+    );
+    const plainNodeObjectType = new model.NodeObjectType("n:Plain", [
+      nodeLabel,
+    ]);
+    const relType = new model.RelationshipType("rt:REF_REL", "REF_REL", []);
+    const relationshipObjectType = new model.RelationshipObjectType(
+      "r:RefTest",
+      relType,
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType),
+      undefined,
+      undefined,
+      "https://example.com/rel"
+    );
+    const plainRelationshipObjectType = new model.RelationshipObjectType(
+      "r:Plain",
+      relType,
+      new model.RelationshipEndType(nodeObjectType),
+      new model.RelationshipEndType(nodeObjectType)
+    );
+    const serialized = toJson(
+      new model.GraphSchema(
+        [nodeObjectType, plainNodeObjectType],
+        [relationshipObjectType, plainRelationshipObjectType]
+      )
+    );
+    const { graphSchema } = JSON.parse(serialized).graphSchemaRepresentation;
+    const [withReference, plain] = graphSchema.nodeLabels[0].properties;
+
+    assert.strictEqual(withReference.reference, "https://example.com/prop");
+    assert.strictEqual("reference" in plain, false);
+    assert.strictEqual(
+      graphSchema.nodeObjectTypes[0].reference,
+      "https://example.com/node"
+    );
+    assert.strictEqual("reference" in graphSchema.nodeObjectTypes[1], false);
+    assert.strictEqual(
+      graphSchema.relationshipObjectTypes[0].reference,
+      "https://example.com/rel"
+    );
+    assert.strictEqual(
+      "reference" in graphSchema.relationshipObjectTypes[1],
+      false
+    );
+  });
+
   test("Serializes relationship end cardinality and round-trips it", () => {
     const nodeLabel = new model.NodeLabel("nl:CardTest", "CardTest", []);
     const person = new model.NodeObjectType("n:Person", [nodeLabel]);
