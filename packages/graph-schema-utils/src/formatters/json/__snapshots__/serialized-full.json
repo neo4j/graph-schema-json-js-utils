@@ -49,7 +49,8 @@
                 "fullName",
                 "actorName"
               ],
-              "pattern": "^[A-Z].*$"
+              "pattern": "^[A-Z].*$",
+              "reference": "https://schema.org/name"
             }
           ]
         },
@@ -198,7 +199,8 @@
           "aliases": [
             "Performer",
             "CastMember"
-          ]
+          ],
+          "reference": "https://schema.org/Person"
         },
         {
           "$id": "n:Director:Person",
@@ -239,7 +241,8 @@
           "aliases": [
             "STARRED_IN",
             "PERFORMED_IN"
-          ]
+          ],
+          "reference": "https://schema.org/actor"
         },
         {
           "$id": "r:DIRECTED",

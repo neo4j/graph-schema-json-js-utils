@@ -99,6 +99,20 @@ describe("Parser tests", () => {
     assert.deepEqual(directorId?.oneOf, ["D1", "D2", "D3"]);
     assert.strictEqual(directorId?.pattern, undefined);
 
+    // reference
+    assert.strictEqual(actorName?.reference, "https://schema.org/name");
+    assert.strictEqual(directorId?.reference, undefined);
+    assert.strictEqual(
+      parsed.nodeObjectTypes[0].reference,
+      "https://schema.org/Person"
+    );
+    assert.strictEqual(parsed.nodeObjectTypes[1].reference, undefined);
+    assert.strictEqual(
+      parsed.relationshipObjectTypes[0].reference,
+      "https://schema.org/actor"
+    );
+    assert.strictEqual(parsed.relationshipObjectTypes[1].reference, undefined);
+
     // node object types, connected to node labels
     assert.strictEqual(parsed.nodeObjectTypes[0].labels[1].$id, "nl:Person");
     assert.strictEqual(parsed.nodeObjectTypes[1].labels[1].token, "Person");
