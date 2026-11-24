@@ -1,5 +1,11 @@
 # @neo4j/graph-schema-utils
 
+## 1.0.0-next.26
+
+### Patch Changes
+
+- 1127d26: add reference to properties, node object types and relationship object types
+
 ## 1.0.0-next.25
 
 ### Patch Changes

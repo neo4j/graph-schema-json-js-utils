@@ -1,5 +1,11 @@
 # @neo4j/graph-json-schema
 
+## 1.0.0-next.12
+
+### Patch Changes
+
+- 1127d26: add reference to properties, node object types and relationship object types
+
 ## 1.0.0-next.11
 
 ### Patch Changes
